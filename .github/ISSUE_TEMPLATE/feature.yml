@@ -1,0 +1,21 @@
+name: Feature request
+description: An idea for creatorloop
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you want to do as a creator?
+      description: Describe the task, not the solution. Example: "I want to know which hashtags my best posts share."
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How could creatorloop help?
+  - type: checkboxes
+    id: api
+    attributes:
+      label: API
+      options:
+        - label: I checked that the Instagram Graph API can provide this data (if you know).

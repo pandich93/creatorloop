@@ -1,0 +1,20 @@
+{
+  "handle": "CREATORLOOP",
+  "theme": "dark",
+  "scenes": [
+    {"type": "hook", "label": "OPEN SOURCE", "rows": ["YOUR NEXT POST,", "[PLANNED BY DATA]"], "kicker": ["ANALYSE", "→", "MAKE", "→", "POST"], "heroes": ["1f4ca", "1f3ac"]},
+    {"type": "montage", "rows": ["ONE LOOP.", "[INSIDE CLAUDE]"], "heroes": ["1f4ca", "1f50d", "1f3ac", "1f5d3-fe0f", "1f4ac", "1f3c6"]},
+    {"type": "point", "label": "1 · ANALYSE", "rows": ["SEE WHAT", "[ACTUALLY WORKS]"], "hero": "1f4ca",
+     "visual": {"kind": "chart", "bars": [{"label": "Mon", "value": 2}, {"label": "Tue", "value": 3}, {"label": "Wed", "value": 2.5}, {"label": "Thu", "value": 6}, {"label": "Fri", "value": 4}], "caption": "Example: reach by posting day"}},
+    {"type": "point", "label": "2 · COMPETITORS", "rows": ["CATCH WHAT", "[TOOK OFF]"], "hero": "1f50d",
+     "visual": {"kind": "notify", "title": "find_viral_posts", "rows": ["@competitor · Reel", "7.4× their median views", "Hook: \"I tried it for 30 days\""]}},
+    {"type": "point", "label": "3 · MAKE", "rows": ["STORYBOARD", "[→ REEL]"], "hero": "1f3ac",
+     "visual": {"kind": "terminal", "cmd": "python tools/make_reel.py", "out": ["✓ text on frame 0", "✓ safe zones clean", "✓ not a copy of the carousel"]}},
+    {"type": "point", "label": "4 · POST", "rows": ["YOU APPROVE,", "[IT GOES OUT]"], "hero": "1f5d3-fe0f",
+     "visual": {"kind": "chat", "ask": "Queue my Reel for Thursday", "answer": "Preview ready. Post Thu 19:00? ✅"}},
+    {"type": "point", "label": "5 · REVIEW", "rows": ["24 H AND 72 H", "[POST REVIEWS]"], "hero": "1f3c6",
+     "visual": {"kind": "checklist", "items": ["Reach vs your median", "Saves and shares", "Follows from the post", "New comments to answer"]}},
+    {"type": "outro", "bg": "amber", "rows": ["OFFICIAL API.", "[NO SCRAPING.]", "MIT."], "beats": 6},
+    {"type": "final", "cta": "STAR IT ON GITHUB", "sub": "Free and open source. MIT licence.", "signature": ["creatorloop · open source", "github.com/pandich93/creatorloop"]}
+  ]
+}

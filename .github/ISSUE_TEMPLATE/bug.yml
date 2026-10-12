@@ -1,0 +1,33 @@
+name: Bug report
+description: Something does not work as described
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you asked Claude or which command you ran, what you expected, what you got.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error message or log
+      description: |
+        Claude Desktop logs: `%APPDATA%\Claude\logs\mcp-server-creatorloop.log` (Windows),
+        `~/Library/Logs/Claude/mcp-server-creatorloop.log` (macOS). Remove tokens and IDs before pasting.
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: creatorloop version
+      placeholder: "0.1.0 (get_api_status shows it)"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Windows, macOS, Linux]
+    validations:
+      required: true

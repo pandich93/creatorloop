@@ -1,0 +1,70 @@
+[project]
+name = "creatorloop"
+dynamic = ["version"]
+description = "Open-source AI content studio for Instagram creators: Claude analyses what works, helps make Reels and carousels, schedules and reviews them via the official Instagram API"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "pandich" }]
+requires-python = ">=3.14"
+keywords = ["mcp", "model-context-protocol", "claude", "instagram", "reels", "content-creator", "social-media", "analytics"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Internet",
+    "Topic :: Multimedia :: Video",
+]
+dependencies = [
+    "mcp>=2.3,<3",
+    "httpx>=0.28",
+    "python-dotenv>=1.0",
+    "tzdata>=2025.2", # zoneinfo database for Windows
+    "pillow>=11.3",   # PNG -> JPEG for publishing
+]
+
+[project.urls]
+Homepage = "https://github.com/pandich93/creatorloop"
+Repository = "https://github.com/pandich93/creatorloop"
+Issues = "https://github.com/pandich93/creatorloop/issues"
+Changelog = "https://github.com/pandich93/creatorloop/blob/main/CHANGELOG.md"
+
+[project.scripts]
+creatorloop = "creatorloop.server:main"
+creatorloop-auth = "creatorloop.auth_cli:main"
+creatorloop-setup = "creatorloop.setup_cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4",
+    "pytest-asyncio>=1.2",
+    "ruff>=0.14",
+]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/creatorloop/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["/src/creatorloop", "/tests", "/README.md", "/README.ru.md", "/README.uz.md", "/LICENSE", "/CHANGELOG.md", "/server.json"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/creatorloop"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 130
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "UP", "I"]

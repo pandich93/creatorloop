@@ -1,0 +1,15 @@
+{
+  "_source": "Shape captured from Graph API Explorer v26.0 (2026-10-05), IDs and username anonymised: GET /{ig-user-id}?fields=business_discovery.username(example.creator){followers_count,media.limit(2){media_product_type,like_count,comments_count,view_count}}",
+  "business_discovery": {
+    "followers_count": 144,
+    "media": {
+      "data": [
+        {"media_product_type": "REELS", "like_count": 0, "comments_count": 0, "view_count": 25, "id": "18000000000000001"},
+        {"media_product_type": "REELS", "like_count": 3, "comments_count": 0, "view_count": 132, "id": "18000000000000002"}
+      ],
+      "paging": {"cursors": {"after": "QVFIexample"}}
+    },
+    "id": "17841400000000001"
+  },
+  "id": "17841400000000001"
+}

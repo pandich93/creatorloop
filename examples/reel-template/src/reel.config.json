@@ -1,0 +1,157 @@
+{
+  "handle": "@YOUR.HANDLE",
+  "theme": "light",
+  "carousel": "../sample-carousel/build.py",
+  "scenes": [
+    {
+      "type": "hook",
+      "label": "WEEKEND BUILDS",
+      "rows": [
+        "A PROJECT",
+        "[THAT WORKS]",
+        "IN 48 HOURS"
+      ],
+      "kicker": [
+        "SATURDAY",
+        "→",
+        "SUNDAY",
+        "=",
+        "✓"
+      ],
+      "heroes": [
+        "1f6e0-fe0f",
+        "1f5d3-fe0f"
+      ]
+    },
+    {
+      "type": "montage",
+      "rows": [
+        "8 IDEAS.",
+        "[THE EASIEST 4]"
+      ],
+      "heroes": [
+        "1f916",
+        "23f0",
+        "1f399-fe0f",
+        "1f9fe",
+        "1f4b5",
+        "1f4ca",
+        "1f50d",
+        "1f511"
+      ]
+    },
+    {
+      "type": "point",
+      "label": "FOR CUSTOMERS",
+      "rows": [
+        "THE BOT",
+        "[ANSWERS FOR YOU]"
+      ],
+      "hero": "1f916",
+      "visual": {
+        "kind": "chat",
+        "ask": "How much is a cappuccino?",
+        "answer": "$3.50. Shall I place the order? ☕"
+      }
+    },
+    {
+      "type": "point",
+      "label": "EVERY MORNING",
+      "rows": [
+        "THE RATE",
+        "[COMES TO YOU]"
+      ],
+      "hero": "1f4b5",
+      "visual": {
+        "kind": "chart",
+        "bars": [
+          {
+            "label": "Mon",
+            "value": 3
+          },
+          {
+            "label": "Tue",
+            "value": 4
+          },
+          {
+            "label": "Wed",
+            "value": 3.5
+          },
+          {
+            "label": "Thu",
+            "value": 5
+          },
+          {
+            "label": "Fri",
+            "value": 6
+          }
+        ],
+        "caption": "08:00 every day — change since yesterday"
+      }
+    },
+    {
+      "type": "point",
+      "label": "WHERE THE MONEY GOES",
+      "rows": [
+        "FORGOTTEN",
+        "[SUBSCRIPTIONS]"
+      ],
+      "hero": "1f9fe",
+      "visual": {
+        "kind": "receipt",
+        "rows": [
+          [
+            "Music subscription",
+            "9.99"
+          ],
+          [
+            "Cloud storage",
+            "2.99"
+          ],
+          [
+            "Unused course",
+            "19.00"
+          ]
+        ],
+        "totalLabel": "You save:",
+        "total": "$31.98 a month"
+      }
+    },
+    {
+      "type": "point",
+      "label": "BEFORE YOU PUSH",
+      "rows": [
+        "NO KEYS",
+        "[IN YOUR CODE]"
+      ],
+      "hero": "1f510",
+      "visual": {
+        "kind": "terminal",
+        "cmd": "gitleaks detect",
+        "out": [
+          "⚠ 1 API key found: .env",
+          "✓ commit blocked"
+        ]
+      }
+    },
+    {
+      "type": "outro",
+      "bg": "amber",
+      "rows": [
+        "PICK ONE,",
+        "TAKE IT",
+        "[ALL THE WAY]"
+      ],
+      "beats": 6
+    },
+    {
+      "type": "final",
+      "cta": "SAVE THIS",
+      "sub": "The full list and 8 prompts are in the carousel.",
+      "signature": [
+        "Your Name · what you do.",
+        "One line about why people should follow you."
+      ]
+    }
+  ]
+}

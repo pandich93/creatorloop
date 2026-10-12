@@ -1,0 +1,11 @@
+{
+  "_source": "Shape captured from Graph API Explorer v26.0 (2026-10-05), IDs and username anonymised: GET /18000000000000002/insights?metric=reach,views,saved,shares,ig_reels_avg_watch_time",
+  "data": [
+    {"name": "reach", "period": "lifetime", "values": [{"value": 119}], "id": "18000000000000002/insights/reach/lifetime"},
+    {"name": "views", "period": "lifetime", "values": [{"value": 132}], "id": "18000000000000002/insights/views/lifetime"},
+    {"name": "saved", "period": "lifetime", "values": [{"value": 0}], "id": "18000000000000002/insights/saved/lifetime"},
+    {"name": "shares", "period": "lifetime", "values": [{"value": 3}], "id": "18000000000000002/insights/shares/lifetime"},
+    {"name": "ig_reels_avg_watch_time", "period": "lifetime", "values": [{"value": 5525}],
+     "id": "18000000000000002/insights/ig_reels_avg_watch_time/lifetime"}
+  ]
+}

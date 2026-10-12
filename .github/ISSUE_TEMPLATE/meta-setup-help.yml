@@ -1,0 +1,27 @@
+name: Help with Meta / token setup
+description: Stuck creating the Meta app, the token or finding the account ID
+labels: [setup]
+body:
+  - type: markdown
+    attributes:
+      value: Please check [docs/meta-setup.md](https://github.com/pandich93/creatorloop/blob/main/docs/meta-setup.md) first. Never paste your token or App Secret here.
+  - type: dropdown
+    id: step
+    attributes:
+      label: Where are you stuck?
+      options:
+        - Creating the Meta app
+        - Permissions in Graph API Explorer
+        - creatorloop-auth exchange / whoami / check
+        - System User token
+        - Claude Desktop does not show the tools
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What you see
+      description: The exact error text or a screenshot with IDs and tokens hidden.
+    validations:
+      required: true

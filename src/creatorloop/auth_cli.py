@@ -1,0 +1,133 @@
+"""Helper CLI: exchange tokens and find your Instagram professional account ID.
+
+Usage:
+    uv run creatorloop-auth exchange --short-token <TOKEN> [--write]
+    uv run creatorloop-auth whoami [--write]
+    uv run creatorloop-auth check
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from datetime import UTC, datetime, timedelta
+from pathlib import Path
+
+import httpx
+
+from creatorloop import DISCLAIMER, paths
+from creatorloop.config import load_settings
+
+ENV_PATH = paths.home_dir() / ".env"
+
+
+def _get(url: str, params: dict[str, str]) -> dict:
+    resp = httpx.get(url, params=params, timeout=30)
+    body = resp.json()
+    if "error" in body:
+        err = body["error"]
+        sys.exit(f"Graph API error: {err.get('message')} (code={err.get('code')})")
+    return body
+
+
+def _write_env(key: str, value: str, path: Path = ENV_PATH) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = path.read_text(encoding="utf-8").splitlines() if path.exists() else []
+    for i, line in enumerate(lines):
+        if line.split("=", 1)[0].strip() == key:
+            lines[i] = f"{key}={value}"
+            break
+    else:
+        lines.append(f"{key}={value}")
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"  -> saved {key} to {path}")
+
+
+def cmd_exchange(args: argparse.Namespace) -> None:
+    s = load_settings()
+    if not (s.app_id and s.app_secret):
+        sys.exit(f"Set META_APP_ID and META_APP_SECRET in {ENV_PATH} first.")
+    body = _get(
+        f"{s.base_url}/oauth/access_token",
+        {
+            "grant_type": "fb_exchange_token",
+            "client_id": s.app_id,
+            "client_secret": s.app_secret,
+            "fb_exchange_token": args.short_token,
+        },
+    )
+    token = body["access_token"]
+    expires_in = int(body.get("expires_in") or 0)
+    expiry = (datetime.now(UTC) + timedelta(seconds=expires_in)).date() if expires_in else "unknown (~60 days)"
+    print(f"Long-lived token received, expires: {expiry}")
+    if args.write:
+        _write_env("IG_ACCESS_TOKEN", token)
+    else:
+        print(token)
+
+
+def cmd_whoami(args: argparse.Namespace) -> None:
+    s = load_settings()
+    if not s.access_token:
+        sys.exit("IG_ACCESS_TOKEN is empty.")
+    body = _get(
+        f"{s.base_url}/me/accounts",
+        {"fields": "name,instagram_business_account{id,username,followers_count}", "access_token": s.access_token},
+    )
+    found = []
+    for page in body.get("data", []):
+        ig = page.get("instagram_business_account")
+        status = f"IG @{ig['username']} id={ig['id']} followers={ig.get('followers_count')}" if ig else "no IG linked"
+        print(f"Facebook Page '{page.get('name')}': {status}")
+        if ig:
+            found.append(ig["id"])
+    if not found:
+        sys.exit(
+            "No Instagram professional account found. Check that IG is Business/Creator, linked to a Facebook Page, "
+            "and the token has instagram_basic + pages_show_list."
+        )
+    if args.write:
+        _write_env("IG_USER_ID", found[0])
+
+
+def cmd_check(_: argparse.Namespace) -> None:
+    s = load_settings()
+    s.require_credentials()
+    body = _get(f"{s.base_url}/{s.ig_user_id}", {"fields": "username,followers_count", "access_token": s.access_token})
+    print(f"OK: @{body.get('username')} followers={body.get('followers_count')} api={s.api_version}")
+    dbg = _get(f"{s.base_url}/debug_token", {"input_token": s.access_token, "access_token": s.access_token})
+    exp = dbg.get("data", {}).get("expires_at") or 0
+    if exp:
+        left = (datetime.fromtimestamp(exp, UTC) - datetime.now(UTC)).days
+        print(f"Token expires {datetime.fromtimestamp(exp, UTC).date()} ({left} days left)")
+    else:
+        print("Token never expires")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(prog="creatorloop-auth", description=__doc__.split("\n")[0], epilog=DISCLAIMER)
+    sub = parser.add_subparsers(required=True)
+
+    p = sub.add_parser("exchange", help="Exchange short-lived user token for a long-lived (60 days) one")
+    p.add_argument("--short-token", required=True)
+    p.add_argument("--write", action="store_true", help="Save to .env instead of printing")
+    p.set_defaults(func=cmd_exchange)
+
+    p = sub.add_parser("whoami", help="List Facebook Pages and linked Instagram account IDs")
+    p.add_argument("--write", action="store_true", help="Save the first IG_USER_ID to .env")
+    p.set_defaults(func=cmd_whoami)
+
+    p = sub.add_parser("check", help="Verify .env credentials with a test request")
+    p.set_defaults(func=cmd_check)
+
+    args = parser.parse_args()
+    try:
+        args.func(args)
+    except RuntimeError as exc:  # missing settings etc.: show the message, not a traceback
+        sys.exit(f"Error: {exc}")
+    except httpx.HTTPError as exc:
+        sys.exit(f"Network error: {exc}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,28 @@
+{
+  "name": "creatorloop-reel-template",
+  "version": "1.0.0",
+  "description": "Remotion Reel template for creatorloop",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@remotion/bundler": "^4.0.533",
+    "@remotion/cli": "^4.0.533",
+    "@remotion/effects": "4.0.533",
+    "@remotion/layout-utils": "^4.0.533",
+    "@remotion/lottie": "4.0.533",
+    "@remotion/renderer": "^4.0.533",
+    "@remotion/rough-notation": "4.0.533",
+    "@types/react": "^19.3.0",
+    "lottie-web": "5.13.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.533",
+    "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
+  },
+  "private": true
+}

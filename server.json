@@ -1,0 +1,35 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.pandich93/creatorloop",
+  "title": "creatorloop",
+  "description": "Instagram content studio for Claude: analytics, competitors, Reels, publishing queue.",
+  "repository": {
+    "url": "https://github.com/pandich93/creatorloop",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "creatorloop",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "IG_ACCESS_TOKEN",
+          "description": "Instagram Graph API token (long-lived or System User). Can also live in the creatorloop .env file.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "IG_USER_ID",
+          "description": "Instagram professional account ID (not the username).",
+          "isRequired": false,
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}

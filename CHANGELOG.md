@@ -1,0 +1,26 @@
+# Changelog
+
+All notable changes to this project are documented here. The format follows
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
+
+## [Unreleased]
+
+## [0.1.0] - 2026-10-13
+
+First public release.
+
+### Added
+- MCP server with 33 tools for one Instagram professional account via the official Instagram Graph API v26.0:
+  own analytics and content reports, caption insights, audience demographics, competitor analysis and tracking
+  (Business Discovery), viral-post detection, post analysis by URL, hashtag research with a 30-per-week quota guard.
+- Two-step publishing of carousels and Reels (resumable upload for Reels), a publishing queue with fingerprints,
+  24 h / 72 h post reviews, new-comment inbox and replies.
+- `creatorloop-setup`: connects Claude Desktop on Windows (incl. Microsoft Store), macOS and Linux; quits and reopens
+  Claude Desktop on macOS so it does not overwrite the config.
+- `creatorloop-auth`: token exchange, account ID lookup, token check.
+- Per-user home folder (`CREATORLOOP_HOME`) for settings, database and content; system timezone by default.
+- Three MCP prompts: weekly report, competitor brief, data-driven content ideas.
+- `examples/`: a sample carousel, a sample Reel storyboard and a Remotion Reel template with automatic checks.
+
+[Unreleased]: https://github.com/pandich93/creatorloop/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/pandich93/creatorloop/releases/tag/v0.1.0

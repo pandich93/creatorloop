@@ -1,0 +1,3136 @@
+{
+ "sources": {
+  "fluent": {
+   "dir": "emoji",
+   "ext": "webp",
+   "license": "MIT",
+   "title": "Fluent Emoji 3D (Microsoft)",
+   "url": "https://github.com/microsoft/fluentui-emoji"
+  },
+  "3d": {
+   "dir": "3dicons",
+   "ext": "webp",
+   "license": "CC0-1.0",
+   "title": "3dicons (Vijay Verma)",
+   "url": "https://3dicons.co"
+  },
+  "noto": {
+   "dir": "noto",
+   "ext": "json",
+   "license": "CC-BY-4.0",
+   "title": "Animated Noto Emoji (Google)",
+   "url": "https://googlefonts.github.io/noto-emoji-animation/",
+   "attribution": "Animated emoji: Google Noto Emoji (CC BY 4.0)"
+  }
+ },
+ "items": [
+  {
+   "ref": "fluent:1f310",
+   "file": "assets/emoji/1f310.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🌐",
+   "name": "globe with meridians",
+   "animated": false,
+   "uz": [
+    "internet",
+    "sayt",
+    "dunyo"
+   ],
+   "ru": [
+    "интернет",
+    "сайт",
+    "мир"
+   ]
+  },
+  {
+   "ref": "fluent:1f354",
+   "file": "assets/emoji/1f354.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🍔",
+   "name": "hamburger",
+   "animated": false,
+   "uz": [
+    "burger",
+    "fastfud",
+    "kafe"
+   ],
+   "ru": [
+    "бургер",
+    "фастфуд",
+    "кафе"
+   ]
+  },
+  {
+   "ref": "fluent:1f355",
+   "file": "assets/emoji/1f355.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🍕",
+   "name": "slice of pizza",
+   "animated": false,
+   "uz": [
+    "pitsa",
+    "yetkazish",
+    "fastfud"
+   ],
+   "ru": [
+    "пицца",
+    "доставка",
+    "фастфуд"
+   ]
+  },
+  {
+   "ref": "fluent:1f370",
+   "file": "assets/emoji/1f370.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🍰",
+   "name": "shortcake",
+   "animated": false,
+   "uz": [
+    "tort",
+    "shirinlik",
+    "qandolat"
+   ],
+   "ru": [
+    "торт",
+    "десерт",
+    "кондитерская"
+   ]
+  },
+  {
+   "ref": "fluent:1f381",
+   "file": "assets/emoji/1f381.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🎁",
+   "name": "wrapped present",
+   "animated": false,
+   "uz": [
+    "sovgʻa",
+    "bonus",
+    "aksiya"
+   ],
+   "ru": [
+    "подарок",
+    "бонус",
+    "акция"
+   ]
+  },
+  {
+   "ref": "fluent:1f389",
+   "file": "assets/emoji/1f389.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🎉",
+   "name": "party popper",
+   "animated": false,
+   "uz": [
+    "bayram",
+    "gʻalaba",
+    "tabrik"
+   ],
+   "ru": [
+    "праздник",
+    "победа",
+    "поздравление"
+   ]
+  },
+  {
+   "ref": "fluent:1f393",
+   "file": "assets/emoji/1f393.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🎓",
+   "name": "graduation cap",
+   "animated": false,
+   "uz": [
+    "taʼlim",
+    "diplom",
+    "bitiruv"
+   ],
+   "ru": [
+    "образование",
+    "диплом",
+    "выпуск"
+   ]
+  },
+  {
+   "ref": "fluent:1f399-fe0f",
+   "file": "assets/emoji/1f399-fe0f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🎙️",
+   "name": "studio microphone",
+   "animated": false,
+   "uz": [
+    "mikrofon",
+    "podkast",
+    "ovoz"
+   ],
+   "ru": [
+    "микрофон",
+    "подкаст",
+    "голос"
+   ]
+  },
+  {
+   "ref": "fluent:1f3ac",
+   "file": "assets/emoji/1f3ac.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🎬",
+   "name": "clapper board",
+   "animated": false,
+   "uz": [
+    "video",
+    "kino",
+    "montaj"
+   ],
+   "ru": [
+    "видео",
+    "кино",
+    "монтаж"
+   ]
+  },
+  {
+   "ref": "fluent:1f3af",
+   "file": "assets/emoji/1f3af.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🎯",
+   "name": "direct hit",
+   "animated": false,
+   "uz": [
+    "maqsad",
+    "nishon",
+    "aniq"
+   ],
+   "ru": [
+    "цель",
+    "мишень",
+    "точно"
+   ]
+  },
+  {
+   "ref": "fluent:1f3c6",
+   "file": "assets/emoji/1f3c6.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🏆",
+   "name": "trophy",
+   "animated": false,
+   "uz": [
+    "kubok",
+    "gʻolib",
+    "top"
+   ],
+   "ru": [
+    "кубок",
+    "победитель",
+    "топ"
+   ]
+  },
+  {
+   "ref": "fluent:1f3e0",
+   "file": "assets/emoji/1f3e0.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🏠",
+   "name": "house building",
+   "animated": false,
+   "uz": [
+    "uy",
+    "ijara",
+    "koʻchmas mulk"
+   ],
+   "ru": [
+    "дом",
+    "аренда",
+    "недвижимость"
+   ]
+  },
+  {
+   "ref": "fluent:1f3e5",
+   "file": "assets/emoji/1f3e5.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🏥",
+   "name": "hospital",
+   "animated": false,
+   "uz": [
+    "shifoxona",
+    "klinika",
+    "tibbiyot"
+   ],
+   "ru": [
+    "больница",
+    "клиника",
+    "медицина"
+   ]
+  },
+  {
+   "ref": "fluent:1f3e6",
+   "file": "assets/emoji/1f3e6.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🏦",
+   "name": "bank",
+   "animated": false,
+   "uz": [
+    "bank",
+    "moliya"
+   ],
+   "ru": [
+    "банк",
+    "финансы"
+   ]
+  },
+  {
+   "ref": "fluent:1f3ea",
+   "file": "assets/emoji/1f3ea.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🏪",
+   "name": "convenience store",
+   "animated": false,
+   "uz": [
+    "doʻkon",
+    "biznes",
+    "savdo"
+   ],
+   "ru": [
+    "магазин",
+    "бизнес",
+    "торговля"
+   ]
+  },
+  {
+   "ref": "fluent:1f3f7-fe0f",
+   "file": "assets/emoji/1f3f7-fe0f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🏷️",
+   "name": "label",
+   "animated": false,
+   "uz": [
+    "narx",
+    "yorliq",
+    "chegirma"
+   ],
+   "ru": [
+    "цена",
+    "ярлык",
+    "скидка"
+   ]
+  },
+  {
+   "ref": "fluent:1f440",
+   "file": "assets/emoji/1f440.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "👀",
+   "name": "eyes",
+   "animated": false,
+   "uz": [
+    "qarang",
+    "diqqat",
+    "koʻzlar"
+   ],
+   "ru": [
+    "смотри",
+    "внимание",
+    "глаза"
+   ]
+  },
+  {
+   "ref": "fluent:1f44d",
+   "file": "assets/emoji/1f44d.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "👍",
+   "name": "thumbs up sign",
+   "animated": false,
+   "uz": [
+    "like",
+    "yaxshi",
+    "maʼqul"
+   ],
+   "ru": [
+    "лайк",
+    "хорошо",
+    "одобряю"
+   ]
+  },
+  {
+   "ref": "fluent:1f44f",
+   "file": "assets/emoji/1f44f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "👏",
+   "name": "clapping hands sign",
+   "animated": false,
+   "uz": [
+    "qarsak",
+    "olqish",
+    "barakalla"
+   ],
+   "ru": [
+    "аплодисменты",
+    "браво"
+   ]
+  },
+  {
+   "ref": "fluent:1f455",
+   "file": "assets/emoji/1f455.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "👕",
+   "name": "t-shirt",
+   "animated": false,
+   "uz": [
+    "kiyim",
+    "futbolka",
+    "doʻkon"
+   ],
+   "ru": [
+    "одежда",
+    "футболка",
+    "магазин"
+   ]
+  },
+  {
+   "ref": "fluent:1f47e",
+   "file": "assets/emoji/1f47e.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "👾",
+   "name": "alien monster",
+   "animated": false,
+   "uz": [
+    "oʻyin",
+    "geym",
+    "piksel"
+   ],
+   "ru": [
+    "игра",
+    "гейм",
+    "пиксель"
+   ]
+  },
+  {
+   "ref": "fluent:1f484",
+   "file": "assets/emoji/1f484.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💄",
+   "name": "lipstick",
+   "animated": false,
+   "uz": [
+    "kosmetika",
+    "goʻzallik",
+    "lab boʻyogʻi"
+   ],
+   "ru": [
+    "косметика",
+    "красота",
+    "помада"
+   ]
+  },
+  {
+   "ref": "fluent:1f487",
+   "file": "assets/emoji/1f487.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💇",
+   "name": "haircut",
+   "animated": false,
+   "uz": [
+    "salon",
+    "soch turmagi",
+    "goʻzallik"
+   ],
+   "ru": [
+    "салон",
+    "стрижка",
+    "красота"
+   ]
+  },
+  {
+   "ref": "fluent:1f488",
+   "file": "assets/emoji/1f488.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💈",
+   "name": "barber pole",
+   "animated": false,
+   "uz": [
+    "sartarosh",
+    "barber",
+    "navbat"
+   ],
+   "ru": [
+    "барбершоп",
+    "парикмахер",
+    "запись"
+   ]
+  },
+  {
+   "ref": "fluent:1f4a1",
+   "file": "assets/emoji/1f4a1.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💡",
+   "name": "electric light bulb",
+   "animated": false,
+   "uz": [
+    "gʻoya",
+    "fikr",
+    "maslahat"
+   ],
+   "ru": [
+    "идея",
+    "мысль",
+    "совет"
+   ]
+  },
+  {
+   "ref": "fluent:1f4a5",
+   "file": "assets/emoji/1f4a5.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💥",
+   "name": "collision symbol",
+   "animated": false,
+   "uz": [
+    "portlash",
+    "zarba",
+    "boom"
+   ],
+   "ru": [
+    "взрыв",
+    "удар",
+    "бум"
+   ]
+  },
+  {
+   "ref": "fluent:1f4aa",
+   "file": "assets/emoji/1f4aa.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💪",
+   "name": "flexed biceps",
+   "animated": false,
+   "uz": [
+    "kuch",
+    "motivatsiya",
+    "sport"
+   ],
+   "ru": [
+    "сила",
+    "мотивация",
+    "спорт"
+   ]
+  },
+  {
+   "ref": "fluent:1f4ac",
+   "file": "assets/emoji/1f4ac.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💬",
+   "name": "speech balloon",
+   "animated": false,
+   "uz": [
+    "chat",
+    "xabar",
+    "izoh"
+   ],
+   "ru": [
+    "чат",
+    "сообщение",
+    "комментарий"
+   ]
+  },
+  {
+   "ref": "fluent:1f4af",
+   "file": "assets/emoji/1f4af.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💯",
+   "name": "hundred points symbol",
+   "animated": false,
+   "uz": [
+    "100",
+    "aʼlo",
+    "toʻliq"
+   ],
+   "ru": [
+    "100",
+    "отлично",
+    "полностью"
+   ]
+  },
+  {
+   "ref": "fluent:1f4b0",
+   "file": "assets/emoji/1f4b0.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💰",
+   "name": "money bag",
+   "animated": false,
+   "uz": [
+    "pul qopi",
+    "daromad",
+    "foyda"
+   ],
+   "ru": [
+    "мешок денег",
+    "доход",
+    "прибыль"
+   ]
+  },
+  {
+   "ref": "fluent:1f4b3",
+   "file": "assets/emoji/1f4b3.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💳",
+   "name": "credit card",
+   "animated": false,
+   "uz": [
+    "karta",
+    "toʻlov",
+    "Click",
+    "Payme"
+   ],
+   "ru": [
+    "карта",
+    "оплата",
+    "платёж"
+   ]
+  },
+  {
+   "ref": "fluent:1f4b5",
+   "file": "assets/emoji/1f4b5.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💵",
+   "name": "banknote with dollar sign",
+   "animated": false,
+   "uz": [
+    "pul",
+    "dollar",
+    "daromad"
+   ],
+   "ru": [
+    "деньги",
+    "доллар",
+    "доход"
+   ]
+  },
+  {
+   "ref": "fluent:1f4b8",
+   "file": "assets/emoji/1f4b8.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💸",
+   "name": "money with wings",
+   "animated": false,
+   "uz": [
+    "xarajat",
+    "pul ketdi",
+    "toʻlov"
+   ],
+   "ru": [
+    "расход",
+    "траты",
+    "платёж"
+   ]
+  },
+  {
+   "ref": "fluent:1f4bb",
+   "file": "assets/emoji/1f4bb.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💻",
+   "name": "personal computer",
+   "animated": false,
+   "uz": [
+    "noutbuk",
+    "kompyuter",
+    "kod"
+   ],
+   "ru": [
+    "ноутбук",
+    "компьютер",
+    "код"
+   ]
+  },
+  {
+   "ref": "fluent:1f4bc",
+   "file": "assets/emoji/1f4bc.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💼",
+   "name": "briefcase",
+   "animated": false,
+   "uz": [
+    "ish",
+    "portfel",
+    "frilans"
+   ],
+   "ru": [
+    "работа",
+    "портфель",
+    "фриланс"
+   ]
+  },
+  {
+   "ref": "fluent:1f4be",
+   "file": "assets/emoji/1f4be.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "💾",
+   "name": "floppy disk",
+   "animated": false,
+   "uz": [
+    "disk",
+    "saqlash",
+    "maʼlumot"
+   ],
+   "ru": [
+    "дискета",
+    "сохранить",
+    "данные"
+   ]
+  },
+  {
+   "ref": "fluent:1f4c5",
+   "file": "assets/emoji/1f4c5.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📅",
+   "name": "calendar",
+   "animated": false,
+   "uz": [
+    "sana",
+    "jadval",
+    "yozilish"
+   ],
+   "ru": [
+    "дата",
+    "расписание",
+    "запись"
+   ]
+  },
+  {
+   "ref": "fluent:1f4c8",
+   "file": "assets/emoji/1f4c8.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📈",
+   "name": "chart with upwards trend",
+   "animated": false,
+   "uz": [
+    "oʻsish",
+    "grafik",
+    "natija"
+   ],
+   "ru": [
+    "рост",
+    "график",
+    "результат"
+   ]
+  },
+  {
+   "ref": "fluent:1f4c9",
+   "file": "assets/emoji/1f4c9.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📉",
+   "name": "chart with downwards trend",
+   "animated": false,
+   "uz": [
+    "tushish",
+    "zarar",
+    "pasayish"
+   ],
+   "ru": [
+    "падение",
+    "убыток",
+    "снижение"
+   ]
+  },
+  {
+   "ref": "fluent:1f4ca",
+   "file": "assets/emoji/1f4ca.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📊",
+   "name": "bar chart",
+   "animated": false,
+   "uz": [
+    "statistika",
+    "diagramma",
+    "tahlil"
+   ],
+   "ru": [
+    "статистика",
+    "диаграмма",
+    "аналитика"
+   ]
+  },
+  {
+   "ref": "fluent:1f4cb",
+   "file": "assets/emoji/1f4cb.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📋",
+   "name": "clipboard",
+   "animated": false,
+   "uz": [
+    "roʻyxat",
+    "vazifalar",
+    "checklist"
+   ],
+   "ru": [
+    "список",
+    "задачи",
+    "чеклист"
+   ]
+  },
+  {
+   "ref": "fluent:1f4cc",
+   "file": "assets/emoji/1f4cc.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📌",
+   "name": "pushpin",
+   "animated": false,
+   "uz": [
+    "saqlash",
+    "pin",
+    "muhim"
+   ],
+   "ru": [
+    "сохранить",
+    "пин",
+    "важно"
+   ]
+  },
+  {
+   "ref": "fluent:1f4da",
+   "file": "assets/emoji/1f4da.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📚",
+   "name": "books",
+   "animated": false,
+   "uz": [
+    "kitoblar",
+    "oʻqish",
+    "kurs"
+   ],
+   "ru": [
+    "книги",
+    "учёба",
+    "курс"
+   ]
+  },
+  {
+   "ref": "fluent:1f4dd",
+   "file": "assets/emoji/1f4dd.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📝",
+   "name": "memo",
+   "animated": false,
+   "uz": [
+    "yozish",
+    "eslatma",
+    "prompt"
+   ],
+   "ru": [
+    "записать",
+    "заметка",
+    "промпт"
+   ]
+  },
+  {
+   "ref": "fluent:1f4e1",
+   "file": "assets/emoji/1f4e1.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📡",
+   "name": "satellite antenna",
+   "animated": false,
+   "uz": [
+    "signal",
+    "antenna",
+    "internet"
+   ],
+   "ru": [
+    "сигнал",
+    "антенна",
+    "интернет"
+   ]
+  },
+  {
+   "ref": "fluent:1f4e3",
+   "file": "assets/emoji/1f4e3.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📣",
+   "name": "cheering megaphone",
+   "animated": false,
+   "uz": [
+    "eʼlon",
+    "reklama",
+    "karnay"
+   ],
+   "ru": [
+    "объявление",
+    "реклама",
+    "рупор"
+   ]
+  },
+  {
+   "ref": "fluent:1f4e6",
+   "file": "assets/emoji/1f4e6.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📦",
+   "name": "package",
+   "animated": false,
+   "uz": [
+    "quti",
+    "yetkazish",
+    "buyurtma"
+   ],
+   "ru": [
+    "коробка",
+    "доставка",
+    "заказ"
+   ]
+  },
+  {
+   "ref": "fluent:1f4e7",
+   "file": "assets/emoji/1f4e7.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📧",
+   "name": "e-mail symbol",
+   "animated": false,
+   "uz": [
+    "email",
+    "pochta",
+    "xat"
+   ],
+   "ru": [
+    "почта",
+    "имейл",
+    "письмо"
+   ]
+  },
+  {
+   "ref": "fluent:1f4f1",
+   "file": "assets/emoji/1f4f1.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📱",
+   "name": "mobile phone",
+   "animated": false,
+   "uz": [
+    "telefon",
+    "smartfon",
+    "mobil"
+   ],
+   "ru": [
+    "телефон",
+    "смартфон",
+    "мобильный"
+   ]
+  },
+  {
+   "ref": "fluent:1f4f2",
+   "file": "assets/emoji/1f4f2.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "📲",
+   "name": "mobile phone with rightwards arrow at left",
+   "animated": false,
+   "uz": [
+    "telefonga xabar",
+    "push",
+    "ilova"
+   ],
+   "ru": [
+    "уведомление на телефон",
+    "пуш",
+    "приложение"
+   ]
+  },
+  {
+   "ref": "fluent:1f50b",
+   "file": "assets/emoji/1f50b.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🔋",
+   "name": "battery",
+   "animated": false,
+   "uz": [
+    "batareya",
+    "quvvat"
+   ],
+   "ru": [
+    "батарея",
+    "заряд"
+   ]
+  },
+  {
+   "ref": "fluent:1f50d",
+   "file": "assets/emoji/1f50d.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🔍",
+   "name": "left-pointing magnifying glass",
+   "animated": false,
+   "uz": [
+    "qidiruv",
+    "tekshirish",
+    "lupa"
+   ],
+   "ru": [
+    "поиск",
+    "проверка",
+    "лупа"
+   ]
+  },
+  {
+   "ref": "fluent:1f510",
+   "file": "assets/emoji/1f510.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🔐",
+   "name": "closed lock with key",
+   "animated": false,
+   "uz": [
+    "xavfsizlik",
+    "qulf",
+    "kalit"
+   ],
+   "ru": [
+    "безопасность",
+    "замок",
+    "ключ"
+   ]
+  },
+  {
+   "ref": "fluent:1f511",
+   "file": "assets/emoji/1f511.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🔑",
+   "name": "key",
+   "animated": false,
+   "uz": [
+    "kalit",
+    "parol",
+    "API"
+   ],
+   "ru": [
+    "ключ",
+    "пароль",
+    "API"
+   ]
+  },
+  {
+   "ref": "fluent:1f512",
+   "file": "assets/emoji/1f512.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🔒",
+   "name": "lock",
+   "animated": false,
+   "uz": [
+    "qulf",
+    "yopiq",
+    "maxfiy"
+   ],
+   "ru": [
+    "замок",
+    "закрыто",
+    "секретно"
+   ]
+  },
+  {
+   "ref": "fluent:1f514",
+   "file": "assets/emoji/1f514.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🔔",
+   "name": "bell",
+   "animated": false,
+   "uz": [
+    "qoʻngʻiroq",
+    "bildirishnoma",
+    "obuna"
+   ],
+   "ru": [
+    "колокольчик",
+    "уведомление",
+    "подписка"
+   ]
+  },
+  {
+   "ref": "fluent:1f525",
+   "file": "assets/emoji/1f525.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🔥",
+   "name": "fire",
+   "animated": false,
+   "uz": [
+    "olov",
+    "zoʻr",
+    "trend"
+   ],
+   "ru": [
+    "огонь",
+    "круто",
+    "тренд"
+   ]
+  },
+  {
+   "ref": "fluent:1f5a5-fe0f",
+   "file": "assets/emoji/1f5a5-fe0f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🖥️",
+   "name": "desktop computer",
+   "animated": false,
+   "uz": [
+    "monitor",
+    "kompyuter",
+    "ekran"
+   ],
+   "ru": [
+    "монитор",
+    "компьютер",
+    "экран"
+   ]
+  },
+  {
+   "ref": "fluent:1f5d3-fe0f",
+   "file": "assets/emoji/1f5d3-fe0f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🗓️",
+   "name": "spiral calendar pad",
+   "animated": false,
+   "uz": [
+    "kalendar",
+    "reja",
+    "sana"
+   ],
+   "ru": [
+    "календарь",
+    "план",
+    "дата"
+   ]
+  },
+  {
+   "ref": "fluent:1f60d",
+   "file": "assets/emoji/1f60d.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "😍",
+   "name": "smiling face with heart-shaped eyes",
+   "animated": false,
+   "uz": [
+    "yoqdi",
+    "sevgi",
+    "ajoyib"
+   ],
+   "ru": [
+    "нравится",
+    "любовь",
+    "восторг"
+   ]
+  },
+  {
+   "ref": "fluent:1f60e",
+   "file": "assets/emoji/1f60e.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "😎",
+   "name": "smiling face with sunglasses",
+   "animated": false,
+   "uz": [
+    "zoʻr",
+    "ishonch",
+    "koʻzoynak"
+   ],
+   "ru": [
+    "круто",
+    "уверенность",
+    "очки"
+   ]
+  },
+  {
+   "ref": "fluent:1f631",
+   "file": "assets/emoji/1f631.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "😱",
+   "name": "face screaming in fear",
+   "animated": false,
+   "uz": [
+    "qoʻrquv",
+    "dahshat",
+    "xato"
+   ],
+   "ru": [
+    "страх",
+    "ужас",
+    "ошибка"
+   ]
+  },
+  {
+   "ref": "fluent:1f680",
+   "file": "assets/emoji/1f680.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🚀",
+   "name": "rocket",
+   "animated": false,
+   "uz": [
+    "raketa",
+    "start",
+    "ishga tushirish"
+   ],
+   "ru": [
+    "ракета",
+    "старт",
+    "запуск"
+   ]
+  },
+  {
+   "ref": "fluent:1f697",
+   "file": "assets/emoji/1f697.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🚗",
+   "name": "automobile",
+   "animated": false,
+   "uz": [
+    "mashina",
+    "avto",
+    "taksi"
+   ],
+   "ru": [
+    "машина",
+    "авто",
+    "такси"
+   ]
+  },
+  {
+   "ref": "fluent:1f69a",
+   "file": "assets/emoji/1f69a.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🚚",
+   "name": "delivery truck",
+   "animated": false,
+   "uz": [
+    "yuk mashinasi",
+    "yetkazib berish"
+   ],
+   "ru": [
+    "грузовик",
+    "доставка"
+   ]
+  },
+  {
+   "ref": "fluent:1f6a8",
+   "file": "assets/emoji/1f6a8.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🚨",
+   "name": "police cars revolving light",
+   "animated": false,
+   "uz": [
+    "sirena",
+    "ogohlantirish",
+    "xavf"
+   ],
+   "ru": [
+    "сирена",
+    "тревога",
+    "опасность"
+   ]
+  },
+  {
+   "ref": "fluent:1f6d2",
+   "file": "assets/emoji/1f6d2.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🛒",
+   "name": "shopping trolley",
+   "animated": false,
+   "uz": [
+    "savat",
+    "xarid",
+    "onlayn doʻkon"
+   ],
+   "ru": [
+    "корзина",
+    "покупка",
+    "интернет-магазин"
+   ]
+  },
+  {
+   "ref": "fluent:1f6e0-fe0f",
+   "file": "assets/emoji/1f6e0-fe0f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🛠️",
+   "name": "hammer and wrench",
+   "animated": false,
+   "uz": [
+    "asboblar",
+    "sozlash",
+    "loyiha"
+   ],
+   "ru": [
+    "инструменты",
+    "настройка",
+    "проект"
+   ]
+  },
+  {
+   "ref": "fluent:1f6e1-fe0f",
+   "file": "assets/emoji/1f6e1-fe0f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🛡️",
+   "name": "shield",
+   "animated": false,
+   "uz": [
+    "himoya",
+    "qalqon",
+    "xavfsizlik"
+   ],
+   "ru": [
+    "защита",
+    "щит",
+    "безопасность"
+   ]
+  },
+  {
+   "ref": "fluent:1f914",
+   "file": "assets/emoji/1f914.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🤔",
+   "name": "thinking face",
+   "animated": false,
+   "uz": [
+    "oʻylash",
+    "savol",
+    "shubha"
+   ],
+   "ru": [
+    "думаю",
+    "вопрос",
+    "сомнение"
+   ]
+  },
+  {
+   "ref": "fluent:1f916",
+   "file": "assets/emoji/1f916.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🤖",
+   "name": "robot face",
+   "animated": false,
+   "uz": [
+    "robot",
+    "bot",
+    "AI"
+   ],
+   "ru": [
+    "робот",
+    "бот",
+    "ИИ"
+   ]
+  },
+  {
+   "ref": "fluent:1f91d",
+   "file": "assets/emoji/1f91d.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🤝",
+   "name": "handshake",
+   "animated": false,
+   "uz": [
+    "kelishuv",
+    "mijoz",
+    "hamkorlik"
+   ],
+   "ru": [
+    "сделка",
+    "клиент",
+    "партнёрство"
+   ]
+  },
+  {
+   "ref": "fluent:1f92f",
+   "file": "assets/emoji/1f92f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🤯",
+   "name": "shocked face with exploding head",
+   "animated": false,
+   "uz": [
+    "hayrat",
+    "portlash",
+    "voy"
+   ],
+   "ru": [
+    "шок",
+    "взрыв мозга",
+    "вау"
+   ]
+  },
+  {
+   "ref": "fluent:1f950",
+   "file": "assets/emoji/1f950.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🥐",
+   "name": "croissant",
+   "animated": false,
+   "uz": [
+    "kruassan",
+    "nonvoyxona",
+    "nonushta"
+   ],
+   "ru": [
+    "круассан",
+    "пекарня",
+    "завтрак"
+   ]
+  },
+  {
+   "ref": "fluent:1f973",
+   "file": "assets/emoji/1f973.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🥳",
+   "name": "face with party horn and party hat",
+   "animated": false,
+   "uz": [
+    "bayram",
+    "tugʻilgan kun",
+    "xursandlik"
+   ],
+   "ru": [
+    "праздник",
+    "день рождения",
+    "радость"
+   ]
+  },
+  {
+   "ref": "fluent:1f9b7",
+   "file": "assets/emoji/1f9b7.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🦷",
+   "name": "tooth",
+   "animated": false,
+   "uz": [
+    "tish",
+    "stomatolog",
+    "klinika"
+   ],
+   "ru": [
+    "зуб",
+    "стоматолог",
+    "клиника"
+   ]
+  },
+  {
+   "ref": "fluent:1f9cb",
+   "file": "assets/emoji/1f9cb.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🧋",
+   "name": "bubble tea",
+   "animated": false,
+   "uz": [
+    "bubble tea",
+    "ichimlik",
+    "choy"
+   ],
+   "ru": [
+    "бабл-ти",
+    "напиток",
+    "чай"
+   ]
+  },
+  {
+   "ref": "fluent:1f9e0",
+   "file": "assets/emoji/1f9e0.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🧠",
+   "name": "brain",
+   "animated": false,
+   "uz": [
+    "miya",
+    "aql",
+    "AI"
+   ],
+   "ru": [
+    "мозг",
+    "ум",
+    "ИИ"
+   ]
+  },
+  {
+   "ref": "fluent:1f9e9",
+   "file": "assets/emoji/1f9e9.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🧩",
+   "name": "jigsaw puzzle piece",
+   "animated": false,
+   "uz": [
+    "pazl",
+    "integratsiya",
+    "qism"
+   ],
+   "ru": [
+    "пазл",
+    "интеграция",
+    "часть"
+   ]
+  },
+  {
+   "ref": "fluent:1f9fe",
+   "file": "assets/emoji/1f9fe.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🧾",
+   "name": "receipt",
+   "animated": false,
+   "uz": [
+    "chek",
+    "hisob",
+    "obuna"
+   ],
+   "ru": [
+    "чек",
+    "счёт",
+    "подписка"
+   ]
+  },
+  {
+   "ref": "fluent:1fa99",
+   "file": "assets/emoji/1fa99.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "🪙",
+   "name": "coin",
+   "animated": false,
+   "uz": [
+    "tanga",
+    "kripto",
+    "tejash"
+   ],
+   "ru": [
+    "монета",
+    "крипта",
+    "экономия"
+   ]
+  },
+  {
+   "ref": "fluent:231a",
+   "file": "assets/emoji/231a.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "⌚",
+   "name": "watch",
+   "animated": false,
+   "uz": [
+    "soat",
+    "vaqt",
+    "smart soat"
+   ],
+   "ru": [
+    "часы",
+    "время",
+    "смарт-часы"
+   ]
+  },
+  {
+   "ref": "fluent:2328-fe0f",
+   "file": "assets/emoji/2328-fe0f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "⌨️",
+   "name": "keyboard",
+   "animated": false,
+   "uz": [
+    "klaviatura",
+    "yozish",
+    "kod"
+   ],
+   "ru": [
+    "клавиатура",
+    "печать",
+    "код"
+   ]
+  },
+  {
+   "ref": "fluent:23f0",
+   "file": "assets/emoji/23f0.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "⏰",
+   "name": "alarm clock",
+   "animated": false,
+   "uz": [
+    "budilnik",
+    "eslatma",
+    "vaqt"
+   ],
+   "ru": [
+    "будильник",
+    "напоминание",
+    "время"
+   ]
+  },
+  {
+   "ref": "fluent:23f3",
+   "file": "assets/emoji/23f3.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "⏳",
+   "name": "hourglass with flowing sand",
+   "animated": false,
+   "uz": [
+    "kutish",
+    "jarayon",
+    "vaqt"
+   ],
+   "ru": [
+    "ожидание",
+    "процесс",
+    "время"
+   ]
+  },
+  {
+   "ref": "fluent:2601-fe0f",
+   "file": "assets/emoji/2601-fe0f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "☁️",
+   "name": "cloud",
+   "animated": false,
+   "uz": [
+    "bulut",
+    "server",
+    "hosting"
+   ],
+   "ru": [
+    "облако",
+    "сервер",
+    "хостинг"
+   ]
+  },
+  {
+   "ref": "fluent:2615",
+   "file": "assets/emoji/2615.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "☕",
+   "name": "hot beverage",
+   "animated": false,
+   "uz": [
+    "kofe",
+    "kafe",
+    "kapuchino"
+   ],
+   "ru": [
+    "кофе",
+    "кафе",
+    "капучино"
+   ]
+  },
+  {
+   "ref": "fluent:2699-fe0f",
+   "file": "assets/emoji/2699-fe0f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "⚙️",
+   "name": "gear",
+   "animated": false,
+   "uz": [
+    "sozlamalar",
+    "avtomatlashtirish",
+    "mexanizm"
+   ],
+   "ru": [
+    "настройки",
+    "автоматизация",
+    "механизм"
+   ]
+  },
+  {
+   "ref": "fluent:26a0-fe0f",
+   "file": "assets/emoji/26a0-fe0f.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "⚠️",
+   "name": "warning sign",
+   "animated": false,
+   "uz": [
+    "ogohlantirish",
+    "xavf",
+    "diqqat"
+   ],
+   "ru": [
+    "предупреждение",
+    "опасность",
+    "внимание"
+   ]
+  },
+  {
+   "ref": "fluent:26a1",
+   "file": "assets/emoji/26a1.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "⚡",
+   "name": "high voltage sign",
+   "animated": false,
+   "uz": [
+    "tez",
+    "energiya",
+    "chaqmoq"
+   ],
+   "ru": [
+    "быстро",
+    "энергия",
+    "молния"
+   ]
+  },
+  {
+   "ref": "fluent:2705",
+   "file": "assets/emoji/2705.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "✅",
+   "name": "white heavy check mark",
+   "animated": false,
+   "uz": [
+    "tayyor",
+    "bajarildi",
+    "toʻgʻri"
+   ],
+   "ru": [
+    "готово",
+    "выполнено",
+    "верно"
+   ]
+  },
+  {
+   "ref": "fluent:2728",
+   "file": "assets/emoji/2728.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "✨",
+   "name": "sparkles",
+   "animated": false,
+   "uz": [
+    "yaltiroq",
+    "sehr",
+    "yangi"
+   ],
+   "ru": [
+    "блёстки",
+    "магия",
+    "новое"
+   ]
+  },
+  {
+   "ref": "fluent:274c",
+   "file": "assets/emoji/274c.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "❌",
+   "name": "cross mark",
+   "animated": false,
+   "uz": [
+    "xato",
+    "notoʻgʻri",
+    "yoʻq"
+   ],
+   "ru": [
+    "ошибка",
+    "неверно",
+    "нет"
+   ]
+  },
+  {
+   "ref": "fluent:2b50",
+   "file": "assets/emoji/2b50.webp",
+   "source": "Fluent Emoji 3D (Microsoft)",
+   "license": "MIT",
+   "char": "⭐",
+   "name": "white medium star",
+   "animated": false,
+   "uz": [
+    "yulduz",
+    "reyting",
+    "sevimli"
+   ],
+   "ru": [
+    "звезда",
+    "рейтинг",
+    "избранное"
+   ]
+  },
+  {
+   "ref": "3d:3d-coin",
+   "file": "assets/3dicons/3d-coin.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "3d coin",
+   "animated": false,
+   "uz": [
+    "tanga",
+    "ball",
+    "bonus"
+   ],
+   "ru": [
+    "монета",
+    "баллы",
+    "бонус"
+   ]
+  },
+  {
+   "ref": "3d:bag",
+   "file": "assets/3dicons/bag.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "bag",
+   "animated": false,
+   "uz": [
+    "xarid sumkasi",
+    "doʻkon",
+    "savdo"
+   ],
+   "ru": [
+    "пакет покупок",
+    "магазин",
+    "шопинг"
+   ]
+  },
+  {
+   "ref": "3d:bell",
+   "file": "assets/3dicons/bell.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "bell",
+   "animated": false,
+   "uz": [
+    "qoʻngʻiroq",
+    "bildirishnoma"
+   ],
+   "ru": [
+    "колокольчик",
+    "уведомление"
+   ]
+  },
+  {
+   "ref": "3d:bookmark",
+   "file": "assets/3dicons/bookmark.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "bookmark",
+   "animated": false,
+   "uz": [
+    "saqlash",
+    "xatchoʻp"
+   ],
+   "ru": [
+    "закладка",
+    "сохранить"
+   ]
+  },
+  {
+   "ref": "3d:bulb",
+   "file": "assets/3dicons/bulb.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "bulb",
+   "animated": false,
+   "uz": [
+    "gʻoya",
+    "lampochka"
+   ],
+   "ru": [
+    "идея",
+    "лампочка"
+   ]
+  },
+  {
+   "ref": "3d:calculator",
+   "file": "assets/3dicons/calculator.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "calculator",
+   "animated": false,
+   "uz": [
+    "kalkulyator",
+    "hisob",
+    "xarajat"
+   ],
+   "ru": [
+    "калькулятор",
+    "расчёт",
+    "расходы"
+   ]
+  },
+  {
+   "ref": "3d:calendar",
+   "file": "assets/3dicons/calendar.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "calendar",
+   "animated": false,
+   "uz": [
+    "kalendar",
+    "sana",
+    "31"
+   ],
+   "ru": [
+    "календарь",
+    "дата",
+    "31"
+   ]
+  },
+  {
+   "ref": "3d:call-ringing",
+   "file": "assets/3dicons/call-ringing.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "call ringing",
+   "animated": false,
+   "uz": [
+    "qoʻngʻiroq",
+    "telefon",
+    "mijoz"
+   ],
+   "ru": [
+    "звонок",
+    "телефон",
+    "клиент"
+   ]
+  },
+  {
+   "ref": "3d:camera",
+   "file": "assets/3dicons/camera.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "camera",
+   "animated": false,
+   "uz": [
+    "kamera",
+    "foto",
+    "kontent"
+   ],
+   "ru": [
+    "камера",
+    "фото",
+    "контент"
+   ]
+  },
+  {
+   "ref": "3d:chart",
+   "file": "assets/3dicons/chart.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "chart",
+   "animated": false,
+   "uz": [
+    "diagramma",
+    "ulush",
+    "tahlil"
+   ],
+   "ru": [
+    "диаграмма",
+    "доля",
+    "аналитика"
+   ]
+  },
+  {
+   "ref": "3d:chat-bubble",
+   "file": "assets/3dicons/chat-bubble.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "chat bubble",
+   "animated": false,
+   "uz": [
+    "chat",
+    "xabar",
+    "dialog"
+   ],
+   "ru": [
+    "чат",
+    "сообщения",
+    "диалог"
+   ]
+  },
+  {
+   "ref": "3d:chat-text",
+   "file": "assets/3dicons/chat-text.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "chat text",
+   "animated": false,
+   "uz": [
+    "xabar matni",
+    "javob",
+    "bot"
+   ],
+   "ru": [
+    "текст сообщения",
+    "ответ",
+    "бот"
+   ]
+  },
+  {
+   "ref": "3d:chat",
+   "file": "assets/3dicons/chat.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "chat",
+   "animated": false,
+   "uz": [
+    "chat",
+    "xabar"
+   ],
+   "ru": [
+    "чат",
+    "сообщение"
+   ]
+  },
+  {
+   "ref": "3d:clock",
+   "file": "assets/3dicons/clock.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "clock",
+   "animated": false,
+   "uz": [
+    "budilnik",
+    "vaqt",
+    "eslatma"
+   ],
+   "ru": [
+    "будильник",
+    "время",
+    "напоминание"
+   ]
+  },
+  {
+   "ref": "3d:computer",
+   "file": "assets/3dicons/computer.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "computer",
+   "animated": false,
+   "uz": [
+    "monitor",
+    "kompyuter"
+   ],
+   "ru": [
+    "монитор",
+    "компьютер"
+   ]
+  },
+  {
+   "ref": "3d:credit-card",
+   "file": "assets/3dicons/credit-card.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "credit card",
+   "animated": false,
+   "uz": [
+    "karta",
+    "toʻlov",
+    "bank"
+   ],
+   "ru": [
+    "карта",
+    "оплата",
+    "банк"
+   ]
+  },
+  {
+   "ref": "3d:dollar",
+   "file": "assets/3dicons/dollar.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "dollar",
+   "animated": false,
+   "uz": [
+    "dollar",
+    "tanga",
+    "kurs"
+   ],
+   "ru": [
+    "доллар",
+    "монета",
+    "курс"
+   ]
+  },
+  {
+   "ref": "3d:file-text",
+   "file": "assets/3dicons/file-text.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "file text",
+   "animated": false,
+   "uz": [
+    "hujjat",
+    "matn",
+    "prompt"
+   ],
+   "ru": [
+    "документ",
+    "текст",
+    "промпт"
+   ]
+  },
+  {
+   "ref": "3d:file",
+   "file": "assets/3dicons/file.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "file",
+   "animated": false,
+   "uz": [
+    "fayl",
+    "hujjat"
+   ],
+   "ru": [
+    "файл",
+    "документ"
+   ]
+  },
+  {
+   "ref": "3d:fire",
+   "file": "assets/3dicons/fire.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "fire",
+   "animated": false,
+   "uz": [
+    "olov",
+    "trend",
+    "zoʻr"
+   ],
+   "ru": [
+    "огонь",
+    "тренд",
+    "круто"
+   ]
+  },
+  {
+   "ref": "3d:flash",
+   "file": "assets/3dicons/flash.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "flash",
+   "animated": false,
+   "uz": [
+    "chaqmoq",
+    "tez",
+    "energiya"
+   ],
+   "ru": [
+    "молния",
+    "быстро",
+    "энергия"
+   ]
+  },
+  {
+   "ref": "3d:folder",
+   "file": "assets/3dicons/folder.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "folder",
+   "animated": false,
+   "uz": [
+    "papka",
+    "fayllar",
+    "loyiha"
+   ],
+   "ru": [
+    "папка",
+    "файлы",
+    "проект"
+   ]
+  },
+  {
+   "ref": "3d:gift-box",
+   "file": "assets/3dicons/gift-box.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "gift box",
+   "animated": false,
+   "uz": [
+    "sovgʻa",
+    "bonus",
+    "aksiya"
+   ],
+   "ru": [
+    "подарок",
+    "бонус",
+    "акция"
+   ]
+  },
+  {
+   "ref": "3d:headphone",
+   "file": "assets/3dicons/headphone.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "headphone",
+   "animated": false,
+   "uz": [
+    "quloqchin",
+    "podkast",
+    "musiqa"
+   ],
+   "ru": [
+    "наушники",
+    "подкаст",
+    "музыка"
+   ]
+  },
+  {
+   "ref": "3d:heart",
+   "file": "assets/3dicons/heart.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "heart",
+   "animated": false,
+   "uz": [
+    "yurak",
+    "like",
+    "sevimli"
+   ],
+   "ru": [
+    "сердце",
+    "лайк",
+    "любимое"
+   ]
+  },
+  {
+   "ref": "3d:key",
+   "file": "assets/3dicons/key.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "key",
+   "animated": false,
+   "uz": [
+    "kalit",
+    "parol",
+    "API"
+   ],
+   "ru": [
+    "ключ",
+    "пароль",
+    "API"
+   ]
+  },
+  {
+   "ref": "3d:location",
+   "file": "assets/3dicons/location.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "location",
+   "animated": false,
+   "uz": [
+    "navigatsiya",
+    "yoʻnalish",
+    "strelka"
+   ],
+   "ru": [
+    "навигация",
+    "направление",
+    "стрелка"
+   ]
+  },
+  {
+   "ref": "3d:lock",
+   "file": "assets/3dicons/lock.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "lock",
+   "animated": false,
+   "uz": [
+    "qulf",
+    "xavfsizlik"
+   ],
+   "ru": [
+    "замок",
+    "безопасность"
+   ]
+  },
+  {
+   "ref": "3d:mail",
+   "file": "assets/3dicons/mail.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "mail",
+   "animated": false,
+   "uz": [
+    "xat",
+    "email",
+    "konvert"
+   ],
+   "ru": [
+    "письмо",
+    "почта",
+    "конверт"
+   ]
+  },
+  {
+   "ref": "3d:map-pin",
+   "file": "assets/3dicons/map-pin.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "map pin",
+   "animated": false,
+   "uz": [
+    "manzil",
+    "xarita",
+    "joylashuv"
+   ],
+   "ru": [
+    "адрес",
+    "карта",
+    "геометка"
+   ]
+  },
+  {
+   "ref": "3d:megaphone",
+   "file": "assets/3dicons/megaphone.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "megaphone",
+   "animated": false,
+   "uz": [
+    "eʼlon",
+    "reklama",
+    "karnay"
+   ],
+   "ru": [
+    "объявление",
+    "реклама",
+    "рупор"
+   ]
+  },
+  {
+   "ref": "3d:message",
+   "file": "assets/3dicons/message.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "message",
+   "animated": false,
+   "uz": [
+    "xabar",
+    "SMS",
+    "chat"
+   ],
+   "ru": [
+    "сообщение",
+    "СМС",
+    "чат"
+   ]
+  },
+  {
+   "ref": "3d:mic",
+   "file": "assets/3dicons/mic.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "mic",
+   "animated": false,
+   "uz": [
+    "mikrofon",
+    "ovoz",
+    "podkast"
+   ],
+   "ru": [
+    "микрофон",
+    "голос",
+    "подкаст"
+   ]
+  },
+  {
+   "ref": "3d:mobile",
+   "file": "assets/3dicons/mobile.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "mobile",
+   "animated": false,
+   "uz": [
+    "telefon",
+    "smartfon",
+    "ilova"
+   ],
+   "ru": [
+    "телефон",
+    "смартфон",
+    "приложение"
+   ]
+  },
+  {
+   "ref": "3d:money-bag",
+   "file": "assets/3dicons/money-bag.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "money bag",
+   "animated": false,
+   "uz": [
+    "qop",
+    "sovgʻa qopi"
+   ],
+   "ru": [
+    "мешок",
+    "мешок с подарком"
+   ]
+  },
+  {
+   "ref": "3d:money",
+   "file": "assets/3dicons/money.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "money",
+   "animated": false,
+   "uz": [
+    "pul",
+    "banknota",
+    "daromad"
+   ],
+   "ru": [
+    "деньги",
+    "купюры",
+    "доход"
+   ]
+  },
+  {
+   "ref": "3d:picture",
+   "file": "assets/3dicons/picture.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "picture",
+   "animated": false,
+   "uz": [
+    "rasm",
+    "galereya",
+    "kontent"
+   ],
+   "ru": [
+    "картинка",
+    "галерея",
+    "контент"
+   ]
+  },
+  {
+   "ref": "3d:play",
+   "file": "assets/3dicons/play.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "play",
+   "animated": false,
+   "uz": [
+    "video",
+    "play",
+    "koʻrish"
+   ],
+   "ru": [
+    "видео",
+    "плей",
+    "смотреть"
+   ]
+  },
+  {
+   "ref": "3d:puzzle",
+   "file": "assets/3dicons/puzzle.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "puzzle",
+   "animated": false,
+   "uz": [
+    "pazl",
+    "integratsiya"
+   ],
+   "ru": [
+    "пазл",
+    "интеграция"
+   ]
+  },
+  {
+   "ref": "3d:rocket",
+   "file": "assets/3dicons/rocket.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "rocket",
+   "animated": false,
+   "uz": [
+    "raketa",
+    "start",
+    "oʻsish"
+   ],
+   "ru": [
+    "ракета",
+    "старт",
+    "рост"
+   ]
+  },
+  {
+   "ref": "3d:setting",
+   "file": "assets/3dicons/setting.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "setting",
+   "animated": false,
+   "uz": [
+    "sozlamalar",
+    "avtomatlashtirish"
+   ],
+   "ru": [
+    "настройки",
+    "автоматизация"
+   ]
+  },
+  {
+   "ref": "3d:shield",
+   "file": "assets/3dicons/shield.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "shield",
+   "animated": false,
+   "uz": [
+    "himoya",
+    "xavfsizlik",
+    "tasdiq"
+   ],
+   "ru": [
+    "защита",
+    "безопасность",
+    "проверено"
+   ]
+  },
+  {
+   "ref": "3d:star",
+   "file": "assets/3dicons/star.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "star",
+   "animated": false,
+   "uz": [
+    "yulduz",
+    "reyting",
+    "sharh"
+   ],
+   "ru": [
+    "звезда",
+    "рейтинг",
+    "отзыв"
+   ]
+  },
+  {
+   "ref": "3d:takeaway-cup",
+   "file": "assets/3dicons/takeaway-cup.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "takeaway cup",
+   "animated": false,
+   "uz": [
+    "kofe",
+    "olib ketish",
+    "kafe"
+   ],
+   "ru": [
+    "кофе с собой",
+    "кафе"
+   ]
+  },
+  {
+   "ref": "3d:target",
+   "file": "assets/3dicons/target.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "target",
+   "animated": false,
+   "uz": [
+    "maqsad",
+    "nishon"
+   ],
+   "ru": [
+    "цель",
+    "мишень"
+   ]
+  },
+  {
+   "ref": "3d:tea-cup",
+   "file": "assets/3dicons/tea-cup.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "tea cup",
+   "animated": false,
+   "uz": [
+    "choy",
+    "kofe",
+    "kafe"
+   ],
+   "ru": [
+    "чай",
+    "кофе",
+    "кафе"
+   ]
+  },
+  {
+   "ref": "3d:thumb-up",
+   "file": "assets/3dicons/thumb-up.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "thumb up",
+   "animated": false,
+   "uz": [
+    "like",
+    "maʼqul",
+    "yaxshi"
+   ],
+   "ru": [
+    "лайк",
+    "одобряю",
+    "хорошо"
+   ]
+  },
+  {
+   "ref": "3d:tick",
+   "file": "assets/3dicons/tick.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "tick",
+   "animated": false,
+   "uz": [
+    "tayyor",
+    "toʻgʻri",
+    "bajarildi"
+   ],
+   "ru": [
+    "готово",
+    "верно",
+    "выполнено"
+   ]
+  },
+  {
+   "ref": "3d:tools",
+   "file": "assets/3dicons/tools.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "tools",
+   "animated": false,
+   "uz": [
+    "asboblar",
+    "taʼmirlash",
+    "sozlash"
+   ],
+   "ru": [
+    "инструменты",
+    "ремонт",
+    "настройка"
+   ]
+  },
+  {
+   "ref": "3d:trophy",
+   "file": "assets/3dicons/trophy.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "trophy",
+   "animated": false,
+   "uz": [
+    "kubok",
+    "gʻolib"
+   ],
+   "ru": [
+    "кубок",
+    "победитель"
+   ]
+  },
+  {
+   "ref": "3d:video-cam",
+   "file": "assets/3dicons/video-cam.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "video cam",
+   "animated": false,
+   "uz": [
+    "videokamera",
+    "montaj",
+    "kontent"
+   ],
+   "ru": [
+    "видеокамера",
+    "съёмка",
+    "контент"
+   ]
+  },
+  {
+   "ref": "3d:wallet",
+   "file": "assets/3dicons/wallet.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "wallet",
+   "animated": false,
+   "uz": [
+    "hamyon",
+    "pul",
+    "tejash"
+   ],
+   "ru": [
+    "кошелёк",
+    "деньги",
+    "экономия"
+   ]
+  },
+  {
+   "ref": "3d:wifi",
+   "file": "assets/3dicons/wifi.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "wifi",
+   "animated": false,
+   "uz": [
+    "wifi",
+    "internet",
+    "aloqa"
+   ],
+   "ru": [
+    "вайфай",
+    "интернет",
+    "связь"
+   ]
+  },
+  {
+   "ref": "3d:zoom",
+   "file": "assets/3dicons/zoom.webp",
+   "source": "3dicons (Vijay Verma)",
+   "license": "CC0-1.0",
+   "char": "",
+   "name": "zoom",
+   "animated": false,
+   "uz": [
+    "qidiruv",
+    "lupa",
+    "tekshirish"
+   ],
+   "ru": [
+    "поиск",
+    "лупа",
+    "проверка"
+   ]
+  },
+  {
+   "ref": "noto:1f389",
+   "file": "assets/noto/1f389.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "🎉",
+   "name": "party popper",
+   "animated": true,
+   "uz": [
+    "bayram",
+    "tabrik",
+    "gʻalaba (anim)"
+   ],
+   "ru": [
+    "праздник",
+    "поздравление (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f440",
+   "file": "assets/noto/1f440.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "👀",
+   "name": "eyes",
+   "animated": true,
+   "uz": [
+    "qarang",
+    "diqqat (anim)"
+   ],
+   "ru": [
+    "смотри",
+    "внимание (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f44d",
+   "file": "assets/noto/1f44d.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "👍",
+   "name": "thumbs up sign",
+   "animated": true,
+   "uz": [
+    "like",
+    "maʼqul (anim)"
+   ],
+   "ru": [
+    "лайк",
+    "одобряю (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f44f",
+   "file": "assets/noto/1f44f.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "👏",
+   "name": "clapping hands sign",
+   "animated": true,
+   "uz": [
+    "qarsak",
+    "barakalla (anim)"
+   ],
+   "ru": [
+    "аплодисменты (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f4a1",
+   "file": "assets/noto/1f4a1.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "💡",
+   "name": "electric light bulb",
+   "animated": true,
+   "uz": [
+    "gʻoya (anim)"
+   ],
+   "ru": [
+    "идея (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f4a5",
+   "file": "assets/noto/1f4a5.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "💥",
+   "name": "collision symbol",
+   "animated": true,
+   "uz": [
+    "portlash",
+    "zarba",
+    "boom (anim)"
+   ],
+   "ru": [
+    "взрыв",
+    "удар",
+    "бум (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f4af",
+   "file": "assets/noto/1f4af.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "💯",
+   "name": "hundred points symbol",
+   "animated": true,
+   "uz": [
+    "100",
+    "aʼlo (anim)"
+   ],
+   "ru": [
+    "100",
+    "отлично (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f4b8",
+   "file": "assets/noto/1f4b8.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "💸",
+   "name": "money with wings",
+   "animated": true,
+   "uz": [
+    "pul uchdi",
+    "xarajat (anim)"
+   ],
+   "ru": [
+    "деньги улетели",
+    "расходы (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f514",
+   "file": "assets/noto/1f514.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "🔔",
+   "name": "bell",
+   "animated": true,
+   "uz": [
+    "qoʻngʻiroq",
+    "bildirishnoma (anim)"
+   ],
+   "ru": [
+    "колокольчик",
+    "уведомление (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f525",
+   "file": "assets/noto/1f525.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "🔥",
+   "name": "fire",
+   "animated": true,
+   "uz": [
+    "olov",
+    "trend (anim)"
+   ],
+   "ru": [
+    "огонь",
+    "тренд (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f60e",
+   "file": "assets/noto/1f60e.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "😎",
+   "name": "smiling face with sunglasses",
+   "animated": true,
+   "uz": [
+    "zoʻr",
+    "ishonch (anim)"
+   ],
+   "ru": [
+    "круто",
+    "уверенность (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f680",
+   "file": "assets/noto/1f680.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "🚀",
+   "name": "rocket",
+   "animated": true,
+   "uz": [
+    "raketa",
+    "start (anim)"
+   ],
+   "ru": [
+    "ракета",
+    "старт (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f6a8",
+   "file": "assets/noto/1f6a8.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "🚨",
+   "name": "police cars revolving light",
+   "animated": true,
+   "uz": [
+    "sirena",
+    "ogohlantirish",
+    "xavf (anim)"
+   ],
+   "ru": [
+    "сирена",
+    "тревога",
+    "опасность (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f92f",
+   "file": "assets/noto/1f92f.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "🤯",
+   "name": "shocked face with exploding head",
+   "animated": true,
+   "uz": [
+    "hayrat",
+    "voy (anim)"
+   ],
+   "ru": [
+    "шок",
+    "взрыв мозга (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:1f973",
+   "file": "assets/noto/1f973.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "🥳",
+   "name": "face with party horn and party hat",
+   "animated": true,
+   "uz": [
+    "bayram",
+    "xursandlik (anim)"
+   ],
+   "ru": [
+    "праздник",
+    "радость (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:23f0",
+   "file": "assets/noto/23f0.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "⏰",
+   "name": "alarm clock",
+   "animated": true,
+   "uz": [
+    "budilnik",
+    "vaqt (anim)"
+   ],
+   "ru": [
+    "будильник",
+    "время (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:2705",
+   "file": "assets/noto/2705.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "✅",
+   "name": "white heavy check mark",
+   "animated": true,
+   "uz": [
+    "tayyor",
+    "toʻgʻri (anim)"
+   ],
+   "ru": [
+    "готово",
+    "верно (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:2728",
+   "file": "assets/noto/2728.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "✨",
+   "name": "sparkles",
+   "animated": true,
+   "uz": [
+    "yaltiroq",
+    "sehr",
+    "yangi (anim)"
+   ],
+   "ru": [
+    "блёстки",
+    "магия",
+    "новое (анимация)"
+   ]
+  },
+  {
+   "ref": "noto:274c",
+   "file": "assets/noto/274c.json",
+   "source": "Animated Noto Emoji (Google)",
+   "license": "CC-BY-4.0",
+   "char": "❌",
+   "name": "cross mark",
+   "animated": true,
+   "uz": [
+    "xato",
+    "yoʻq (anim)"
+   ],
+   "ru": [
+    "ошибка",
+    "нет (анимация)"
+   ]
+  }
+ ]
+}
