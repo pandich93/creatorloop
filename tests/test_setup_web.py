@@ -1,5 +1,6 @@
 import http.client
 import json
+import re
 import threading
 
 import pytest
@@ -246,3 +247,47 @@ def test_run_returns_the_result(env_path, monkeypatch):
     result = setup_web.run(env_path, out=printed.append, make_auth=lambda i, s: FakeAuth(i, s), linger=0)
     assert result.username == "me"
     assert opened == [printed[0].removeprefix("Setup page: ")]
+
+
+def test_second_choice_after_completion_changes_nothing(env_path):
+    done = []
+    session = setup_web.SetupSession(
+        env_path, make_auth=lambda i, s: FakeAuth(i, s, accounts=(ME, SHOP)), on_done=done.append
+    )
+    session.set_app("1234", "secret")
+    session.callback({"state": session.state, "code": "CODE"}, "http://localhost/callback")
+    session.choose(ME.id)
+    session.choose(SHOP.id)
+    assert [r.username for r in done] == ["me"]
+    assert session.result.username == "me"
+    assert "IG_USER_ID=1784" in env_path.read_text(encoding="utf-8")
+    assert session.error is None
+
+
+def test_double_click_on_an_account_is_a_no_op(make_server, env_path):
+    srv = make_server(accounts=(ME, SHOP))
+    login(srv)
+    back_from_facebook(srv, code="CODE")
+    assert call(srv, "POST", "/api/account", {"ig_user_id": "1784"})[0] == 200
+    status, _, body = call(srv, "POST", "/api/account", {"ig_user_id": "1785"})
+    assert status == 200 and json.loads(body)["step"] == "done"
+    assert "IG_USER_ID=1784" in env_path.read_text(encoding="utf-8")
+    assert "1785" not in env_path.read_text(encoding="utf-8")
+
+
+def test_reloading_the_callback_after_success_changes_nothing(make_server, env_path):
+    srv = make_server()
+    login(srv)
+    back_from_facebook(srv, code="CODE")
+    before = env_path.read_text(encoding="utf-8")
+    status, headers, _ = back_from_facebook(srv, code="CODE")
+    assert status == 303 and headers["location"] == "/"
+    assert state_of(srv)["step"] == "done" and state_of(srv)["error"] is None
+    assert env_path.read_text(encoding="utf-8") == before
+
+
+def test_page_keeps_the_typed_secret_when_the_check_fails():
+    # Pins the retry behaviour: the secret field is cleared only when the response carries no error,
+    # otherwise the next click would send an empty secret and fail with bad_app.
+    page = setup_web.PAGE.read_text(encoding="utf-8")
+    assert re.search(r"if\s*\(\s*!state\.error\s*\)\s*\$\(\"app-secret\"\)\.value\s*=\s*\"\"", page)

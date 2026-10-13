@@ -121,7 +121,7 @@ function renderAccounts() {
     const b = document.createElement("button");
     b.className = "account";
     b.textContent = `@${a.username} · ${t("followers", {count: a.followers ?? "?"})} · ${a.page}`;
-    b.onclick = () => post("/api/account", {ig_user_id: a.id});
+    b.onclick = () => { b.disabled = true; post("/api/account", {ig_user_id: a.id}); };
     box.append(b);
   }
 }
@@ -146,15 +146,19 @@ function renderError() {
 }
 
 async function post(path, body) {
-  const r = await fetch(path, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
-  state = await r.json();
+  try {
+    const r = await fetch(path, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+    state = await r.json();
+  } catch (err) {
+    state = {...state, error: {code: "network", detail: String(err)}};
+  }
   render();
 }
 
 $("b-app").onclick = async () => {
   $("b-app").textContent = t("working");
   await post("/api/app", {app_id: $("app-id").value, app_secret: $("app-secret").value});
-  $("app-secret").value = "";
+  if (!state.error) $("app-secret").value = "";
 };
 $("lang").onchange = (ev) => { lang = ev.target.value; render(); };
 $("c-pro").onchange = render;

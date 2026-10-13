@@ -148,6 +148,8 @@ class SetupSession:
 
     def choose(self, ig_user_id: str) -> None:
         with self._step():
+            if self.result:  # a double click or a retry after success: keep the first result, finish only once
+                return
             account = next((a for a in self.accounts if a.id == ig_user_id), None)
             if account is None or self.token is None or self.auth is None:
                 raise MetaAuthError("bad_state")
