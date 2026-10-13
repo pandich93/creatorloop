@@ -8,7 +8,10 @@ from __future__ import annotations
 import contextlib
 import json
 import logging
+import os
 import secrets
+import subprocess
+import sys
 import threading
 import time
 import webbrowser
@@ -299,6 +302,27 @@ def start(
 
     threading.Thread(target=watch, daemon=True).start()
     return srv
+
+
+def open_browser(url: str, *, platform: str = sys.platform) -> bool:
+    """Open `url` in the default browser with the child's stdin/stdout/stderr on /dev/null: inside the MCP server
+    stdout is the protocol channel, and webbrowser.open lets the browser inherit it. False: no opener could be
+    started (the caller then shows the URL)."""
+    try:
+        if platform == "win32":
+            os.startfile(url)  # type: ignore[attr-defined]  # noqa: S606 - Windows only; os.startfile spawns no console child
+            return True
+        command = ["open", url] if platform == "darwin" else ["xdg-open", url]
+        subprocess.Popen(
+            command,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+    except OSError:
+        return False
+    return True
 
 
 def run(

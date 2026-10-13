@@ -1,6 +1,8 @@
 import http.client
 import json
+import os
 import re
+import subprocess
 import threading
 
 import pytest
@@ -291,3 +293,31 @@ def test_page_keeps_the_typed_secret_when_the_check_fails():
     # otherwise the next click would send an empty secret and fail with bad_app.
     page = setup_web.PAGE.read_text(encoding="utf-8")
     assert re.search(r"if\s*\(\s*!state\.error\s*\)\s*\$\(\"app-secret\"\)\.value\s*=\s*\"\"", page)
+
+
+@pytest.mark.parametrize(("platform", "command"), [("linux", "xdg-open"), ("darwin", "open")])
+def test_open_browser_detaches_the_child_from_our_stdio(monkeypatch, platform, command):
+    """Inside the MCP server stdout is the protocol channel: a browser started with webbrowser.open inherits it."""
+    calls = []
+    monkeypatch.setattr(setup_web.subprocess, "Popen", lambda *a, **kw: calls.append((a, kw)))
+    assert setup_web.open_browser("http://localhost:1/", platform=platform) is True
+    (args, kwargs), = calls
+    assert args[0] == [command, "http://localhost:1/"]
+    for stream in ("stdin", "stdout", "stderr"):
+        assert kwargs[stream] == subprocess.DEVNULL
+    assert kwargs["start_new_session"] is True
+
+
+def test_open_browser_on_windows_uses_startfile(monkeypatch):
+    opened = []
+    monkeypatch.setattr(os, "startfile", opened.append, raising=False)
+    assert setup_web.open_browser("http://localhost:1/", platform="win32") is True
+    assert opened == ["http://localhost:1/"]
+
+
+def test_open_browser_reports_a_missing_opener(monkeypatch):
+    def boom(*a, **kw):
+        raise FileNotFoundError("xdg-open")
+
+    monkeypatch.setattr(setup_web.subprocess, "Popen", boom)
+    assert setup_web.open_browser("http://localhost:1/", platform="linux") is False

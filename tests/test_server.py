@@ -212,15 +212,32 @@ async def test_api_status_reports_package_version(make_service, monkeypatch):
 SETUP_KEYS = ("META_APP_ID", "META_APP_SECRET", "IG_ACCESS_TOKEN", "IG_USER_ID")
 
 
+class FakeOpener:
+    """Stands in for setup_web.open_browser: records the urls and returns `ok`."""
+
+    def __init__(self):
+        self.calls, self.ok = [], True
+
+    def __call__(self, url, **_):
+        self.calls.append(url)
+        return self.ok
+
+
 @pytest.fixture
-def setup_env(tmp_path, monkeypatch):
+def opener(monkeypatch):
+    fake = FakeOpener()
+    monkeypatch.setattr(server.setup_web, "open_browser", fake)
+    return fake
+
+
+@pytest.fixture
+def setup_env(tmp_path, monkeypatch, opener):
     monkeypatch.setenv("CREATORLOOP_HOME", str(tmp_path / "home"))
     db = tmp_path / "test.db"
     monkeypatch.setenv("IG_DB_PATH", str(db))
     for key in SETUP_KEYS:
         monkeypatch.setenv(key, "")  # like the empty .env template loaded at server start
     monkeypatch.setattr(server.setup_web, "MetaAuth", lambda i, s, **kw: FakeAuth(i, s))
-    monkeypatch.setattr(server.setup_web.webbrowser, "open", lambda url: None)
     monkeypatch.setattr(server, "_setup", None)
     monkeypatch.setattr(server, "_setup_result", None)
     monkeypatch.setattr(server, "_service", None)
@@ -244,11 +261,12 @@ def finish_setup(srv):
 
 
 def test_http_client_logs_do_not_print_request_urls():
-    """httpx would log GET .../oauth/access_token?client_secret=... at INFO into the server's stderr."""
+    """httpx would log GET .../oauth/access_token?client_secret=... at INFO into the server's stderr.
+    The logger's own level is checked: under pytest the root level is WARNING anyway, so the effective one proves nothing."""
     import logging
 
     for name in ("httpx", "httpcore"):
-        assert logging.getLogger(name).getEffectiveLevel() >= logging.WARNING
+        assert logging.getLogger(name).level >= logging.WARNING
 
 
 async def test_missing_credentials_point_to_open_setup(setup_env):
@@ -288,3 +306,43 @@ async def test_open_setup_again_starts_a_new_page(setup_env):
     finish_setup(old)
     again = await server.open_setup(open_browser=False, again=True)
     assert again["url"] and server._setup is not old
+
+
+async def test_open_setup_opens_the_browser_once_and_says_so(setup_env, opener):
+    page = await server.open_setup()
+    assert opener.calls == [page["url"]] and page["opened_in_browser"] is True
+    again = await server.open_setup()  # the page is reused: nothing is opened, so nothing is claimed
+    assert opener.calls == [page["url"]] and again["url"] == page["url"] and again["opened_in_browser"] is False
+
+
+async def test_open_setup_without_browser_does_not_open_one(setup_env, opener):
+    page = await server.open_setup(open_browser=False)
+    assert opener.calls == [] and page["opened_in_browser"] is False
+
+
+async def test_open_setup_reports_a_browser_that_did_not_start(setup_env, opener):
+    opener.ok = False
+    page = await server.open_setup()
+    assert opener.calls == [page["url"]] and page["opened_in_browser"] is False and page["url"]
+
+
+async def test_again_never_restarts_an_unfinished_page(setup_env, opener):
+    first = await server.open_setup(again=True)
+    page = server._setup
+    second = await server.open_setup(again=True)
+    assert second["url"] == first["url"] and server._setup is page
+    assert opener.calls == [first["url"]] and second["opened_in_browser"] is False
+
+
+async def test_again_after_a_finished_setup_starts_a_new_page(setup_env, opener):
+    await server.open_setup(open_browser=False)
+    old = server._setup
+    finish_setup(old)
+    page = await server.open_setup(again=True)
+    assert server._setup is not old and old.stopped.is_set() and page["url"] != old.url
+    assert opener.calls == [page["url"]] and page["opened_in_browser"] is True
+
+
+async def test_next_step_tells_the_model_to_confirm_without_again(setup_env):
+    page = await server.open_setup(open_browser=False)
+    assert "without again" in page["next"]

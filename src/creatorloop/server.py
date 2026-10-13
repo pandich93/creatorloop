@@ -801,8 +801,10 @@ async def open_setup(
     or a token in the chat. Call again to check progress: once it reports done, every tool works without restarting
     Claude Desktop. Does not work inside Docker: there the user runs `creatorloop-auth login` (README, Docker)."""
     global _setup, _setup_result
-    if again:
+    if again and _setup_result is not None:  # `again` only means "forget the finished result", never "restart this page"
         _setup_result = None
+        if _setup is not None:
+            _setup.close()  # the lingering page of the finished setup
     if _setup_result is not None:
         r = _setup_result
         return {
@@ -810,9 +812,8 @@ async def open_setup(
             "account": f"@{r.username}",
             "token_expires": r.expires_at.date().isoformat() if r.expires_at else "never",
         }
-    if _setup is None or _setup.stopped.is_set() or again:
-        if _setup is not None:
-            _setup.close()
+    opened = False
+    if _setup is None or _setup.stopped.is_set():
         settings = load_settings()
         _setup = setup_web.start(
             paths.home_dir() / ".env",
@@ -821,12 +822,11 @@ async def open_setup(
             app_secret=settings.app_secret or "",
             on_done=_apply_setup,
         )
-        if open_browser:
-            setup_web.webbrowser.open(_setup.url)
+        opened = open_browser and setup_web.open_browser(_setup.url)
     return {
         "url": _setup.url,
-        "opened_in_browser": open_browser,
-        "next": "Ask the user to finish the steps on that page, then call open_setup again to confirm.",
+        "opened_in_browser": opened,
+        "next": "Ask the user to finish the steps on that page, then call open_setup (without again) to confirm.",
     }
 
 
