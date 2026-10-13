@@ -406,11 +406,14 @@ class InstagramService:
         }
         lefts = [d for d in (days_left, data_days_left) if d is not None]
         if not data.get("is_valid"):
-            status["warning"] = "Token is invalid. Generate a new one (README, section 'Token')."
+            status["warning"] = (
+                "Token is invalid. Reconnect: call open_setup with again=true (or run `creatorloop-auth login`)."
+            )
         elif lefts and min(lefts) <= TOKEN_WARN_DAYS:
             status["warning"] = (
                 f"Token or its data access expires in {min(lefts)} days. "
-                "Renew it or switch to a never-expiring System User token (README, section 'Token')."
+                "Renew: call open_setup with again=true, or use a never-expiring System User token "
+                "(docs/meta-setup.md, step 3)."
             )
         return status
 

@@ -69,5 +69,7 @@ def test_thread_follow_ups_after_my_reply():
 async def test_missing_permission_explained(make_service, monkeypatch):
     monkeypatch.setattr("creatorloop.analytics.media_since", lambda media, days: media)
     svc = make_service(handler([], deny=True))
-    with pytest.raises(comments.CommentsError, match="instagram_manage_comments"):
+    with pytest.raises(comments.CommentsError, match="instagram_manage_comments") as info:
         await comments.new_comments(svc)
+    assert "open_setup (again=true)" in str(info.value)
+    assert "README" not in str(info.value) and "exchange" not in str(info.value)

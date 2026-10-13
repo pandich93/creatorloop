@@ -34,7 +34,10 @@ A local page opens in your browser (or ask Claude *"connect my Instagram"*: it r
 1. Tick that your account is professional and linked to a Facebook Page.
 2. Enter **App ID** and **App Secret**, press *Check the app*.
 3. Press *Continue with Facebook*, allow access to your Page and Instagram account, keep every permission ticked.
+   If several Instagram accounts are found, pick one.
 4. The page shows `@your_account` and the token expiry. Settings are saved; no restart needed when started from Claude.
+
+After `creatorloop-auth login` in a terminal, restart Claude Desktop if it is running (not needed with `open_setup`).
 
 The page asks for these permissions: `instagram_basic`, `instagram_manage_insights`, `pages_show_list`,
 `pages_read_engagement`, `business_management`, `instagram_content_publish`, `instagram_manage_comments`.
@@ -93,7 +96,7 @@ First put `META_APP_ID` and `META_APP_SECRET` (*App settings → Basic*) into th
 | Error code 190 (token) | The token expired or was revoked: ask Claude to run `open_setup` with `again=true`, or use a System User token (step 3) |
 | Hashtag search fails with a permission error | Meta may require *Instagram Public Content Access* (App Review) for your account |
 | `get_competitor` fails for an account | Only public Business/Creator accounts work; personal, private and 18+ accounts are not available |
-| The setup page says "No Page was shared" | In the Facebook window press *Edit access* and tick your Page |
+| The setup page says "Facebook did not share any Page with the app" | In the Facebook window press *Edit access* and tick your Page |
 | The setup page says no Instagram account is linked | Switch Instagram to a professional account and link it in your Page settings, then *Check again* |
 | Demographics are empty | Meta returns them only for accounts with 100+ followers |
 | Rate-limit errors (codes 4, 17, 32, 613) | Wait; `get_api_status` shows the current usage. creatorloop does not retry these |

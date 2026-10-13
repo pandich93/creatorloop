@@ -133,7 +133,18 @@ async def test_debug_token_warns_before_expiry(make_service):
     svc = make_service(handler)
     status = await svc.debug_token()
     assert status["days_left"] == 5.0 and "5.0 days" in status["warning"]
+    assert "open_setup" in status["warning"] and "again=true" in status["warning"]
+    assert "System User token (docs/meta-setup.md, step 3)" in status["warning"]
+    assert "README" not in status["warning"]
     assert await svc.token_warning() == status["warning"]
+
+
+async def test_debug_token_invalid_points_to_open_setup(make_service):
+    svc = make_service(lambda request: json_response({"data": {"is_valid": False}}))
+    status = await svc.debug_token()
+    assert status["warning"] == (
+        "Token is invalid. Reconnect: call open_setup with again=true (or run `creatorloop-auth login`)."
+    )
 
 
 async def test_unsupported_metrics_are_remembered(make_service):

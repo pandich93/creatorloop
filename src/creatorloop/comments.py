@@ -1,6 +1,6 @@
 """Comments on own posts: digest of new / unanswered comments and replies (only after user approval).
 
-Needs the token permission instagram_manage_comments (README, section 3).
+Needs the token permission instagram_manage_comments (kept ticked on the setup page, see docs/meta-setup.md).
 """
 
 from __future__ import annotations
@@ -23,9 +23,8 @@ class CommentsError(RuntimeError):
 def _permission_hint(exc: GraphAPIError) -> CommentsError:
     if exc.code in PERMISSION_CODES or "permission" in exc.message.lower():
         return CommentsError(
-            "The token has no instagram_manage_comments permission. Regenerate it in Graph API Explorer with "
-            "instagram_manage_comments added, then run `uv run creatorloop-auth exchange --short-token <TOKEN> "
-            f"--write` (README, section 3). Graph API said: {exc}"
+            "The token has no instagram_manage_comments permission. Reconnect with open_setup (again=true) "
+            f"and keep instagram_manage_comments ticked. Graph API said: {exc}"
         )
     return CommentsError(f"Graph API error: {exc}")
 

@@ -74,14 +74,16 @@ docker build -t creatorloop https://github.com/pandich93/creatorloop.git
 mkdir "$HOME/creatorloop"
 ```
 
-Connect your account (the setup page runs in the container; open the printed link in your browser):
+If you use the post queue, first create `.env` in that folder with `IG_TIMEZONE=Europe/Berlin` (your zone): the container
+runs in UTC.
+
+Connect your account (the setup page runs in the container; open the printed link in your browser). Keep all three
+`8765` the same; to use another port change all three:
 
 ```bash
 docker run --rm -it -p 127.0.0.1:8765:8765 -v "$HOME/creatorloop:/data" --entrypoint creatorloop-auth creatorloop \
   login --no-browser --port 8765 --bind 0.0.0.0
 ```
-
-The container runs in UTC: add `IG_TIMEZONE=Europe/Berlin` (your zone) to `.env` in that folder for the queue.
 
 `creatorloop-setup` doesn't run inside Docker, so add the server to `claude_desktop_config.json` yourself, with the
 full path to the folder:
