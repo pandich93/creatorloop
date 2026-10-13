@@ -136,6 +136,78 @@ def test_find_accounts_when_no_page_has_instagram():
     assert err.value.detail == "Blog, Shop"
 
 
+# Failure path tests: malformed responses should raise MetaAuthError with stable codes
+def test_get_http_500_empty_json():
+    """(a) Non-2xx response with JSON body but no "error" key."""
+    with pytest.raises(MetaAuthError) as err:
+        auth(lambda r: json_response({}, status=500)).validate_app()
+    assert err.value.code == "meta_error"
+    assert "HTTP 500" in err.value.detail
+
+
+def test_get_json_list_response():
+    """(e) JSON body is a list, not a dict."""
+    with pytest.raises(MetaAuthError) as err:
+        auth(lambda r: json_response([], status=200)).missing_permissions("TOKEN")
+    assert err.value.code == "meta_error"
+
+
+def test_get_error_is_string():
+    """(d) body["error"] is a string, not a dict."""
+    def handler(request):
+        return httpx.Response(
+            400,
+            content='{"error": "invalid_request", "error_description": "Missing code"}',
+            headers={"content-type": "application/json"},
+        )
+
+    with pytest.raises(MetaAuthError) as err:
+        auth(handler).exchange_code("", "http://localhost:5/callback")
+    assert err.value.code == "code_exchange"
+    assert "invalid_request" in err.value.detail
+
+
+def test_exchange_code_missing_access_token():
+    """(b) exchange_code: body["access_token"] missing."""
+    with pytest.raises(MetaAuthError) as err:
+        auth(lambda r: json_response({})).exchange_code("CODE", "http://localhost:5/callback")
+    assert err.value.code == "code_exchange"
+    assert "no access token" in err.value.detail
+
+
+def test_to_long_lived_missing_access_token():
+    """(b) to_long_lived: body["access_token"] missing."""
+    with pytest.raises(MetaAuthError) as err:
+        auth(lambda r: json_response({})).to_long_lived("SHORT")
+    assert err.value.code == "code_exchange"
+    assert "no access token" in err.value.detail
+
+
+def test_validate_app_missing_access_token():
+    """(c) validate_app: no token in response."""
+    with pytest.raises(MetaAuthError) as err:
+        auth(lambda r: json_response({})).validate_app()
+    assert err.value.code == "bad_app"
+    assert "no app token" in err.value.detail
+
+
+def test_to_long_lived_bad_expires_in():
+    """(f) to_long_lived: expires_in present but not int-like."""
+    with pytest.raises(MetaAuthError) as err:
+        auth(lambda r: json_response({"access_token": "LONG", "expires_in": "soon"})).to_long_lived(
+            "SHORT", now=NOW
+        )
+    assert err.value.code == "meta_error"
+    assert "bad expires_in" in err.value.detail
+
+
+def test_find_accounts_json_list_response():
+    """(e) find_accounts with JSON list response."""
+    with pytest.raises(MetaAuthError) as err:
+        auth(lambda r: json_response([])).find_accounts("TOKEN")
+    assert err.value.code == "meta_error"
+
+
 def test_credentials_work():
     ok = httpx.MockTransport(lambda r: json_response({"id": "1784"}))
     expired = httpx.MockTransport(lambda r: meta_error("Session has expired", 190))
