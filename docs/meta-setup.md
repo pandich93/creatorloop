@@ -57,6 +57,10 @@ A user token lasts 60 days; creatorloop warns 14 days ahead (`token_warning` in 
 
 ## Manual way (developers)
 
+First put `META_APP_ID` and `META_APP_SECRET` (*App settings → Basic*) into the settings file, because
+`creatorloop-auth exchange` needs them. `creatorloop-setup` prints the folder that holds the file (`data:`), and
+`exchange` prints the file's path if they are missing.
+
 1. Open [Graph API Explorer](https://developers.facebook.com/tools/explorer/), pick your app → *User Token*, and add
    these permissions:
 
