@@ -15,7 +15,7 @@ from pathlib import Path
 
 import httpx
 
-from creatorloop import DISCLAIMER, paths
+from creatorloop import DISCLAIMER, env_file, paths
 from creatorloop.config import load_settings
 
 ENV_PATH = paths.home_dir() / ".env"
@@ -31,15 +31,7 @@ def _get(url: str, params: dict[str, str]) -> dict:
 
 
 def _write_env(key: str, value: str, path: Path = ENV_PATH) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    lines = path.read_text(encoding="utf-8").splitlines() if path.exists() else []
-    for i, line in enumerate(lines):
-        if line.split("=", 1)[0].strip() == key:
-            lines[i] = f"{key}={value}"
-            break
-    else:
-        lines.append(f"{key}={value}")
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    env_file.update(path, {key: value})
     print(f"  -> saved {key} to {path}")
 
 
