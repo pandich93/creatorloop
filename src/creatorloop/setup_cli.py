@@ -1,7 +1,8 @@
-"""Add the "creatorloop" MCP server to the Claude Desktop config (keeps all other settings).
+"""Add the "creatorloop" MCP server to the Claude Desktop config (keeps all other settings), then connect your
+Instagram account on a local setup page.
 
 Usage (from the project folder, on Windows, macOS or Linux):
-    uv run creatorloop-setup [--config PATH] [--no-restart]
+    uv run creatorloop-setup [--config PATH] [--no-restart] [--reauth] [--no-browser]
 
 Claude Desktop rewrites its config from memory while it runs, so the config is only written while
 Desktop is closed: on macOS this command quits and reopens it, elsewhere it asks you to quit it first.
@@ -20,7 +21,8 @@ from collections.abc import Mapping
 from datetime import datetime
 from pathlib import Path
 
-from creatorloop import DISCLAIMER, paths
+from creatorloop import DISCLAIMER, meta_auth, paths, setup_web
+from creatorloop.config import load_settings
 
 CONFIG_NAME = "claude_desktop_config.json"
 MAC_APP_BINARY = "Claude.app/Contents/MacOS/Claude$"
@@ -139,10 +141,35 @@ def close_desktop_if_running(platform: str, *, restart: bool) -> bool:
     )
 
 
+def connect_account(env_path: Path, *, reauth: bool, open_browser: bool) -> None:
+    """Open the setup page unless the saved token already works (or --reauth)."""
+    s = load_settings()
+    if not reauth and meta_auth.credentials_work(s.access_token, s.ig_user_id, api_version=s.api_version):
+        print("Instagram account already connected (run with --reauth to connect another one).")
+        return
+    print("\nConnect your Instagram account on the setup page (about 5 minutes).")
+    result = setup_web.run(
+        env_path,
+        open_browser=open_browser,
+        api_version=s.api_version,
+        app_id=s.app_id or "",
+        app_secret=s.app_secret or "",
+    )
+    if result:
+        print(f"OK: @{result.username} connected, settings saved to {env_path}")
+    else:
+        print(
+            "The setup page closed before finishing. Finish later: `uvx --from creatorloop creatorloop-auth login`, "
+            "or ask Claude to run open_setup."
+        )
+
+
 def main(argv: list[str] | None = None, platform: str = sys.platform) -> None:
     ap = argparse.ArgumentParser(description=__doc__, epilog=DISCLAIMER, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--config", type=Path, help=f"path to {CONFIG_NAME} (default: auto-detect)")
     ap.add_argument("--no-restart", action="store_true", help="macOS: do not quit and reopen a running Claude Desktop")
+    ap.add_argument("--reauth", action="store_true", help="Open the setup page even if the account is already connected")
+    ap.add_argument("--no-browser", action="store_true", help="Only print the setup page link")
     args = ap.parse_args(argv)
 
     uv = find_uv()
@@ -162,8 +189,9 @@ def main(argv: list[str] | None = None, platform: str = sys.platform) -> None:
 
     home = paths.home_dir()
     if env_file := paths.ensure_env_file(home):
-        print(f"Created {env_file}: fill in IG_ACCESS_TOKEN and IG_USER_ID (see README).")
+        print(f"Created {env_file}")
     print(f"\nrun:     {' '.join([entry['command'], *entry['args']])}\ndata:    {home}")
+    connect_account(home / ".env", reauth=args.reauth, open_browser=not args.no_browser)
     if relaunch:
         launch_desktop()
         print("Claude Desktop restarted: the 'creatorloop' tools appear in a new chat.")

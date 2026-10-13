@@ -7,6 +7,8 @@ import pytest
 
 from creatorloop import setup_cli
 
+REAL_CONNECT_ACCOUNT = setup_cli.connect_account
+
 
 def test_config_candidates_macos(tmp_path):
     [path] = setup_cli.config_candidates("darwin", home=tmp_path, env={})
@@ -104,6 +106,14 @@ def test_find_uv_falls_back_to_installer_location(tmp_path, monkeypatch):
 def isolated_home(tmp_path, monkeypatch):
     monkeypatch.setenv("CREATORLOOP_HOME", str(tmp_path / "home"))
     return tmp_path / "home"
+
+
+@pytest.fixture(autouse=True)
+def no_setup_page(monkeypatch):
+    """main() opens the setup page; existing tests only check the Desktop config part."""
+    calls = []
+    monkeypatch.setattr(setup_cli, "connect_account", lambda env_path, **kw: calls.append((env_path, kw)))
+    return calls
 
 
 def test_setup_creates_env_file_in_home(tmp_path, monkeypatch, isolated_home):
@@ -205,3 +215,46 @@ def test_help_carries_meta_disclaimer(capsys):
         setup_cli.main(["--help"])
     out = capsys.readouterr().out
     assert "Not affiliated with, endorsed or sponsored by Meta or Instagram" in out
+
+
+def test_setup_connects_the_account_before_relaunching_desktop(tmp_path, monkeypatch, isolated_home, no_setup_page):
+    desktop = FakeDesktop(monkeypatch, running=True)
+    monkeypatch.setattr(setup_cli, "connect_account", lambda env_path, **kw: desktop.calls.append("connect"))
+    setup_cli.main(["--config", str(tmp_path / "claude_desktop_config.json")], platform="darwin")
+    assert desktop.calls == ["quit", "install", "connect", "launch"]
+
+
+def test_setup_passes_flags(tmp_path, monkeypatch, isolated_home, no_setup_page):
+    FakeDesktop(monkeypatch, running=False)
+    setup_cli.main(["--config", str(tmp_path / "c.json"), "--reauth", "--no-browser"], platform="linux")
+    assert no_setup_page == [(isolated_home / ".env", {"reauth": True, "open_browser": False})]
+
+
+def test_connect_account_skips_a_working_token(monkeypatch, tmp_path, capsys):
+    monkeypatch.setattr(setup_cli.meta_auth, "credentials_work", lambda *a, **kw: True)
+    monkeypatch.setattr(setup_cli.setup_web, "run", lambda *a, **kw: pytest.fail("page must not open"))
+    REAL_CONNECT_ACCOUNT(tmp_path / ".env", reauth=False, open_browser=True)
+    assert "already connected" in capsys.readouterr().out
+
+
+def test_connect_account_opens_the_page(monkeypatch, tmp_path, capsys):
+    from creatorloop.setup_web import Result
+
+    monkeypatch.setattr(setup_cli.meta_auth, "credentials_work", lambda *a, **kw: True)
+    seen = {}
+
+    def run(env_path, **kw):
+        seen.update(kw)
+        return Result("me", "1784", 155, None, {})
+
+    monkeypatch.setattr(setup_cli.setup_web, "run", run)
+    REAL_CONNECT_ACCOUNT(tmp_path / ".env", reauth=True, open_browser=False)
+    assert seen["open_browser"] is False
+    assert "OK: @me connected" in capsys.readouterr().out
+
+
+def test_connect_account_unfinished(monkeypatch, tmp_path, capsys):
+    monkeypatch.setattr(setup_cli.meta_auth, "credentials_work", lambda *a, **kw: False)
+    monkeypatch.setattr(setup_cli.setup_web, "run", lambda *a, **kw: None)
+    REAL_CONNECT_ACCOUNT(tmp_path / ".env", reauth=False, open_browser=True)
+    assert "creatorloop-auth login" in capsys.readouterr().out
