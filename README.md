@@ -69,6 +69,42 @@ uv downloads Python 3.14 by itself if you don't have it.
 keeps your other servers, makes a backup and creates your settings file. Claude Desktop rewrites its config while it
 runs, so on macOS the command quits and reopens it for you; on Windows and Linux it asks you to quit it first.
 
+<details>
+<summary>Running in Docker instead of uv</summary>
+
+Build the image straight from GitHub and keep your settings in a folder on your computer:
+
+```bash
+docker build -t creatorloop https://github.com/pandich93/creatorloop.git
+mkdir "$HOME/creatorloop"
+```
+
+Create a `.env` file in that folder with `META_APP_ID`, `META_APP_SECRET` and `IG_TIMEZONE` (the container runs
+in UTC), then save the token and account ID:
+
+```bash
+docker run --rm -v "$HOME/creatorloop:/data" --entrypoint creatorloop-auth creatorloop exchange --short-token <TOKEN> --write
+docker run --rm -v "$HOME/creatorloop:/data" --entrypoint creatorloop-auth creatorloop whoami --write
+```
+
+`creatorloop-setup` doesn't run inside Docker, so add the server to `claude_desktop_config.json` yourself, with the
+full path to the folder:
+
+```json
+{
+  "mcpServers": {
+    "creatorloop": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-v", "/Users/you/creatorloop:/data", "creatorloop"]
+    }
+  }
+}
+```
+
+Post folders for `prepare_post` and `queue_post` go into `creatorloop/content/`. The image includes `cloudflared` for
+publishing carousels.
+</details>
+
 ## What you can ask
 
 - "Make a report on my content for the last 60 days. Reels or carousels — what works better, and when should I post?"

@@ -5,6 +5,10 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- `Dockerfile` to run the server without a local Python (settings and data in a `/data` volume, `cloudflared`
+  included); CI builds the image and checks that it answers MCP `initialize` and lists the tools.
+
 ## [0.1.0] - 2026-10-13
 
 First public release.
