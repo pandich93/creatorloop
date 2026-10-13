@@ -1,6 +1,7 @@
-"""Helper CLI: exchange tokens and find your Instagram professional account ID.
+"""Helper CLI: connect your Instagram account, exchange tokens and find your account ID.
 
 Usage:
+    uv run creatorloop-auth login [--no-browser] [--port N] [--bind ADDR]
     uv run creatorloop-auth exchange --short-token <TOKEN> [--write]
     uv run creatorloop-auth whoami [--write]
     uv run creatorloop-auth check
@@ -15,7 +16,7 @@ from pathlib import Path
 
 import httpx
 
-from creatorloop import DISCLAIMER, env_file, paths
+from creatorloop import DISCLAIMER, env_file, paths, setup_web
 from creatorloop.config import load_settings
 
 ENV_PATH = paths.home_dir() / ".env"
@@ -33,6 +34,27 @@ def _get(url: str, params: dict[str, str]) -> dict:
 def _write_env(key: str, value: str, path: Path = ENV_PATH) -> None:
     env_file.update(path, {key: value})
     print(f"  -> saved {key} to {path}")
+
+
+def cmd_login(args: argparse.Namespace) -> None:
+    s = load_settings()
+    env_path = paths.home_dir() / ".env"
+    try:
+        result = setup_web.run(
+            env_path,
+            open_browser=not args.no_browser,
+            port=args.port,
+            bind=args.bind,
+            api_version=s.api_version,
+            app_id=s.app_id or "",
+            app_secret=s.app_secret or "",
+        )
+    except OSError as exc:
+        sys.exit(f"Cannot start the setup page on port {args.port}: {exc}. Pass another --port.")
+    if result is None:
+        sys.exit("The setup page closed before finishing (15 minutes). Run `creatorloop-auth login` again.")
+    print(f"OK: @{result.username} connected, settings saved to {env_path}. "
+          f"Restart Claude Desktop if it is running.")
 
 
 def cmd_exchange(args: argparse.Namespace) -> None:
@@ -99,6 +121,12 @@ def cmd_check(_: argparse.Namespace) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(prog="creatorloop-auth", description=__doc__.split("\n")[0], epilog=DISCLAIMER)
     sub = parser.add_subparsers(required=True)
+
+    p = sub.add_parser("login", help="Connect your Instagram account on a local page in the browser (recommended)")
+    p.add_argument("--no-browser", action="store_true", help="Only print the link (e.g. in Docker)")
+    p.add_argument("--port", type=int, default=0, help="Port of the setup page (default: any free port)")
+    p.add_argument("--bind", default="127.0.0.1", help="Listen address; 0.0.0.0 only inside Docker with -p 127.0.0.1:PORT:PORT")
+    p.set_defaults(func=cmd_login)
 
     p = sub.add_parser("exchange", help="Exchange short-lived user token for a long-lived (60 days) one")
     p.add_argument("--short-token", required=True)
