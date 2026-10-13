@@ -258,3 +258,36 @@ def test_connect_account_unfinished(monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(setup_cli.setup_web, "run", lambda *a, **kw: None)
     REAL_CONNECT_ACCOUNT(tmp_path / ".env", reauth=False, open_browser=True)
     assert "creatorloop-auth login" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize(
+    ("error", "reason"),
+    [
+        (RuntimeError("IG_TIMEZONE='x' is not a known timezone"), "IG_TIMEZONE='x' is not a known timezone"),
+        (KeyboardInterrupt(), "KeyboardInterrupt"),
+    ],
+)
+def test_setup_relaunches_desktop_even_if_the_setup_page_fails(tmp_path, monkeypatch, capsys, error, reason):
+    desktop = FakeDesktop(monkeypatch, running=True)
+
+    def boom(env_path, **kw):
+        raise error
+
+    monkeypatch.setattr(setup_cli, "connect_account", boom)
+    setup_cli.main(["--config", str(tmp_path / "claude_desktop_config.json")], platform="darwin")
+    out = capsys.readouterr().out
+    assert desktop.calls == ["quit", "install", "launch"]
+    assert reason in out
+    assert "creatorloop-auth login" in out
+
+
+def test_config_write_errors_still_propagate_and_desktop_is_not_relaunched(tmp_path, monkeypatch):
+    desktop = FakeDesktop(monkeypatch, running=True)
+
+    def broken_install(path, **kw):
+        raise OSError("disk full")
+
+    monkeypatch.setattr(setup_cli, "install", broken_install)
+    with pytest.raises(OSError, match="disk full"):
+        setup_cli.main(["--config", str(tmp_path / "claude_desktop_config.json")], platform="darwin")
+    assert desktop.calls == ["quit"]

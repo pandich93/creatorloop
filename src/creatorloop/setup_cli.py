@@ -27,6 +27,7 @@ from creatorloop.config import load_settings
 CONFIG_NAME = "claude_desktop_config.json"
 MAC_APP_BINARY = "Claude.app/Contents/MacOS/Claude$"
 QUIT_TIMEOUT_S = 30
+CONNECT_LATER_HINT = "Finish later: `uvx --from creatorloop creatorloop-auth login`, or ask Claude to run open_setup."
 
 
 def config_candidates(platform: str, *, home: Path, env: Mapping[str, str]) -> list[Path]:
@@ -158,10 +159,7 @@ def connect_account(env_path: Path, *, reauth: bool, open_browser: bool) -> None
     if result:
         print(f"OK: @{result.username} connected, settings saved to {env_path}")
     else:
-        print(
-            "The setup page closed before finishing. Finish later: `uvx --from creatorloop creatorloop-auth login`, "
-            "or ask Claude to run open_setup."
-        )
+        print(f"The setup page closed before finishing. {CONNECT_LATER_HINT}")
 
 
 def main(argv: list[str] | None = None, platform: str = sys.platform) -> None:
@@ -191,7 +189,10 @@ def main(argv: list[str] | None = None, platform: str = sys.platform) -> None:
     if env_file := paths.ensure_env_file(home):
         print(f"Created {env_file}")
     print(f"\nrun:     {' '.join([entry['command'], *entry['args']])}\ndata:    {home}")
-    connect_account(home / ".env", reauth=args.reauth, open_browser=not args.no_browser)
+    try:
+        connect_account(home / ".env", reauth=args.reauth, open_browser=not args.no_browser)
+    except (Exception, KeyboardInterrupt) as exc:  # Desktop was quit by us: never leave it closed
+        print(f"\nCould not finish connecting the account ({str(exc) or type(exc).__name__}). {CONNECT_LATER_HINT}")
     if relaunch:
         launch_desktop()
         print("Claude Desktop restarted: the 'creatorloop' tools appear in a new chat.")
