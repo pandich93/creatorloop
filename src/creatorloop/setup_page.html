@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>creatorloop setup</title>
+<style>
+  :root { color-scheme: light dark; --fg: #1d1d1f; --muted: #6e6e73; --bg: #f6f6f7; --card: #fff; --line: #e3e3e8;
+          --accent: #2563eb; --ok: #15803d; --err: #b91c1c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg: #f5f5f7; --muted: #a1a1a6; --bg: #111113; --card: #1c1c1e; --line: #2c2c2e;
+            --accent: #60a5fa; --ok: #4ade80; --err: #f87171; }
+  }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 17px; margin: 0 0 8px; }
+  .muted { color: var(--muted); font-size: 14px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 16px; }
+  section.off { opacity: .45; pointer-events: none; }
+  label { display: block; margin: 10px 0 4px; font-size: 14px; }
+  .check { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0; }
+  .check input { margin-top: 6px; }
+  .check label { margin: 0; font-size: 16px; }
+  input[type=text], input[type=password] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid var(--line);
+    border-radius: 8px; background: transparent; color: inherit; font: inherit; }
+  button, .btn { display: inline-block; margin-top: 12px; padding: 10px 16px; border: 0; border-radius: 8px;
+    background: var(--accent); color: #fff; font: inherit; cursor: pointer; text-decoration: none; }
+  .account { display: block; width: 100%; text-align: left; background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .ok { color: var(--ok); margin-left: 8px; }
+  .err { color: var(--err); border: 1px solid var(--err); border-radius: 8px; padding: 12px; margin-top: 16px; }
+  .err p { margin: 0; }
+  select { font: inherit; color: inherit; background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div><h1 data-t="title"></h1><div class="muted" data-t="subtitle"></div></div>
+    <select id="lang" aria-label="Language">
+      <option value="en">English</option><option value="ru">Русский</option><option value="uz">Oʻzbekcha</option>
+    </select>
+  </header>
+
+  <section id="s-account">
+    <h2 data-t="step_account"></h2>
+    <div class="check"><input type="checkbox" id="c-pro">
+      <label for="c-pro"><span data-t="account_pro"></span><br><span class="muted" data-t="account_pro_help"></span></label></div>
+    <div class="check"><input type="checkbox" id="c-page">
+      <label for="c-page"><span data-t="account_page"></span><br><span class="muted" data-t="account_page_help"></span></label></div>
+  </section>
+
+  <section id="s-app">
+    <h2 data-t="step_app"></h2>
+    <p class="muted"><span data-t="app_help"></span> <a id="guide" target="_blank" rel="noreferrer" data-t="app_guide"></a></p>
+    <label for="app-id" data-t="app_id"></label>
+    <input type="text" id="app-id" inputmode="numeric" autocomplete="off">
+    <label for="app-secret" data-t="app_secret"></label>
+    <input type="password" id="app-secret" autocomplete="off">
+    <div class="muted" id="secret-saved" data-t="app_secret_saved" hidden></div>
+    <button id="b-app" data-t="app_check"></button><span id="app-ok" class="ok" data-t="app_ok" hidden></span>
+  </section>
+
+  <section id="s-connect">
+    <h2 data-t="step_connect"></h2>
+    <p class="muted" data-t="connect_help"></p>
+    <a class="btn" id="b-connect" href="/login" data-t="connect"></a>
+    <div id="accounts"></div>
+  </section>
+
+  <div id="error" class="err" hidden></div>
+
+  <section id="s-done" hidden>
+    <h2 id="done-title"></h2>
+    <p id="done-expires"></p>
+    <p data-t="done_next"></p>
+  </section>
+</main>
+<script>
+const BOOT = /*BOOT*/null;
+const APP_ERRORS = ["bad_app_id", "bad_app", "no_app"];
+let lang = BOOT.lang;
+let state = null;
+const $ = (id) => document.getElementById(id);
+const t = (key, vars = {}) =>
+  (BOOT.strings[lang][key] ?? BOOT.strings.en[key] ?? key).replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ""));
+
+function render() {
+  document.documentElement.lang = lang;
+  $("lang").value = lang;
+  document.querySelectorAll("[data-t]").forEach((el) => { el.textContent = t(el.dataset.t); });
+  if (!state) return;
+  const step = state.step;
+  const ready = $("c-pro").checked && $("c-page").checked;
+  $("guide").href = state.guide;
+  if (!$("app-id").value) $("app-id").value = state.app_id;
+  $("secret-saved").hidden = !state.secret_saved;
+  $("app-ok").hidden = step === "app";
+  $("s-app").classList.toggle("off", !ready || step === "done");
+  $("s-connect").classList.toggle("off", step === "app" || step === "done");
+  renderAccounts();
+  renderError();
+  $("s-done").hidden = step !== "done";
+  if (step === "done") {
+    $("done-title").textContent = t("done_title", {username: state.result.username});
+    $("done-expires").textContent = state.result.expires ? t("done_expires", {date: state.result.expires}) : t("done_never");
+  }
+}
+
+function renderAccounts() {
+  const box = $("accounts");
+  box.replaceChildren();
+  if (state.step !== "choose") return;
+  const title = document.createElement("h2");
+  title.textContent = t("choose_title");
+  box.append(title);
+  for (const a of state.accounts) {
+    const b = document.createElement("button");
+    b.className = "account";
+    b.textContent = `@${a.username} · ${t("followers", {count: a.followers ?? "?"})} · ${a.page}`;
+    b.onclick = () => post("/api/account", {ig_user_id: a.id});
+    box.append(b);
+  }
+}
+
+function renderError() {
+  const box = $("error");
+  const e = state.error;
+  box.replaceChildren();
+  box.hidden = !e;
+  if (!e) return;
+  const perms = e.code === "missing_permissions"
+    ? e.detail.split(",").map((p) => `${p} (${t("perm_" + p)})`).join(", ") : "";
+  const p = document.createElement("p");
+  p.textContent = t("err_" + e.code, {detail: e.detail, perms, pages: e.detail});
+  box.append(p);
+  if (state.step === "app" || APP_ERRORS.includes(e.code)) return;
+  const a = document.createElement("a");
+  a.className = "btn";
+  a.href = "/login?rerequest=1";
+  a.textContent = t({missing_permissions: "rerequest", no_instagram: "recheck"}[e.code] ?? "retry");
+  box.append(a);
+}
+
+async function post(path, body) {
+  const r = await fetch(path, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+  state = await r.json();
+  render();
+}
+
+$("b-app").onclick = async () => {
+  $("b-app").textContent = t("working");
+  await post("/api/app", {app_id: $("app-id").value, app_secret: $("app-secret").value});
+  $("app-secret").value = "";
+};
+$("lang").onchange = (ev) => { lang = ev.target.value; render(); };
+$("c-pro").onchange = render;
+$("c-page").onchange = render;
+fetch("/api/state").then((r) => r.json()).then((s) => {
+  state = s;
+  if (s.step !== "app") $("c-pro").checked = $("c-page").checked = true;
+  render();
+});
+</script>
+</body>
+</html>
