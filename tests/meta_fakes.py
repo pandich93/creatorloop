@@ -14,6 +14,7 @@ class FakeAuth:
         self.app_id, self.app_secret = app_id.strip(), app_secret.strip()
         self.accounts, self.missing, self.find_error, self.expires_at = list(accounts), list(missing), find_error, expires_at
         self.redirect_uri = None
+        self.closed = False
 
     def validate_app(self):
         if self.app_secret != "secret":
@@ -40,4 +41,4 @@ class FakeAuth:
         return self.accounts
 
     def close(self):
-        pass
+        self.closed = True

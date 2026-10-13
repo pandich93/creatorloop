@@ -282,6 +282,15 @@ async def test_open_setup_returns_one_page_until_done(setup_env):
     assert "secret" not in json.dumps(first).lower()
 
 
+async def test_a_timed_out_page_is_replaced_by_a_new_one(setup_env):
+    first = await server.open_setup(open_browser=False)
+    old = server._setup
+    old.close()  # like the 15-minute limit
+    second = await server.open_setup(open_browser=False)
+    assert server._setup is not old and not server._setup.stopped.is_set()
+    assert first["url"].startswith("http://localhost:") and second["url"].startswith("http://localhost:")
+
+
 async def test_finished_setup_works_without_restart(setup_env):
     await server.open_setup(open_browser=False)
     finish_setup(server._setup)

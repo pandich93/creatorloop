@@ -112,8 +112,9 @@ def tool(**kwargs: Any):
         async def wrapper(*args: Any, **kw: Any) -> Any:
             try:
                 result = await fn(*args, **kw)
-                if isinstance(result, dict) and _service is not None and fn.__name__ != "get_api_status":
-                    if warning := await _service.token_warning():
+                svc = _service  # read once: open_setup's finish handler may reset the global during the await
+                if isinstance(result, dict) and svc is not None and fn.__name__ != "get_api_status":
+                    if warning := await svc.token_warning():
                         result["token_warning"] = warning
                 return result
             except ToolError:

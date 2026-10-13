@@ -2,6 +2,7 @@ import http.client
 import json
 import os
 import re
+import socket
 import subprocess
 import threading
 
@@ -201,6 +202,88 @@ def test_page_language_and_safe_boot_data(make_server, monkeypatch):
     assert "/*BOOT*/" not in page
 
 
+def _lang_of(srv, path="/", **headers):
+    page = call(srv, "GET", path, headers=headers)[2].decode()
+    return re.search(r'"lang": "(\w+)"', page).group(1)
+
+
+def test_language_cookie_survives_the_facebook_round_trip(make_server):
+    srv = make_server()
+    assert _lang_of(srv, **{"Cookie": "creatorloop_lang=uz", "Accept-Language": "ru"}) == "uz"
+    assert _lang_of(srv, **{"Cookie": "other=1; creatorloop_lang=ru", "Accept-Language": "en"}) == "ru"
+
+
+def test_query_language_beats_the_cookie(make_server):
+    srv = make_server()
+    assert _lang_of(srv, "/?lang=en", **{"Cookie": "creatorloop_lang=uz", "Accept-Language": "ru"}) == "en"
+
+
+def test_invalid_language_values_fall_back(make_server):
+    srv = make_server()
+    assert _lang_of(srv, **{"Cookie": "creatorloop_lang=xx", "Accept-Language": "ru"}) == "ru"
+    assert _lang_of(srv, "/?lang=xx", **{"Cookie": "creatorloop_lang=uz"}) == "uz"
+    assert _lang_of(srv, **{"Cookie": "creatorloop_lang", "Accept-Language": "uz"}) == "uz"
+    assert _lang_of(srv, **{"Cookie": "\x00;;=;", "Accept-Language": "uz"}) == "uz"
+
+
+def test_page_stores_the_chosen_language_in_a_lax_cookie():
+    page = setup_web.PAGE.read_text(encoding="utf-8")
+    assert re.search(r'document\.cookie\s*=\s*"creatorloop_lang="\s*\+\s*lang\s*\+\s*"; path=/; SameSite=Lax"', page)
+
+
+def test_secret_and_token_stay_out_of_reprs(make_server):
+    srv = make_server()
+    login(srv)
+    back_from_facebook(srv, code="CODE")
+    result = srv.session.result
+    assert result.values["META_APP_SECRET"] == "secret" and result.values["IG_ACCESS_TOKEN"] == "LONG-TOKEN"
+    assert "secret" not in repr(result) and "LONG-TOKEN" not in repr(result)
+    assert "LONG-TOKEN" not in repr(srv.session.token)
+
+
+def test_a_rejected_app_closes_the_connection_it_opened(make_server):
+    srv = make_server()
+    status, state = login(srv, "wrong")
+    assert status == 400 and state["step"] == "app"
+    assert [f.closed for f in srv.fakes] == [True]
+
+
+def test_closing_the_server_closes_the_auth_client(make_server):
+    srv = make_server()
+    login(srv)
+    assert [f.closed for f in srv.fakes] == [False]
+    srv.close()
+    assert [f.closed for f in srv.fakes] == [True]
+
+
+def raw_post(srv, headers, body=b""):
+    head = "".join(f"{k}: {v}\r\n" for k, v in {"Host": f"localhost:{srv.port}", **headers}.items())
+    with socket.create_connection(("127.0.0.1", srv.port), timeout=5) as sock:
+        sock.sendall(f"POST /api/app HTTP/1.0\r\n{head}\r\n".encode() + body)
+        return sock.makefile("rb").readline().decode()
+
+
+@pytest.mark.parametrize(
+    ("length", "body"), [("abc", b""), ("-1", b""), ("2", b"[]"), ("4", b"null"), ("2", b"42")]
+)
+def test_malformed_posts_get_400_and_the_server_lives(make_server, length, body):
+    srv = make_server()
+    json_type = {"Content-Type": "application/json", "Content-Length": length}
+    assert raw_post(srv, json_type, body).startswith("HTTP/1.0 400")
+    assert state_of(srv)["step"] == "app"
+
+
+def test_responses_forbid_framing_and_sniffing(make_server):
+    _, headers, _ = call(make_server(), "GET", "/")
+    assert headers["x-frame-options"] == "DENY"
+    assert headers["content-security-policy"] == "frame-ancestors 'none'"
+    assert headers["x-content-type-options"] == "nosniff"
+
+
+def test_boot_data_has_no_dead_scopes(make_server):
+    assert '"scopes"' not in call(make_server(), "GET", "/")[2].decode()
+
+
 def test_unknown_path_is_404(make_server):
     assert call(make_server(), "GET", "/etc/passwd")[0] == 404
 
@@ -293,6 +376,13 @@ def test_page_keeps_the_typed_secret_when_the_check_fails():
     # otherwise the next click would send an empty secret and fail with bad_app.
     page = setup_web.PAGE.read_text(encoding="utf-8")
     assert re.search(r"if\s*\(\s*!state\.error\s*\)\s*\$\(\"app-secret\"\)\.value\s*=\s*\"\"", page)
+
+
+def test_page_disables_sections_for_the_keyboard_too():
+    page = setup_web.PAGE.read_text(encoding="utf-8")
+    for section in ("s-app", "s-connect"):
+        assert re.search(rf'\$\("{section}"\)\.inert\s*=', page)
+    assert re.search(r"\.err\s*\{[^}]*overflow-wrap:\s*anywhere", page)
 
 
 @pytest.mark.parametrize(("platform", "command"), [("linux", "xdg-open"), ("darwin", "open")])

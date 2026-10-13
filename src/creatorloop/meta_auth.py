@@ -4,7 +4,7 @@ Every failure is a MetaAuthError with a stable `code`; the setup page shows a tr
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
 from typing import Any
 from urllib.parse import urlencode
@@ -41,7 +41,7 @@ class IgAccount:
 
 @dataclass(frozen=True, slots=True)
 class LongLivedToken:
-    value: str
+    value: str = field(repr=False)  # the access token: keep it out of logs and tracebacks
     expires_at: datetime | None  # None: Meta gave no expiry (the token does not expire)
 
 

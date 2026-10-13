@@ -16,8 +16,9 @@ import threading
 import time
 import webbrowser
 from collections.abc import Callable, Iterator, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
+from http.cookies import CookieError, SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
@@ -25,7 +26,7 @@ from urllib.parse import parse_qsl, urlsplit
 
 from creatorloop import env_file, setup_i18n
 from creatorloop.config import DEFAULT_API_VERSION
-from creatorloop.meta_auth import SCOPES, IgAccount, LongLivedToken, MetaAuth, MetaAuthError
+from creatorloop.meta_auth import IgAccount, LongLivedToken, MetaAuth, MetaAuthError
 
 log = logging.getLogger("creatorloop.setup")
 PAGE = Path(__file__).with_name("setup_page.html")
@@ -39,7 +40,7 @@ class Result:
     ig_user_id: str
     followers: int | None
     expires_at: datetime | None
-    values: dict[str, str]  # exactly what was written to .env
+    values: dict[str, str] = field(repr=False)  # exactly what was written to .env; holds the App Secret and the token
 
 
 class SetupSession:
@@ -69,24 +70,27 @@ class SetupSession:
         self.done = threading.Event()
         self._lock = threading.Lock()
 
+    @staticmethod
+    def _step_of(result: Result | None, accounts: list[IgAccount], auth: MetaAuth | None) -> str:
+        if result:
+            return "done"
+        if accounts:
+            return "choose"
+        return "connect" if auth else "app"
+
     @property
     def step(self) -> str:
-        if self.result:
-            return "done"
-        if self.accounts:
-            return "choose"
-        return "connect" if self.auth else "app"
+        return self._step_of(self.result, self.accounts, self.auth)
 
     def snapshot(self) -> dict[str, Any]:
-        """Everything the page may see: never the App Secret or a token."""
-        r = self.result
+        """Everything the page may see: never the App Secret or a token. Each field is read once, so the
+        step always agrees with the rest of the answer even while another request is changing the session."""
+        r, accounts, auth = self.result, self.accounts, self.auth
         return {
-            "step": self.step,
+            "step": self._step_of(r, accounts, auth),
             "app_id": self.app_id,
             "secret_saved": bool(self._saved_secret),
-            "accounts": [
-                {"id": a.id, "username": a.username, "followers": a.followers, "page": a.page} for a in self.accounts
-            ],
+            "accounts": [{"id": a.id, "username": a.username, "followers": a.followers, "page": a.page} for a in accounts],
             "result": r
             and {
                 "username": r.username,
@@ -117,10 +121,19 @@ class SetupSession:
             app_id = app_id.strip()
             secret = app_secret.strip() or (self._saved_secret if app_id == self.app_id else "")
             auth = self._make_auth(app_id, secret)
-            auth.validate_app()
+            try:
+                auth.validate_app()
+            except BaseException:
+                auth.close()
+                raise
             if self.auth:
                 self.auth.close()
             self.app_id, self.auth, self.token, self.accounts = app_id, auth, None, []
+
+    def close(self) -> None:
+        """Release the HTTP client of the current app (the server is shutting down)."""
+        if self.auth:
+            self.auth.close()
 
     def login_url(self, redirect_uri: str, *, rerequest: bool = False) -> str:
         with self._step():
@@ -129,9 +142,9 @@ class SetupSession:
             return self.auth.login_url(redirect_uri, self.state, rerequest=rerequest)
 
     def callback(self, params: Mapping[str, str], redirect_uri: str) -> None:
-        if self.result:  # the page was reloaded after success
-            return
         with self._step():
+            if self.result:  # the page was reloaded after success: keep it as it is
+                return
             if not secrets.compare_digest(params.get("state", "").encode(), self.state.encode()):
                 raise MetaAuthError("bad_state")
             if params.get("error"):
@@ -146,8 +159,9 @@ class SetupSession:
                 raise MetaAuthError("missing_permissions", ",".join(missing))
             self.accounts = self.auth.find_accounts(token.value)
             self.token = token
-        if len(self.accounts) == 1:
-            self.choose(self.accounts[0].id)
+            single = self.accounts[0].id if len(self.accounts) == 1 else None
+        if single:
+            self.choose(single)
 
     def choose(self, ig_user_id: str) -> None:
         with self._step():
@@ -185,6 +199,9 @@ class _Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
         self.send_header("Referrer-Policy", "no-referrer")
+        self.send_header("X-Frame-Options", "DENY")
+        self.send_header("Content-Security-Policy", "frame-ancestors 'none'")
+        self.send_header("X-Content-Type-Options", "nosniff")
         for name, value in headers.items():
             self.send_header(name.replace("_", "-"), value)
         self.end_headers()
@@ -197,6 +214,17 @@ class _Handler(BaseHTTPRequestHandler):
         # blocks DNS rebinding: a foreign site resolved to 127.0.0.1 still sends its own Host
         return self.headers.get("Host", "") in self.server.allowed_hosts
 
+    def _language_override(self, query: Mapping[str, str]) -> str | None:
+        """?lang= (if valid) beats the creatorloop_lang cookie (if valid); the page sets the cookie so the choice survives
+        the redirect chain through facebook.com."""
+        if (chosen := query.get("lang")) in setup_i18n.LANGS:
+            return chosen
+        jar: SimpleCookie = SimpleCookie()
+        with contextlib.suppress(CookieError):
+            jar.load(self.headers.get("Cookie", ""))
+        saved = jar.get("creatorloop_lang")
+        return saved.value if saved and saved.value in setup_i18n.LANGS else None
+
     def do_GET(self) -> None:
         if not self._host_ok():
             return self._send(403, b"forbidden")
@@ -205,7 +233,7 @@ class _Handler(BaseHTTPRequestHandler):
         session = self.server.session
         match url.path:
             case "/":
-                page = self.server.render_page(self.headers.get("Accept-Language"), query.get("lang"))
+                page = self.server.render_page(self.headers.get("Accept-Language"), self._language_override(query))
                 return self._send(200, page, "text/html; charset=utf-8")
             case "/api/state":
                 return self._state()
@@ -228,13 +256,20 @@ class _Handler(BaseHTTPRequestHandler):
         # cross-site forms cannot send application/json without a preflight this server never answers
         if self.headers.get("Content-Type", "").split(";")[0].strip() != "application/json":
             return self._send(415, b"application/json only")
-        length = int(self.headers.get("Content-Length") or 0)
+        try:
+            length = int(self.headers.get("Content-Length") or 0)
+        except ValueError:
+            return self._send(400, b"bad Content-Length")
+        if length < 0:
+            return self._send(400, b"bad Content-Length")
         if length > MAX_BODY:
             return self._send(413, b"too large")
         try:
             data = json.loads(self.rfile.read(length) or b"{}")
         except ValueError:
             return self._send(400, b"bad JSON")
+        if not isinstance(data, dict):
+            return self._send(400, b"JSON object expected")
         session = self.server.session
         try:
             match urlsplit(self.path).path:
@@ -260,11 +295,11 @@ class SetupServer(ThreadingHTTPServer):
         self.redirect_uri = f"http://localhost:{self.port}/callback"  # Meta allows localhost without registering it
         self.allowed_hosts = {f"localhost:{self.port}", f"127.0.0.1:{self.port}"}
         self.stopped = threading.Event()
-        threading.Thread(target=self.serve_forever, daemon=True).start()
+        threading.Thread(target=self.serve_forever, kwargs={"poll_interval": 0.1}, daemon=True).start()
 
     def render_page(self, accept_language: str | None, override: str | None) -> bytes:
         lang = setup_i18n.pick_language(accept_language, override)
-        boot = {"lang": lang, "strings": setup_i18n.STRINGS, "scopes": list(SCOPES)}
+        boot = {"lang": lang, "strings": setup_i18n.STRINGS}
         data = json.dumps(boot, ensure_ascii=False).replace("</", "<\\/")
         return PAGE.read_text(encoding="utf-8").replace("/*BOOT*/null", data).encode()
 
@@ -273,6 +308,7 @@ class SetupServer(ThreadingHTTPServer):
             self.stopped.set()
             self.shutdown()
             self.server_close()
+            self.session.close()
 
 
 def start(
@@ -310,7 +346,7 @@ def open_browser(url: str, *, platform: str = sys.platform) -> bool:
     started (the caller then shows the URL)."""
     try:
         if platform == "win32":
-            os.startfile(url)  # type: ignore[attr-defined]  # noqa: S606 - Windows only; os.startfile spawns no console child
+            os.startfile(url)  # type: ignore[attr-defined]  # Windows only; os.startfile spawns no console child
             return True
         command = ["open", url] if platform == "darwin" else ["xdg-open", url]
         subprocess.Popen(

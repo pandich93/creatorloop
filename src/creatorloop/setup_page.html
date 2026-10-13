@@ -31,6 +31,7 @@
   .account { display: block; width: 100%; text-align: left; background: transparent; color: var(--accent); border: 1px solid var(--accent); }
   .ok { color: var(--ok); margin-left: 8px; }
   .err { color: var(--err); border: 1px solid var(--err); border-radius: 8px; padding: 12px; margin-top: 16px; }
+  .err { overflow-wrap: anywhere; }
   .err p { margin: 0; }
   select { font: inherit; color: inherit; background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
   a { color: var(--accent); }
@@ -99,8 +100,13 @@ function render() {
   if (!$("app-id").value) $("app-id").value = state.app_id;
   $("secret-saved").hidden = !state.secret_saved;
   $("app-ok").hidden = step === "app";
-  $("s-app").classList.toggle("off", !ready || step === "done");
-  $("s-connect").classList.toggle("off", step === "app" || step === "done");
+  // `inert` keeps keyboard users out of a greyed-out section, like pointer-events does for the mouse
+  const appOff = !ready || step === "done";
+  const connectOff = step === "app" || step === "done";
+  $("s-app").classList.toggle("off", appOff);
+  $("s-app").inert = appOff;
+  $("s-connect").classList.toggle("off", connectOff);
+  $("s-connect").inert = connectOff;
   renderAccounts();
   renderError();
   $("s-done").hidden = step !== "done";
@@ -160,7 +166,12 @@ $("b-app").onclick = async () => {
   await post("/api/app", {app_id: $("app-id").value, app_secret: $("app-secret").value});
   if (!state.error) $("app-secret").value = "";
 };
-$("lang").onchange = (ev) => { lang = ev.target.value; render(); };
+$("lang").onchange = (ev) => {
+  lang = ev.target.value;
+  // Lax: a Strict cookie is not sent on the redirect chain back from facebook.com
+  document.cookie = "creatorloop_lang=" + lang + "; path=/; SameSite=Lax";
+  render();
+};
 $("c-pro").onchange = render;
 $("c-page").onchange = render;
 fetch("/api/state").then((r) => r.json()).then((s) => {
