@@ -218,7 +218,8 @@ class GraphClient:
             )
         if code == TOKEN_ERROR_CODE:
             raise TokenError(
-                f"Access token problem: {message}. Refresh IG_ACCESS_TOKEN (README, section 'Token').",
+                f"Access token problem: {message}. Reconnect the account: call open_setup with again=true "
+                "(or run `creatorloop-auth login`).",
                 **kwargs,
             )
         raise GraphAPIError(message, **kwargs)

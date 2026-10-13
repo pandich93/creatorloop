@@ -1,12 +1,16 @@
+import http.client
 import json
+import os
 
 import httpx
 import pytest
 from mcp.server.mcpserver.exceptions import ToolError, UnexpectedToolError
 
 from creatorloop import server
+from creatorloop.storage import Storage
 
 from .conftest import json_response
+from .meta_fakes import FakeAuth
 
 EXPECTED_TOOLS = {
     "get_my_profile",
@@ -42,6 +46,7 @@ EXPECTED_TOOLS = {
     "cancel_queued",
     "get_new_comments",
     "reply_comment",
+    "open_setup",
 }
 
 
@@ -77,7 +82,7 @@ async def test_api_errors_reach_the_model(make_service, monkeypatch):
     svc = make_service(lambda r: json_response({"error": {"message": "Session has expired", "code": 190}}, 400))
     monkeypatch.setattr(server, "_service", svc)
     # MCPServer.call_tool raises ToolError; over stdio it becomes isError=True with this text.
-    with pytest.raises(ToolError, match="IG_ACCESS_TOKEN") as info:
+    with pytest.raises(ToolError, match="open_setup") as info:
         await server.mcp.call_tool("get_my_profile", {})
     assert not isinstance(info.value, UnexpectedToolError)
 
@@ -202,3 +207,84 @@ async def test_api_status_reports_package_version(make_service, monkeypatch):
     res = await server.mcp.call_tool("get_api_status", {})
     payload = res.structured_content or json.loads(res.content[0].text)
     assert payload["server"]["version"] == creatorloop.__version__
+
+
+SETUP_KEYS = ("META_APP_ID", "META_APP_SECRET", "IG_ACCESS_TOKEN", "IG_USER_ID")
+
+
+@pytest.fixture
+def setup_env(tmp_path, monkeypatch):
+    monkeypatch.setenv("CREATORLOOP_HOME", str(tmp_path / "home"))
+    db = tmp_path / "test.db"
+    monkeypatch.setenv("IG_DB_PATH", str(db))
+    for key in SETUP_KEYS:
+        monkeypatch.setenv(key, "")  # like the empty .env template loaded at server start
+    monkeypatch.setattr(server.setup_web, "MetaAuth", lambda i, s, **kw: FakeAuth(i, s))
+    monkeypatch.setattr(server.setup_web.webbrowser, "open", lambda url: None)
+    monkeypatch.setattr(server, "_setup", None)
+    monkeypatch.setattr(server, "_setup_result", None)
+    monkeypatch.setattr(server, "_service", None)
+    yield db
+    if server._setup is not None:
+        server._setup.close()
+
+
+def finish_setup(srv):
+    def go(method, path, body=None):
+        conn = http.client.HTTPConnection("127.0.0.1", srv.port, timeout=5)
+        headers = {"Host": f"localhost:{srv.port}"}
+        if body is not None:
+            headers["Content-Type"] = "application/json"
+        conn.request(method, path, body=body and json.dumps(body), headers=headers)
+        conn.getresponse().read()
+        conn.close()
+
+    go("POST", "/api/app", {"app_id": "1234", "app_secret": "secret"})
+    go("GET", f"/callback?state={srv.session.state}&code=CODE")
+
+
+def test_http_client_logs_do_not_print_request_urls():
+    """httpx would log GET .../oauth/access_token?client_secret=... at INFO into the server's stderr."""
+    import logging
+
+    for name in ("httpx", "httpcore"):
+        assert logging.getLogger(name).getEffectiveLevel() >= logging.WARNING
+
+
+async def test_missing_credentials_point_to_open_setup(setup_env):
+    with pytest.raises(ToolError) as err:
+        await server.get_api_status()
+    assert "open_setup" in str(err.value)
+
+
+async def test_open_setup_returns_one_page_until_done(setup_env):
+    first = await server.open_setup(open_browser=False)
+    second = await server.open_setup(open_browser=False)
+    assert first["url"] == second["url"] and first["url"].startswith("http://localhost:")
+    assert "secret" not in json.dumps(first).lower()
+
+
+async def test_finished_setup_works_without_restart(setup_env):
+    await server.open_setup(open_browser=False)
+    finish_setup(server._setup)
+    status = await server.open_setup()
+    assert status == {"done": True, "account": "@me", "token_expires": "2026-12-13"}
+    assert os.environ["IG_ACCESS_TOKEN"] == "LONG-TOKEN" and os.environ["IG_USER_ID"] == "1784"
+    svc = server.service()
+    assert svc.settings.access_token == "LONG-TOKEN" and svc.uid == "1784"
+
+
+async def test_reconnect_drops_the_cached_token_warning(setup_env):
+    storage = Storage(setup_env)
+    storage.cache_set("token:status:1784", {"warning": "expires soon"}, 3600)
+    await server.open_setup(open_browser=False)
+    finish_setup(server._setup)
+    assert storage.cache_get("token:status:1784") is None
+
+
+async def test_open_setup_again_starts_a_new_page(setup_env):
+    await server.open_setup(open_browser=False)
+    old = server._setup
+    finish_setup(old)
+    again = await server.open_setup(open_browser=False, again=True)
+    assert again["url"] and server._setup is not old

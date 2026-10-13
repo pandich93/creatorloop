@@ -78,8 +78,8 @@ class Settings:
         ]
         if missing:
             raise RuntimeError(
-                f"Missing required settings: {', '.join(missing)}. "
-                f"Fill them in {paths.home_dir() / '.env'} (run creatorloop-setup to create it)."
+                f"Missing required settings: {', '.join(missing)}. Connect your Instagram account: call the open_setup "
+                "tool, or run `uvx --from creatorloop creatorloop-auth login` in a terminal."
             )
 
 

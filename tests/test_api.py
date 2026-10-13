@@ -23,7 +23,7 @@ async def test_rate_limit_not_retried(make_service):
 
 async def test_token_error(make_service):
     svc = make_service(lambda r: json_response({"error": {"message": "Session has expired", "code": 190}}, 400))
-    with pytest.raises(TokenError, match="IG_ACCESS_TOKEN"):
+    with pytest.raises(TokenError, match="open_setup"):
         await svc.my_profile()
 
 

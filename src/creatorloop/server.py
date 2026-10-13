@@ -19,7 +19,7 @@ from mcp.server.mcpserver.exceptions import ToolError
 from mcp_types import ToolAnnotations
 from pydantic import Field
 
-from creatorloop import __version__, analytics, comments, post_queue, reviews
+from creatorloop import __version__, analytics, comments, paths, post_queue, reviews, setup_web
 from creatorloop.config import load_settings
 from creatorloop.graph_client import GraphAPIError, GraphClient
 from creatorloop.instagram import InstagramService
@@ -29,6 +29,9 @@ from creatorloop.storage import Storage
 
 # stdout is the MCP stdio channel: logs must go to stderr only.
 logging.basicConfig(level=logging.INFO, stream=sys.stderr, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+# httpx logs every request URL at INFO, and our Graph/OAuth calls carry the App Secret and tokens in the query string
+for _noisy in ("httpx", "httpcore"):
+    logging.getLogger(_noisy).setLevel(logging.WARNING)
 log = logging.getLogger("creatorloop")
 
 INSTRUCTIONS = """\
@@ -40,11 +43,15 @@ Loop: analyse what works -> plan and make posts/Reels -> publish or queue them -
   Personal/private accounts cannot be analysed.
 - Hashtags: max 30 unique hashtags per rolling 7 days. Check get_api_status before bulk hashtag research.
 - Results are cached in SQLite; pass refresh=true to force fresh data.
+- Not connected yet, or the token expired: call open_setup. Never ask the user to paste an App Secret or a token
+  into the chat: they are entered only on the local setup page.
 Answer the user in the language they write in.
 """
 
 _service: InstagramService | None = None
 JOBS: dict[str, dict[str, Any]] = {}  # background prepare_post jobs (the device bridge times out calls at 60 s)
+_setup: setup_web.SetupServer | None = None
+_setup_result: setup_web.Result | None = None
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 
@@ -770,6 +777,56 @@ async def get_api_status() -> dict[str, Any]:
         },
         "hashtag_quota": svc.storage.hashtag_quota(),
         "database": str(svc.storage.path),
+    }
+
+
+def _apply_setup(result: setup_web.Result) -> None:
+    """Runs in the setup page thread when the user finishes: make the new token visible without a restart.
+    _load_env() never overrides variables already in os.environ, and the empty template values are there since start."""
+    global _service, _setup_result
+    os.environ.update(result.values)
+    _setup_result = result
+    _service = None  # the next tool call builds a client with the new token; the old one is garbage-collected
+    # a warning cached for the old token ("expires in 3 days") must not follow the new one for 12 hours
+    service().storage.cache_clear(f"token:status:{result.ig_user_id}")
+
+
+@tool(annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=False, idempotentHint=True, openWorldHint=False))
+async def open_setup(
+    open_browser: Annotated[bool, Field(description="false: only return the link, e.g. when the browser is elsewhere")] = True,
+    again: Annotated[bool, Field(description="true: connect again after a finished setup (expired or revoked token)")] = False,
+) -> dict[str, Any]:
+    """Connect creatorloop to the user's Instagram account: opens a local setup page in their browser (Meta app,
+    Facebook login, account choice). Use when settings are missing or the token expired. Never ask for an App Secret
+    or a token in the chat. Call again to check progress: once it reports done, every tool works without restarting
+    Claude Desktop. Does not work inside Docker: there the user runs `creatorloop-auth login` (README, Docker)."""
+    global _setup, _setup_result
+    if again:
+        _setup_result = None
+    if _setup_result is not None:
+        r = _setup_result
+        return {
+            "done": True,
+            "account": f"@{r.username}",
+            "token_expires": r.expires_at.date().isoformat() if r.expires_at else "never",
+        }
+    if _setup is None or _setup.stopped.is_set() or again:
+        if _setup is not None:
+            _setup.close()
+        settings = load_settings()
+        _setup = setup_web.start(
+            paths.home_dir() / ".env",
+            api_version=settings.api_version,
+            app_id=settings.app_id or "",
+            app_secret=settings.app_secret or "",
+            on_done=_apply_setup,
+        )
+        if open_browser:
+            setup_web.webbrowser.open(_setup.url)
+    return {
+        "url": _setup.url,
+        "opened_in_browser": open_browser,
+        "next": "Ask the user to finish the steps on that page, then call open_setup again to confirm.",
     }
 
 
