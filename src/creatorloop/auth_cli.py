@@ -39,6 +39,12 @@ def _write_env(key: str, value: str, path: Path = ENV_PATH) -> None:
 def cmd_login(args: argparse.Namespace) -> None:
     s = load_settings()
     env_path = paths.home_dir() / ".env"
+    if args.bind not in {"127.0.0.1", "localhost", "::1"}:
+        print(
+            f"Listening on {args.bind}: the page is reachable from the network. That is expected inside Docker with "
+            "-p 127.0.0.1:PORT:PORT; otherwise keep the default 127.0.0.1.",
+            file=sys.stderr,
+        )
     try:
         result = setup_web.run(
             env_path,
@@ -50,9 +56,12 @@ def cmd_login(args: argparse.Namespace) -> None:
             app_secret=s.app_secret or "",
         )
     except OSError as exc:
-        sys.exit(f"Cannot start the setup page on port {args.port}: {exc}. Pass another --port.")
+        sys.exit(f"Cannot start the setup page on {args.bind}:{args.port}: {exc}. Pass another --port, or check --bind.")
     if result is None:
-        sys.exit("The setup page closed before finishing (15 minutes). Run `creatorloop-auth login` again.")
+        sys.exit(
+            "The setup page closed before the account was connected (stopped, or the 15-minute limit). "
+            "Run `creatorloop-auth login` again."
+        )
     print(f"OK: @{result.username} connected, settings saved to {env_path}. "
           f"Restart Claude Desktop if it is running.")
 

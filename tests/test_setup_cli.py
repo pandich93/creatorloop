@@ -231,6 +231,7 @@ def test_setup_passes_flags(tmp_path, monkeypatch, isolated_home, no_setup_page)
 
 
 def test_connect_account_skips_a_working_token(monkeypatch, tmp_path, capsys):
+    monkeypatch.chdir(tmp_path)  # the repo's own ./.env must not be read
     monkeypatch.setattr(setup_cli.meta_auth, "credentials_work", lambda *a, **kw: True)
     monkeypatch.setattr(setup_cli.setup_web, "run", lambda *a, **kw: pytest.fail("page must not open"))
     REAL_CONNECT_ACCOUNT(tmp_path / ".env", reauth=False, open_browser=True)
@@ -240,6 +241,10 @@ def test_connect_account_skips_a_working_token(monkeypatch, tmp_path, capsys):
 def test_connect_account_opens_the_page(monkeypatch, tmp_path, capsys):
     from creatorloop.setup_web import Result
 
+    monkeypatch.chdir(tmp_path)  # the repo's own ./.env must not be read
+    monkeypatch.setenv("META_APP_ID", "1234")
+    monkeypatch.setenv("META_APP_SECRET", "shh")
+    monkeypatch.setenv("GRAPH_API_VERSION", "v99.0")
     monkeypatch.setattr(setup_cli.meta_auth, "credentials_work", lambda *a, **kw: True)
     seen = {}
 
@@ -250,10 +255,12 @@ def test_connect_account_opens_the_page(monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(setup_cli.setup_web, "run", run)
     REAL_CONNECT_ACCOUNT(tmp_path / ".env", reauth=True, open_browser=False)
     assert seen["open_browser"] is False
+    assert (seen["app_id"], seen["app_secret"], seen["api_version"]) == ("1234", "shh", "v99.0")
     assert "OK: @me connected" in capsys.readouterr().out
 
 
 def test_connect_account_unfinished(monkeypatch, tmp_path, capsys):
+    monkeypatch.chdir(tmp_path)  # the repo's own ./.env must not be read
     monkeypatch.setattr(setup_cli.meta_auth, "credentials_work", lambda *a, **kw: False)
     monkeypatch.setattr(setup_cli.setup_web, "run", lambda *a, **kw: None)
     REAL_CONNECT_ACCOUNT(tmp_path / ".env", reauth=False, open_browser=True)
