@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import os
 import tempfile
 from collections.abc import Mapping
@@ -12,7 +13,7 @@ def update(path: Path, values: Mapping[str, str]) -> None:
     """Set the given keys (every existing line of a key is replaced, missing keys are appended) in one atomic write.
     The file is readable by its owner only on POSIX: it holds the App Secret and the access token."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    lines = path.read_text(encoding="utf-8").splitlines() if path.exists() else []
+    lines = path.read_text(encoding="utf-8-sig").splitlines() if path.exists() else []  # -sig: Notepad's BOM
     seen: set[str] = set()
     for i, line in enumerate(lines):
         key = line.split("=", 1)[0].strip()
@@ -24,6 +25,10 @@ def update(path: Path, values: Mapping[str, str]) -> None:
     try:
         with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
             f.write("\n".join(lines) + "\n")
+        if hasattr(os, "geteuid") and os.geteuid() == 0:  # a root container must not turn the user's .env into root:root
+            owner = path.stat() if path.exists() else path.parent.stat()
+            with contextlib.suppress(OSError):
+                os.chown(tmp, owner.st_uid, owner.st_gid)
         os.replace(tmp, path)
     except BaseException:
         Path(tmp).unlink(missing_ok=True)
