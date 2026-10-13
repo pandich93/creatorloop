@@ -5,6 +5,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-14
+
 ### Added
 - `Dockerfile` to run the server without a local Python (settings and data in a `/data` volume, `cloudflared`
   included); CI builds the image and checks that it answers MCP `initialize` and lists the tools.
@@ -33,5 +35,6 @@ First public release.
 - Three MCP prompts: weekly report, competitor brief, data-driven content ideas.
 - `examples/`: a sample carousel, a sample Reel storyboard and a Remotion Reel template with automatic checks.
 
-[Unreleased]: https://github.com/pandich93/creatorloop/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/pandich93/creatorloop/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/pandich93/creatorloop/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/pandich93/creatorloop/releases/tag/v0.1.0

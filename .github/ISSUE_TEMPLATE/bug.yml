@@ -21,7 +21,7 @@ body:
     id: version
     attributes:
       label: creatorloop version
-      placeholder: "0.1.0 (get_api_status shows it)"
+      placeholder: "0.2.0 (get_api_status shows it)"
     validations:
       required: true
   - type: dropdown
