@@ -22,12 +22,12 @@
 
 ```bash
 uvx --from creatorloop creatorloop-setup
-uvx --from creatorloop creatorloop-auth exchange --short-token <ТОКЕН> --write
-uvx --from creatorloop creatorloop-auth whoami --write
 ```
 
-Перед второй командой впишите `META_APP_ID` и `META_APP_SECRET` в файл настроек, путь к которому покажет первая.
-Перезапустите Claude Desktop и спросите: *«Как зашли мои последние 10 постов и что мне публиковать дальше?»*
+Команда подключит Claude Desktop и откроет страницу настройки в браузере: введите **App ID** и **App Secret**
+своего приложения, нажмите **«Продолжить через Facebook»** — готово. Затем спросите Claude: *«Как зашли мои
+последние 10 постов и что мне публиковать дальше?»* Уже в Claude? Попросите *«подключи мой Instagram»* — откроется
+та же страница. Секрет и токен вводятся только на ней, не в чат.
 
 Полная документация — в [README на английском](README.md).
 

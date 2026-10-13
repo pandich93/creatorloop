@@ -22,12 +22,12 @@ Kerak boʻladi: [uv](https://docs.astral.sh/uv/getting-started/installation/), C
 
 ```bash
 uvx --from creatorloop creatorloop-setup
-uvx --from creatorloop creatorloop-auth exchange --short-token <TOKEN> --write
-uvx --from creatorloop creatorloop-auth whoami --write
 ```
 
-Ikkinchi buyruqdan oldin birinchi buyruq koʻrsatgan sozlamalar fayliga `META_APP_ID` va `META_APP_SECRET` ni yozing.
-Claude Desktop'ni qayta ishga tushiring va soʻrang: *«Oxirgi 10 ta postim qanday ketdi va keyin nima joylashim kerak?»*
+Buyruq Claude Desktop'ni ulaydi va brauzerda sozlash sahifasini ochadi: ilovangizning **App ID** va **App Secret**
+qiymatlarini kiriting, **“Facebook orqali davom etish”** tugmasini bosing — tayyor. Soʻng Claude'dan soʻrang:
+*«Oxirgi 10 ta postim qanday ketdi va keyin nima joylashim kerak?»* Claude'dasizmi? *«Instagram'imni ulab ber»* deb
+soʻrang — oʻsha sahifa ochiladi. Secret va token faqat shu sahifada kiritiladi, chatga emas.
 
 Toʻliq hujjatlar — [ingliz tilidagi README](README.md)da.
 

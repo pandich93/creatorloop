@@ -25,4 +25,4 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: docker build -t creatorloop .
-      - run: python3 .github/scripts/mcp_smoke.py 33 docker run -i --rm creatorloop
+      - run: python3 .github/scripts/mcp_smoke.py 34 docker run -i --rm creatorloop

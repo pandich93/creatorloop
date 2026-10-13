@@ -8,6 +8,13 @@ All notable changes to this project are documented here. The format follows
 ### Added
 - `Dockerfile` to run the server without a local Python (settings and data in a `/data` volume, `cloudflared`
   included); CI builds the image and checks that it answers MCP `initialize` and lists the tools.
+- Setup page: `creatorloop-setup`, `creatorloop-auth login` and the new `open_setup` tool open a local page that
+  checks your Meta app, logs in with Facebook, finds your Instagram account and saves the settings — no Graph API
+  Explorer, no editing `.env`, no restart when started from Claude. English, Russian and Uzbek.
+
+### Changed
+- `.env` is written atomically and readable by its owner only.
+- Errors about missing settings or an expired token point to `open_setup` / `creatorloop-auth login`.
 
 ## [0.1.0] - 2026-10-13
 

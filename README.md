@@ -36,22 +36,17 @@ There are plenty of "Instagram API for Claude" servers. creatorloop is built for
 
 You need [uv](https://docs.astral.sh/uv/getting-started/installation/), [Claude Desktop](https://claude.ai/download),
 an Instagram **Business or Creator** account linked to a **Facebook Page**, and your own Meta app
-([5-minute guide](https://github.com/pandich93/creatorloop/blob/main/docs/meta-setup.md)).
+([5-minute guide](https://github.com/pandich93/creatorloop/blob/main/docs/meta-setup.md#1-create-the-app)).
 
 ```bash
-uvx --from creatorloop creatorloop-setup        # 1. connect to Claude Desktop, create the settings file
+uvx --from creatorloop creatorloop-setup
 ```
 
-2. Put your app's `META_APP_ID` and `META_APP_SECRET` into the settings file the command printed.
-3. Save a 60-day token and find your account ID (the short-lived token comes from Graph API Explorer, see the guide):
+It connects Claude Desktop and opens a setup page in your browser: enter your app's **App ID** and **App Secret**,
+press **Continue with Facebook**, done. Then ask Claude: *"How did my last 10 posts do, and what should I post next?"*
 
-```bash
-uvx --from creatorloop creatorloop-auth exchange --short-token <TOKEN> --write
-uvx --from creatorloop creatorloop-auth whoami --write
-uvx --from creatorloop creatorloop-auth check   # → OK: @your_account followers=...
-```
-
-Restart Claude Desktop and ask: *"How did my last 10 posts do, and what should I post next?"*
+Already in Claude? Ask *"connect my Instagram"*: Claude opens the same page (`open_setup`). Your App Secret and
+token are typed only into that local page, never into the chat.
 
 <details>
 <summary>Installing uv</summary>
@@ -79,13 +74,14 @@ docker build -t creatorloop https://github.com/pandich93/creatorloop.git
 mkdir "$HOME/creatorloop"
 ```
 
-Create a `.env` file in that folder with `META_APP_ID`, `META_APP_SECRET` and `IG_TIMEZONE` (the container runs
-in UTC), then save the token and account ID:
+Connect your account (the setup page runs in the container; open the printed link in your browser):
 
 ```bash
-docker run --rm -v "$HOME/creatorloop:/data" --entrypoint creatorloop-auth creatorloop exchange --short-token <TOKEN> --write
-docker run --rm -v "$HOME/creatorloop:/data" --entrypoint creatorloop-auth creatorloop whoami --write
+docker run --rm -it -p 127.0.0.1:8765:8765 -v "$HOME/creatorloop:/data" --entrypoint creatorloop-auth creatorloop \
+  login --no-browser --port 8765 --bind 0.0.0.0
 ```
+
+The container runs in UTC: add `IG_TIMEZONE=Europe/Berlin` (your zone) to `.env` in that folder for the queue.
 
 `creatorloop-setup` doesn't run inside Docker, so add the server to `claude_desktop_config.json` yourself, with the
 full path to the folder:
@@ -103,6 +99,8 @@ full path to the folder:
 
 Post folders for `prepare_post` and `queue_post` go into `creatorloop/content/`. The image includes `cloudflared` for
 publishing carousels.
+
+The `open_setup` tool does not work inside Docker; use the command above to reconnect.
 </details>
 
 ## What you can ask
@@ -128,9 +126,9 @@ Ready-made prompts in Claude Desktop's **+** menu: *Weekly Instagram report*, *C
 | Publishing | `prepare_post`, `get_post_job`, `publish_media`, `list_publications` |
 | Queue | `queue_post`, `list_queue`, `cancel_queued` |
 | Comments | `get_new_comments`, `reply_comment` |
-| Service | `get_api_status`, `clear_cache`, `restart_server` |
+| Service | `get_api_status`, `open_setup`, `clear_cache`, `restart_server` |
 
-33 tools in total. Tools that change something on Instagram are annotated as such for Claude, and their descriptions
+34 tools in total. Tools that change something on Instagram are annotated as such for Claude, and their descriptions
 tell it to act only after you approve: `publish_media` and `reply_comment` after you OK the preview or the exact
 text, `queue_post` only with `confirm=true` after you saw the preview.
 
@@ -194,7 +192,7 @@ Set `CREATORLOOP_HOME` to use another folder. The home folder holds `.env`, the 
 | `IG_ACCESS_TOKEN` | yes | Long-lived (60 days) or System User (never expires) token — see [Meta setup](https://github.com/pandich93/creatorloop/blob/main/docs/meta-setup.md) |
 | `IG_USER_ID` | yes | Your Instagram professional account ID (`1784…`), not the username |
 | `GRAPH_API_VERSION` | no | Default `v26.0` |
-| `META_APP_ID`, `META_APP_SECRET` | no | Only for `creatorloop-auth exchange` |
+| `META_APP_ID`, `META_APP_SECRET` | no | Filled by the setup page; also used to check the token expiry |
 | `IG_TIMEZONE` | no | IANA name, e.g. `Europe/Berlin`. Default: your computer's timezone |
 | `QUEUE_SLOTS` | no | e.g. `Mon,Wed,Fri 20:00` |
 | `IG_DB_PATH`, `CACHE_TTL_*_MIN` | no | Database location, cache lifetime in minutes |
