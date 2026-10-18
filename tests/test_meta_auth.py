@@ -97,7 +97,9 @@ def test_long_lived_token_without_expiry():
 
 def test_bad_code_is_a_code_exchange_error():
     with pytest.raises(MetaAuthError) as err:
-        auth(lambda r: meta_error("This authorization code has expired.", 100)).exchange_code("OLD", "http://localhost:5/callback")
+        auth(lambda r: meta_error("This authorization code has expired.", 100)).exchange_code(
+            "OLD", "http://localhost:5/callback"
+        )
     assert err.value.code == "code_exchange"
 
 
@@ -154,6 +156,7 @@ def test_get_json_list_response():
 
 def test_get_error_is_string():
     """(d) body["error"] is a string, not a dict."""
+
     def handler(request):
         return httpx.Response(
             400,
@@ -194,9 +197,7 @@ def test_validate_app_missing_access_token():
 def test_to_long_lived_bad_expires_in():
     """(f) to_long_lived: expires_in present but not int-like."""
     with pytest.raises(MetaAuthError) as err:
-        auth(lambda r: json_response({"access_token": "LONG", "expires_in": "soon"})).to_long_lived(
-            "SHORT", now=NOW
-        )
+        auth(lambda r: json_response({"access_token": "LONG", "expires_in": "soon"})).to_long_lived("SHORT", now=NOW)
     assert err.value.code == "meta_error"
     assert "bad expires_in" in err.value.detail
 

@@ -282,9 +282,7 @@ class Storage:
 
     # ---- publications ------------------------------------------------------
 
-    def save_publication(
-        self, creation_id: str, folder: str, caption: str, items: int, media_type: str | None = None
-    ) -> None:
+    def save_publication(self, creation_id: str, folder: str, caption: str, items: int, media_type: str | None = None) -> None:
         with self._conn() as conn:
             conn.execute(
                 """
@@ -348,9 +346,7 @@ class Storage:
     def queue_list(self, include_done: bool = False, limit: int = 50) -> list[dict[str, Any]]:
         where = "" if include_done else "WHERE status IN ('queued', 'publishing')"
         with self._conn() as conn:
-            rows = conn.execute(
-                f"SELECT * FROM post_queue {where} ORDER BY publish_at DESC LIMIT ?", (limit,)
-            ).fetchall()
+            rows = conn.execute(f"SELECT * FROM post_queue {where} ORDER BY publish_at DESC LIMIT ?", (limit,)).fetchall()
         return [dict(r) for r in rows]
 
     def queue_active_for(self, folder: str) -> dict[str, Any] | None:
@@ -385,9 +381,7 @@ class Storage:
 
     def review_get(self, media_id: str, stage: str) -> dict[str, Any] | None:
         with self._conn() as conn:
-            row = conn.execute(
-                "SELECT * FROM post_reviews WHERE media_id = ? AND stage = ?", (media_id, stage)
-            ).fetchone()
+            row = conn.execute("SELECT * FROM post_reviews WHERE media_id = ? AND stage = ?", (media_id, stage)).fetchone()
         return dict(row) if row else None
 
     def review_save(self, media_id: str, stage: str, metrics: dict[str, Any]) -> None:
@@ -417,9 +411,7 @@ class Storage:
             "hashtags": [
                 {
                     "hashtag": r["hashtag"],
-                    "frees_up_at": (datetime.fromisoformat(r["first_queried_at"]) + HASHTAG_WINDOW).isoformat(
-                        timespec="minutes"
-                    ),
+                    "frees_up_at": (datetime.fromisoformat(r["first_queried_at"]) + HASHTAG_WINDOW).isoformat(timespec="minutes"),
                 }
                 for r in used
             ],
@@ -440,7 +432,7 @@ class Storage:
             "remaining_before": quota["remaining"],
             "remaining_after": max(quota["remaining"] - len(new), 0),
             "fits_in_quota": fits,
-            "would_be_skipped": [f"#{t}" for t in new[quota["remaining"]:]] if not fits else [],
+            "would_be_skipped": [f"#{t}" for t in new[quota["remaining"] :]] if not fits else [],
             "next_slot_frees_up_at": quota["hashtags"][0]["frees_up_at"] if quota["hashtags"] else None,
         }
 

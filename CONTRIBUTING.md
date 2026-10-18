@@ -9,6 +9,7 @@ git clone https://github.com/pandich93/creatorloop && cd creatorloop
 uv sync
 uv run pytest -q            # offline: the Graph API is mocked, no token needed
 uv run ruff check src tests
+uv run ruff format src tests
 ```
 
 To try your changes in Claude Desktop, run `uv run creatorloop-setup` from the checkout: it points Claude Desktop at
@@ -29,7 +30,8 @@ Use `CREATORLOOP_HOME=/some/test/folder` to keep a test account's settings and d
 
 ## Pull requests
 
-- One topic per PR; tests and `ruff check` must pass on Ubuntu, macOS and Windows (CI runs all three).
+- One topic per PR; tests, `ruff check` and `ruff format --check` must pass on Ubuntu, macOS and Windows (CI runs
+  all three).
 - Never commit tokens, `.env` files, databases or real account data.
 - Describe what you tested. If you checked against the live API, say which endpoint and API version.
 

@@ -5,8 +5,19 @@ import pytest
 from creatorloop.meta_auth import SCOPES
 from creatorloop.setup_i18n import DEFAULT, LANGS, STRINGS, pick_language
 
-ERROR_CODES = ["bad_app_id", "bad_app", "no_app", "access_denied", "missing_permissions", "no_pages", "no_instagram",
-               "bad_state", "code_exchange", "network", "meta_error"]
+ERROR_CODES = [
+    "bad_app_id",
+    "bad_app",
+    "no_app",
+    "access_denied",
+    "missing_permissions",
+    "no_pages",
+    "no_instagram",
+    "bad_state",
+    "code_exchange",
+    "network",
+    "meta_error",
+]
 
 
 def placeholders(text: str) -> set[str]:

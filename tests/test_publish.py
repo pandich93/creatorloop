@@ -118,12 +118,10 @@ def test_validation(content, tmp_path):
 async def test_tunnel_with_fake_cloudflared(tmp_path, monkeypatch):
     fake = tmp_path / "fake_cloudflared.py"
     fake.write_text(
-        "import sys, time\n"
-        "print('INF |  https://abc-def.trycloudflare.com  |', file=sys.stderr, flush=True)\n"
-        "time.sleep(30)\n"
+        "import sys, time\nprint('INF |  https://abc-def.trycloudflare.com  |', file=sys.stderr, flush=True)\ntime.sleep(30)\n"
     )
     launcher = tmp_path / "cloudflared"
-    launcher.write_text(f"#!/bin/sh\nexec {sys.executable} {fake} \"$@\"\n")
+    launcher.write_text(f'#!/bin/sh\nexec {sys.executable} {fake} "$@"\n')
     launcher.chmod(0o755)
     (tmp_path / "a.jpg").write_bytes(b"x")
 

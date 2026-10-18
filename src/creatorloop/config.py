@@ -75,11 +75,7 @@ class Settings:
         return f"https://graph.facebook.com/{self.api_version}"
 
     def require_credentials(self) -> None:
-        missing = [
-            name
-            for name, value in (("IG_ACCESS_TOKEN", self.access_token), ("IG_USER_ID", self.ig_user_id))
-            if not value
-        ]
+        missing = [name for name, value in (("IG_ACCESS_TOKEN", self.access_token), ("IG_USER_ID", self.ig_user_id)) if not value]
         if missing:
             raise RuntimeError(
                 f"Missing required settings: {', '.join(missing)}. Connect your Instagram account: call the open_setup "

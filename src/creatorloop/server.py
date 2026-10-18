@@ -102,7 +102,6 @@ mcp = MCPServer(name="creatorloop", version=__version__, instructions=INSTRUCTIO
 RO = ToolAnnotations(readOnlyHint=True, openWorldHint=True)
 
 
-
 def tool(**kwargs: Any):
     """mcp.tool + turn expected errors into ToolError, so the model sees the real message
     (mcp 2.x hides the text of any other exception)."""
@@ -537,8 +536,13 @@ async def prepare_post(
     if running:
         raise ToolError(f"Another post is being prepared (job {running[0]['job_id']}). Wait for it to finish.")
     job_id = datetime.now(UTC).strftime("%H%M%S")
-    job: dict[str, Any] = {"job_id": job_id, "folder": folder, "status": "running", "stage": "queued",
-                           "started_at": datetime.now(UTC).isoformat(timespec="seconds")}
+    job: dict[str, Any] = {
+        "job_id": job_id,
+        "folder": folder,
+        "status": "running",
+        "stage": "queued",
+        "started_at": datetime.now(UTC).isoformat(timespec="seconds"),
+    }
     JOBS[job_id] = job
 
     def stage(name: str) -> None:
@@ -592,8 +596,11 @@ async def list_publications(limit: Annotated[int, Field(ge=1, le=100)] = 20) -> 
 def _queue_view(item: dict[str, Any]) -> dict[str, Any]:
     tz = service().settings.timezone
     keep = ("id", "folder", "media_type", "caption_head", "status", "permalink", "error")
-    return {**{k: item.get(k) for k in keep}, "publish_at_local": post_queue.local_str(item["publish_at"], tz),
-            "publish_at_utc": item["publish_at"]}
+    return {
+        **{k: item.get(k) for k in keep},
+        "publish_at_local": post_queue.local_str(item["publish_at"], tz),
+        "publish_at_utc": item["publish_at"],
+    }
 
 
 @tool(annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=False, idempotentHint=False, openWorldHint=False))
@@ -620,15 +627,27 @@ async def queue_post(
     check = await asyncio.to_thread(post_queue.validate, path)
     fp = await asyncio.to_thread(post_queue.fingerprint, path)
     at_iso = at.isoformat(timespec="seconds")
-    preview = {"folder": str(path), "publish_at_local": post_queue.local_str(at_iso, tz), "publish_at_utc": at_iso,
-               "fingerprint": fp, **check}
+    preview = {
+        "folder": str(path),
+        "publish_at_local": post_queue.local_str(at_iso, tz),
+        "publish_at_utc": at_iso,
+        "fingerprint": fp,
+        **check,
+    }
     if not confirm:
-        return {"queued": False, "preview": preview,
-                "next": "Show this to the user. Call queue_post(..., confirm=true) with the SAME folder and when "
-                "only after they explicitly approve the post and the time."}
+        return {
+            "queued": False,
+            "preview": preview,
+            "next": "Show this to the user. Call queue_post(..., confirm=true) with the SAME folder and when "
+            "only after they explicitly approve the post and the time.",
+        }
     qid = svc.storage.queue_add(str(path), at_iso, fp, check["type"], check["caption_hook"])
-    return {"queued": True, "id": qid, **preview,
-            "note": "Published automatically while Claude Desktop runs on the laptop. Cancel with cancel_queued(id)."}
+    return {
+        "queued": True,
+        "id": qid,
+        **preview,
+        "note": "Published automatically while Claude Desktop runs on the laptop. Cancel with cancel_queued(id).",
+    }
 
 
 @tool(annotations=RO)
@@ -640,9 +659,11 @@ async def list_queue(include_done: bool = False) -> dict[str, Any]:
     taken = {datetime.fromisoformat(i["publish_at"]) for i in svc.storage.queue_list()}
     tz = svc.settings.timezone
     free = post_queue.next_slots(tz, datetime.now(UTC), taken, n=3)
-    return {"items": [_queue_view(i) for i in items],
-            "next_free_slots": [s.astimezone(tz).strftime("%a %Y-%m-%d %H:%M") for s in free],
-            "slots_rule": os.getenv("QUEUE_SLOTS") or post_queue.DEFAULT_SLOTS}
+    return {
+        "items": [_queue_view(i) for i in items],
+        "next_free_slots": [s.astimezone(tz).strftime("%a %Y-%m-%d %H:%M") for s in free],
+        "slots_rule": os.getenv("QUEUE_SLOTS") or post_queue.DEFAULT_SLOTS,
+    }
 
 
 @tool(annotations=ToolAnnotations(readOnlyHint=False, destructiveHint=False, idempotentHint=True, openWorldHint=False))

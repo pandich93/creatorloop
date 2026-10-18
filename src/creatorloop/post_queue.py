@@ -168,8 +168,12 @@ class QueueRunner:
         at = datetime.fromisoformat(item["publish_at"])
         st = svc.storage
         if now - at > LATE_WINDOW:
-            st.queue_update(qid, status="missed", error=f"server was not running between {item['publish_at']} and "
-                            f"+{LATE_WINDOW.seconds // 3600}h; nothing was posted")
+            st.queue_update(
+                qid,
+                status="missed",
+                error=f"server was not running between {item['publish_at']} and "
+                f"+{LATE_WINDOW.seconds // 3600}h; nothing was posted",
+            )
             return st.queue_get(qid)
         try:
             folder = resolve_folder(item["folder"])

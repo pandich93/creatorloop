@@ -194,8 +194,12 @@ def check_video(path: Path) -> dict[str, Any]:
         problems.append("moov atom must be at the front: re-mux with `ffmpeg -i in.mp4 -c copy -movflags +faststart out.mp4`")
     if problems:
         raise PublishError(f"{path.name} rejected: " + "; ".join(problems))
-    return {"file": path.name, "mb": round(info["bytes"] / 2**20, 1), "duration_s": d,
-            "size": f"{info['width']}x{info['height']}" if info["width"] else None}
+    return {
+        "file": path.name,
+        "mb": round(info["bytes"] / 2**20, 1),
+        "duration_s": d,
+        "size": f"{info['width']}x{info['height']}" if info["width"] else None,
+    }
 
 
 def read_reel_settings(folder: Path) -> dict[str, Any]:
@@ -410,8 +414,6 @@ class Publisher:
             raise PublishError(f"Publishing failed: {exc}") from exc
         media_id = body["id"]
         info = await self.client.get(f"/{media_id}", {"fields": "permalink,timestamp,media_type"})
-        self.storage.update_publication(
-            creation_id, status="published", media_id=media_id, permalink=info.get("permalink")
-        )
+        self.storage.update_publication(creation_id, status="published", media_id=media_id, permalink=info.get("permalink"))
         self.storage.cache_clear("me:")  # profile / media lists changed
         return {"published": True, "media_id": media_id, "permalink": info.get("permalink"), "timestamp": info.get("timestamp")}
