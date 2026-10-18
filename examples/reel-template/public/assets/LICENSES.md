@@ -5,7 +5,7 @@
 | `emoji/*.webp` | Fluent Emoji 3D (Microsoft), 256×256 RGBA, ref `fluent:<code>` | github.com/microsoft/fluentui-emoji; npm `@lobehub/fluent-emoji-3d@1.1.0` | MIT |
 | `3dicons/*.webp` | 3dicons (Vijay Verma), 512 px, ref `3d:<name>` | 3dicons.co | CC0 1.0 (no attribution required) |
 | `noto/*.json` | Animated Noto Emoji (Google), Lottie, ref `noto:<code>` | googlefonts.github.io/noto-emoji-animation | CC BY 4.0: the Reel caption must carry "Animated emoji: Google Noto Emoji (CC BY 4.0)" |
-| `catalog.json` | every object: source, licence, uz/ru search tags | `python tools/assets.py build` | — |
+| `catalog.json` | every object: source, licence, uz/ru/en search tags | `python tools/assets.py build` | — |
 | `../fonts/Inter-*.otf` | Inter typeface | rsms.me/inter | SIL Open Font License 1.1, full text in `../fonts/OFL-Inter.txt` |
 | `../fonts/DejaVuSansMono*.ttf` | DejaVu Sans Mono | dejavu-fonts.github.io | Bitstream Vera / public domain changes, full text in `../fonts/LICENSE-DejaVu.txt` |
 | `../track.wav` | music and sound effects | synthesised by `music/compose.py` | yours |

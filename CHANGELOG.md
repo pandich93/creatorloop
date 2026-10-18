@@ -5,6 +5,10 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- Reel template: English search tags for all 167 objects in the object catalog; `python tools/assets.py find`
+  now searches Uzbek, Russian and English tags (`find coffee`, `find kofe` and `find кофе` give the same objects).
+
 ### Changed
 - Python 3.12 and 3.13 are supported (was 3.14 only); CI tests 3.12, 3.13 and 3.14 on Ubuntu, macOS and Windows.
 - The code is formatted with `ruff format`; CI fails on unformatted code (`ruff format --check`).
