@@ -9,7 +9,7 @@ Analyse what works → make Reels and carousels → publish or queue them → re
 
 [![CI](https://github.com/pandich93/creatorloop/actions/workflows/ci.yml/badge.svg)](https://github.com/pandich93/creatorloop/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/creatorloop.svg)](https://pypi.org/project/creatorloop/)
-[![Python](https://img.shields.io/badge/python-3.14-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.12%20%7C%203.13%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 [Русский](https://github.com/pandich93/creatorloop/blob/main/README.ru.md) · [Oʻzbekcha](https://github.com/pandich93/creatorloop/blob/main/README.uz.md)
@@ -57,7 +57,7 @@ token are typed only into that local page, never into the chat.
 | macOS | `brew install uv` or `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
 | Linux | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
 
-uv downloads Python 3.14 by itself if you don't have it.
+creatorloop runs on Python 3.12 or newer; uv downloads one by itself if you don't have it.
 </details>
 
 `creatorloop-setup` finds the Claude Desktop config on Windows (including the Microsoft Store build), macOS and Linux,
