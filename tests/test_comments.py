@@ -17,12 +17,21 @@ def handler(posts, *, deny=False):
         if path.endswith("/m1/comments"):
             if deny:
                 return json_response({"error": {"message": "(#10) Application does not have permission", "code": 10}}, 400)
-            return json_response({"data": [
-                {"id": "c1", "text": "Zo'r!", "username": "ali", "timestamp": "2099-01-01T01:00:00+0000"},
-                {"id": "c2", "text": "Rahmat", "username": "vali", "timestamp": "2099-01-01T02:00:00+0000",
-                 "replies": {"data": [{"id": "r1", "username": "me", "text": "!"}]}},
-                {"id": "c3", "text": "my own", "username": "me", "timestamp": "2099-01-01T03:00:00+0000"},
-            ]})
+            return json_response(
+                {
+                    "data": [
+                        {"id": "c1", "text": "Zo'r!", "username": "ali", "timestamp": "2099-01-01T01:00:00+0000"},
+                        {
+                            "id": "c2",
+                            "text": "Rahmat",
+                            "username": "vali",
+                            "timestamp": "2099-01-01T02:00:00+0000",
+                            "replies": {"data": [{"id": "r1", "username": "me", "text": "!"}]},
+                        },
+                        {"id": "c3", "text": "my own", "username": "me", "timestamp": "2099-01-01T03:00:00+0000"},
+                    ]
+                }
+            )
         if path.endswith("/media"):
             return json_response({"data": MEDIA})
         if request.method == "POST" and path.endswith("/replies"):
@@ -51,16 +60,29 @@ async def test_new_comments_and_reply(make_service, monkeypatch):
 
 
 def test_thread_follow_ups_after_my_reply():
-    thread = {"id": "c1", "username": "ali", "text": "Savol", "timestamp": "2099-01-01T01:00:00+0000", "replies": {"data": [
-        {"id": "r1", "username": "me", "text": "Javob", "timestamp": "2099-01-01T02:00:00+0000"},
-        {"id": "r2", "username": "ali", "text": "Rahmat, yana savol", "timestamp": "2099-01-01T03:00:00+0000"},
-    ]}}
+    thread = {
+        "id": "c1",
+        "username": "ali",
+        "text": "Savol",
+        "timestamp": "2099-01-01T01:00:00+0000",
+        "replies": {
+            "data": [
+                {"id": "r1", "username": "me", "text": "Javob", "timestamp": "2099-01-01T02:00:00+0000"},
+                {"id": "r2", "username": "ali", "text": "Rahmat, yana savol", "timestamp": "2099-01-01T03:00:00+0000"},
+            ]
+        },
+    }
     items = comments._unanswered(thread, "me")
     assert [i["comment_id"] for i in items] == ["r2"]
     assert items[0]["reply_to"] == "c1" and items[0]["in_thread"] and items[0]["thread_start"]["text"] == "Savol"
     # a reply under MY own top-level comment is new too
-    own = {"id": "c9", "username": "me", "text": "@ali hi", "timestamp": "2099-01-01T01:00:00+0000",
-           "replies": {"data": [{"id": "r5", "username": "ali", "text": "ok", "timestamp": "2099-01-01T02:00:00+0000"}]}}
+    own = {
+        "id": "c9",
+        "username": "me",
+        "text": "@ali hi",
+        "timestamp": "2099-01-01T01:00:00+0000",
+        "replies": {"data": [{"id": "r5", "username": "ali", "text": "ok", "timestamp": "2099-01-01T02:00:00+0000"}]},
+    }
     assert [i["comment_id"] for i in comments._unanswered(own, "me")] == ["r5"]
     # untouched comment: the comment itself
     assert [i["comment_id"] for i in comments._unanswered({"id": "c5", "username": "x", "text": "?"}, "me")] == ["c5"]

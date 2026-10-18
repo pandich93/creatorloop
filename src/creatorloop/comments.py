@@ -46,23 +46,26 @@ def _unanswered(c: dict[str, Any], me: str) -> list[dict[str, Any]]:
         if i <= last_mine or (x.get("username") or "").lower() == me:
             continue  # mine, or already answered by a later message of mine
         in_thread = x is not c
-        items.append({
-            "comment_id": x["id"],
-            "reply_to": c["id"],
-            "username": x.get("username"),
-            "text": x.get("text"),
-            "timestamp": x.get("timestamp"),
-            "likes": x.get("like_count"),
-            "in_thread": in_thread,
-            "thread_start": {"username": c.get("username"), "text": c.get("text")} if in_thread else None,
-        })
+        items.append(
+            {
+                "comment_id": x["id"],
+                "reply_to": c["id"],
+                "username": x.get("username"),
+                "text": x.get("text"),
+                "timestamp": x.get("timestamp"),
+                "likes": x.get("like_count"),
+                "in_thread": in_thread,
+                "thread_start": {"username": c.get("username"), "text": c.get("text")} if in_thread else None,
+            }
+        )
     return items
 
 
 async def new_comments(svc, *, days: int = 14, only_new: bool = True, mark_seen: bool = True) -> dict[str, Any]:
     me = (await svc.my_username()).lower()
-    media = [m for m in analytics.media_since(await svc.my_media(limit=50, refresh=True), days)
-             if (m.get("comments_count") or 0) > 0]
+    media = [
+        m for m in analytics.media_since(await svc.my_media(limit=50, refresh=True), days) if (m.get("comments_count") or 0) > 0
+    ]
     sem = asyncio.Semaphore(4)
 
     async def fetch(m: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:

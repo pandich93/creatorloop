@@ -41,9 +41,7 @@ async def test_retry_on_transient(make_service, monkeypatch):
 
 
 async def test_usage_headers_recorded(make_service):
-    svc = make_service(
-        lambda r: json_response({"id": "1", "username": "me"}, headers={"x-app-usage": '{"call_count": 12}'})
-    )
+    svc = make_service(lambda r: json_response({"id": "1", "username": "me"}, headers={"x-app-usage": '{"call_count": 12}'}))
     await svc.my_profile()
     assert svc.client.usage.app_usage == {"call_count": 12}
 
@@ -58,8 +56,10 @@ async def test_business_discovery_fallback_and_pagination(make_service):
             err = {"message": "(#100) Tried accessing nonexisting field (view_count)", "code": 100}
             return json_response({"error": err}, 400)
         if ".after(" not in fields:
-            media = {"data": [{"id": "a", "timestamp": "2026-09-01T10:00:00+0000", "like_count": 1}],
-                     "paging": {"cursors": {"after": "CUR"}}}
+            media = {
+                "data": [{"id": "a", "timestamp": "2026-09-01T10:00:00+0000", "like_count": 1}],
+                "paging": {"cursors": {"after": "CUR"}},
+            }
         else:
             media = {"data": [{"id": "b", "timestamp": "2026-09-02T10:00:00+0000", "like_count": 2}]}
         return json_response({"business_discovery": {"username": "rival", "followers_count": 500, "media": media}, "id": "1784"})
@@ -127,8 +127,16 @@ async def test_debug_token_warns_before_expiry(make_service):
 
     def handler(request: httpx.Request) -> httpx.Response:
         assert request.url.params["access_token"] == "TEST"  # self-inspection, no app secret needed
-        return json_response({"data": {"is_valid": True, "type": "USER", "expires_at": int(time.time()) + 5 * 86400,
-                                        "data_access_expires_at": int(time.time()) + 80 * 86400}})
+        return json_response(
+            {
+                "data": {
+                    "is_valid": True,
+                    "type": "USER",
+                    "expires_at": int(time.time()) + 5 * 86400,
+                    "data_access_expires_at": int(time.time()) + 80 * 86400,
+                }
+            }
+        )
 
     svc = make_service(handler)
     status = await svc.debug_token()

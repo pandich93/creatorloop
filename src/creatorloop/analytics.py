@@ -396,8 +396,7 @@ def post_growth(history: dict[str, Any]) -> dict[str, Any]:
     if len(points) >= 2:
         first, last = points[0], points[-1]
         hours = max(
-            (datetime.fromisoformat(last["captured_at"]) - datetime.fromisoformat(first["captured_at"])).total_seconds()
-            / 3600,
+            (datetime.fromisoformat(last["captured_at"]) - datetime.fromisoformat(first["captured_at"])).total_seconds() / 3600,
             1e-9,
         )
         per_day = {}
@@ -507,8 +506,13 @@ def caption_breakdown(media: list[dict[str, Any]], *, own: bool, min_age_hours: 
         "by_cta": group("has_cta"),
         "by_length": group("length_bucket"),
         "best_hooks": [
-            {"hook": f["hook"], "format": media_format(m), "score": score(m), "language": f["language"],
-             "permalink": m.get("permalink")}
+            {
+                "hook": f["hook"],
+                "format": media_format(m),
+                "score": score(m),
+                "language": f["language"],
+                "permalink": m.get("permalink"),
+            }
             for m, f in ranked[:7]
         ],
         "worst_hooks": [

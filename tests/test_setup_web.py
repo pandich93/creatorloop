@@ -263,9 +263,7 @@ def raw_post(srv, headers, body=b""):
         return sock.makefile("rb").readline().decode()
 
 
-@pytest.mark.parametrize(
-    ("length", "body"), [("abc", b""), ("-1", b""), ("2", b"[]"), ("4", b"null"), ("2", b"42")]
-)
+@pytest.mark.parametrize(("length", "body"), [("abc", b""), ("-1", b""), ("2", b"[]"), ("4", b"null"), ("2", b"42")])
 def test_malformed_posts_get_400_and_the_server_lives(make_server, length, body):
     srv = make_server()
     json_type = {"Content-Type": "application/json", "Content-Length": length}
@@ -336,9 +334,7 @@ def test_run_returns_the_result(env_path, monkeypatch):
 
 def test_second_choice_after_completion_changes_nothing(env_path):
     done = []
-    session = setup_web.SetupSession(
-        env_path, make_auth=lambda i, s: FakeAuth(i, s, accounts=(ME, SHOP)), on_done=done.append
-    )
+    session = setup_web.SetupSession(env_path, make_auth=lambda i, s: FakeAuth(i, s, accounts=(ME, SHOP)), on_done=done.append)
     session.set_app("1234", "secret")
     session.callback({"state": session.state, "code": "CODE"}, "http://localhost/callback")
     session.choose(ME.id)
@@ -391,7 +387,7 @@ def test_open_browser_detaches_the_child_from_our_stdio(monkeypatch, platform, c
     calls = []
     monkeypatch.setattr(setup_web.subprocess, "Popen", lambda *a, **kw: calls.append((a, kw)))
     assert setup_web.open_browser("http://localhost:1/", platform=platform) is True
-    (args, kwargs), = calls
+    ((args, kwargs),) = calls
     assert args[0] == [command, "http://localhost:1/"]
     for stream in ("stdin", "stdout", "stderr"):
         assert kwargs[stream] == subprocess.DEVNULL

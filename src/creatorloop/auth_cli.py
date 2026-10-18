@@ -62,8 +62,7 @@ def cmd_login(args: argparse.Namespace) -> None:
             "The setup page closed before the account was connected (stopped, or the 15-minute limit). "
             "Run `creatorloop-auth login` again."
         )
-    print(f"OK: @{result.username} connected, settings saved to {env_path}. "
-          f"Restart Claude Desktop if it is running.")
+    print(f"OK: @{result.username} connected, settings saved to {env_path}. Restart Claude Desktop if it is running.")
 
 
 def cmd_exchange(args: argparse.Namespace) -> None:

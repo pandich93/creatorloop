@@ -48,7 +48,7 @@ def source_root(package_dir: Path = PACKAGE_DIR) -> Path | None:
     pyproject = package_dir.parents[1] / "pyproject.toml"
     try:
         name = tomllib.loads(pyproject.read_text(encoding="utf-8"))["project"]["name"]
-    except OSError, KeyError, tomllib.TOMLDecodeError:
+    except (OSError, KeyError, tomllib.TOMLDecodeError):
         return None
     return pyproject.parent if name == APP else None
 

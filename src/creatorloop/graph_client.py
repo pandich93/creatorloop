@@ -157,9 +157,7 @@ class GraphClient:
             raise GraphAPIError(f"Video upload rejected (HTTP {response.status_code}): {debug}", status=response.status_code)
         return body
 
-    async def paginate(
-        self, path: str, params: dict[str, Any] | None = None, *, max_items: int = 100
-    ) -> list[dict[str, Any]]:
+    async def paginate(self, path: str, params: dict[str, Any] | None = None, *, max_items: int = 100) -> list[dict[str, Any]]:
         """Follow cursor pagination (`paging.cursors.after`) until max_items."""
         items: list[dict[str, Any]] = []
         page_params = dict(params or {})
@@ -194,9 +192,7 @@ class GraphClient:
         except ValueError:
             if response.is_success:
                 raise GraphAPIError("Non-JSON response from Graph API", status=response.status_code) from None
-            raise GraphAPIError(
-                f"HTTP {response.status_code}: {response.text[:300]}", status=response.status_code
-            ) from None
+            raise GraphAPIError(f"HTTP {response.status_code}: {response.text[:300]}", status=response.status_code) from None
 
         if response.is_success and "error" not in body:
             return body

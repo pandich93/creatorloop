@@ -78,6 +78,5 @@ def test_login_busy_port(monkeypatch):
     with pytest.raises(SystemExit) as exit_:
         run_cli(monkeypatch, "login", "--port", "8765")
     assert str(exit_.value) == (
-        "Cannot start the setup page on 127.0.0.1:8765: [Errno 48] Address already in use. "
-        "Pass another --port, or check --bind."
+        "Cannot start the setup page on 127.0.0.1:8765: [Errno 48] Address already in use. Pass another --port, or check --bind."
     )

@@ -66,8 +66,18 @@ async def test_compare_accounts_end_to_end(make_service, monkeypatch):
         if name == "ghost":
             return json_response({"error": {"message": "Invalid user id", "code": 110}}, 400)
         followers = {"me": 100, "rival": 1000}[name]
-        media = {"data": [{"id": f"{name}{i}", "media_type": "IMAGE", "timestamp": f"2026-09-0{i + 1}T10:00:00+0000",
-                           "like_count": 10 * (i + 1), "comments_count": 1} for i in range(3)]}
+        media = {
+            "data": [
+                {
+                    "id": f"{name}{i}",
+                    "media_type": "IMAGE",
+                    "timestamp": f"2026-09-0{i + 1}T10:00:00+0000",
+                    "like_count": 10 * (i + 1),
+                    "comments_count": 1,
+                }
+                for i in range(3)
+            ]
+        }
         return json_response({"business_discovery": {"username": name, "followers_count": followers, "media": media}})
 
     monkeypatch.setattr(server, "_service", make_service(handler))
@@ -107,8 +117,12 @@ async def test_tracking_flow_detects_new_posts(make_service, monkeypatch):
     def handler(request: httpx.Request) -> httpx.Response:
         if request.url.path.endswith("/debug_token"):
             return json_response({"data": {"is_valid": True}})
-        media = {"data": [{"id": p, "media_type": "IMAGE", "timestamp": "2026-08-01T10:00:00+0000",
-                           "like_count": 5, "comments_count": 0} for p in state["posts"]]}
+        media = {
+            "data": [
+                {"id": p, "media_type": "IMAGE", "timestamp": "2026-08-01T10:00:00+0000", "like_count": 5, "comments_count": 0}
+                for p in state["posts"]
+            ]
+        }
         return json_response({"business_discovery": {"username": "rival", "followers_count": 10, "media": media}})
 
     monkeypatch.setattr(server, "_service", make_service(handler))
