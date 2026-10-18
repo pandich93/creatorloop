@@ -8,7 +8,7 @@ from datetime import datetime, tzinfo
 from pathlib import Path
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 
 from creatorloop import paths
 
@@ -16,10 +16,14 @@ DEFAULT_API_VERSION = "v26.0"
 
 
 def _load_env() -> None:
-    # Real environment variables win (override=False), then the user's home .env, then ./.env (development).
+    # Real environment variables win, then the user's home .env, then ./.env (development).
     # Claude Desktop starts the process with an arbitrary cwd, so the home .env is the one that matters.
-    load_dotenv(paths.home_dir() / ".env", override=False)
-    load_dotenv(Path.cwd() / ".env", override=False)
+    # An empty variable counts as unset: the Claude Desktop bundle passes "" for a setting left empty, and that
+    # must not hide the token the setup page saved to .env.
+    for env_file in (paths.home_dir() / ".env", Path.cwd() / ".env"):
+        for key, value in dotenv_values(env_file).items():
+            if (value or "").strip() and not os.environ.get(key, "").strip():
+                os.environ[key] = value
 
 
 def _zone(name: str) -> ZoneInfo | None:

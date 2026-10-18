@@ -65,6 +65,16 @@ def test_env_precedence(clean_env, monkeypatch):
     assert s.access_token == "from-home"  # then the user's home .env, then ./.env
 
 
+def test_empty_env_var_does_not_hide_env_file(clean_env, monkeypatch):
+    # the Claude Desktop bundle passes "" for a setting the user left empty: the setup page's .env must still count
+    home, _ = clean_env
+    (home / ".env").write_text("IG_ACCESS_TOKEN=from-home\nIG_USER_ID=home-id\n", encoding="utf-8")
+    monkeypatch.setenv("IG_ACCESS_TOKEN", "")
+    monkeypatch.setenv("IG_USER_ID", " ")
+    s = config.load_settings()
+    assert (s.access_token, s.ig_user_id) == ("from-home", "home-id")
+
+
 def test_env_falls_back_to_cwd(clean_env):
     _, cwd = clean_env
     (cwd / ".env").write_text("IG_ACCESS_TOKEN=from-cwd\n", encoding="utf-8")
