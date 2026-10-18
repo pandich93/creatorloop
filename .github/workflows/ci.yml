@@ -34,6 +34,10 @@ jobs:
           mapfile -t args < <(jq -r '.server.mcp_config.args[]' manifest.json | sed "s|\${__dirname}|$RUNNER_TEMP/bundle|")
           IG_ACCESS_TOKEN= IG_USER_ID= CREATORLOOP_HOME="$RUNNER_TEMP/home" \
             python3 .github/scripts/mcp_smoke.py 34 "$(jq -r .server.mcp_config.command manifest.json)" "${args[@]}"
+      - uses: actions/upload-artifact@v4 # for trying the bundle in Claude Desktop before a release
+        with:
+          name: creatorloop-mcpb
+          path: ${{ runner.temp }}/creatorloop.mcpb
 
   docker:
     runs-on: ubuntu-latest
