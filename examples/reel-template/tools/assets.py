@@ -89,7 +89,7 @@ def build() -> dict:
         d = ASSETS / s["dir"]
         for f in sorted(d.glob(f"*.{s['ext']}")) if d.exists() else []:
             ref = f"{src}:{f.stem}"
-            uz, ru = TAGS.get(ref, ("", ""))
+            uz, ru, en = TAGS.get(ref, ("", "", ""))
             if not uz:
                 untagged.append(ref)
             items.append({
@@ -98,6 +98,7 @@ def build() -> dict:
                 "name": name_of(src, f.stem), "animated": src == "noto",
                 "uz": [t.strip() for t in uz.split(",") if t.strip()],
                 "ru": [t.strip() for t in ru.split(",") if t.strip()],
+                "en": [t.strip() for t in en.split(",") if t.strip()],
             })
     cat = {"sources": SOURCES, "items": items}
     CATALOG.write_text(json.dumps(cat, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -114,10 +115,12 @@ def load() -> dict:
 
 def find(words: list[str]) -> None:
     q = " ".join(words).lower()
-    hits = [i for i in load()["items"] if q in " ".join([i["ref"], i["name"], *i["uz"], *i["ru"]]).lower()]
+    items = load()["items"]
+    hits = [i for i in items if q in " ".join([i["ref"], i["name"], *i["uz"], *i["ru"], *i.get("en", [])]).lower()]
     for i in hits:
         anim = " (anim)" if i["animated"] else ""
-        print(f"{i['ref']:<22} {i['char']:<3} {', '.join(i['uz'][:3])} | {', '.join(i['ru'][:2])}{anim}")
+        tags = f"{', '.join(i['uz'][:3])} | {', '.join(i['ru'][:2])} | {', '.join(i.get('en', [])[:2])}"
+        print(f"{i['ref']:<22} {i['char']:<3} {tags}{anim}")
     if not hits:
         print("nothing found; try another word or: python tools/assets.py sheet")
 

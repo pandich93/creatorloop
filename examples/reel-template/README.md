@@ -52,8 +52,8 @@ Claude to prepare or queue it.
   `terminal {cmd, out}`, `counter {from, to, prefix?, suffix?, caption}`, `beforeafter {bad, good}`,
   `checklist {items}`, `chart {bars:[{label,value}], caption}`.
 - Objects (`hero`, `heroes`, `visual.bot`, `visual.icon`): `fluent:2615` (or just `2615`), `3d:wallet`, `noto:1f525`
-  (animated Lottie). Search: `python tools/assets.py find coffee` (tags are in Uzbek and Russian today; English tags
-  are welcome as a contribution). All objects on one image: `python tools/assets.py sheet` → `public/assets/assets.png`.
+  (animated Lottie). Search: `python tools/assets.py find coffee` (tags in English, Russian and Uzbek: `kofe` and
+  `кофе` find the same objects). All objects on one image: `python tools/assets.py sheet` → `public/assets/assets.png`.
 - `tools/from_carousel.py ../sample-carousel/build.py` drafts a config from a carousel script (reads its `HANDLE`,
   `SIGNATURE` and slide dicts without running it). Rewrite the hook afterwards — the Reel needs its own first frame.
 
@@ -85,5 +85,5 @@ camera and a wipe — always a wipe when the background changes); objects bob on
 | 3dicons (Vijay Verma) | `3d:<name>` | CC0 | `python tools/assets.py import-3d archive.zip wallet=wallet-iso-color.png` |
 | Animated Noto Emoji (Google) | `noto:<code>` | CC BY 4.0 | `python tools/assets.py import-noto folder_with_json` |
 
-After adding: tags in `tools/catalog_tags.py`, then `python tools/assets.py build && python tools/assets.py sheet`.
+After adding: uz / ru / en tags in `tools/catalog_tags.py`, then `python tools/assets.py build && python tools/assets.py sheet`.
 Licences of every bundled file: `public/assets/LICENSES.md`.
