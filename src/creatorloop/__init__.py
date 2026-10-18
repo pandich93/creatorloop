@@ -5,7 +5,7 @@ analyse your account and competitors, make Reels and carousels, schedule them an
 Not affiliated with, endorsed or sponsored by Meta or Instagram.
 """
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 DISCLAIMER = (
     "creatorloop is an independent open-source project. Not affiliated with, endorsed or sponsored by Meta or "
