@@ -804,7 +804,7 @@ async def get_api_status() -> dict[str, Any]:
 
 def _apply_setup(result: setup_web.Result) -> None:
     """Runs in the setup page thread when the user finishes: make the new token visible without a restart.
-    _load_env() never overrides variables already in os.environ, and the empty template values are there since start."""
+    _load_env() never overrides a non-empty variable already in os.environ, such as the old token loaded at start."""
     global _service, _setup_result
     os.environ.update(result.values)
     _setup_result = result

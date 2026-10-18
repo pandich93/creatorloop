@@ -1,0 +1,60 @@
+{
+  "manifest_version": "0.4",
+  "name": "creatorloop",
+  "display_name": "creatorloop",
+  "version": "0.2.0",
+  "description": "Instagram content studio for Claude: analytics, competitors, Reels, publishing queue.",
+  "long_description": "Open-source AI content studio for Instagram creators, built on the official Instagram Graph API. Analyse what works, make Reels and carousels, publish or queue them and review how they did, all from a chat with Claude.\n\nYou need an Instagram **Business or Creator** account linked to a Facebook Page and your own Meta app ([5-minute guide](https://github.com/pandich93/creatorloop/blob/main/docs/meta-setup.md#1-create-the-app)). Leave the settings below empty and ask Claude to *connect my Instagram*: it opens a local setup page that logs in with Facebook and saves the token on your computer.\n\nNot affiliated with, endorsed or sponsored by Meta or Instagram.",
+  "author": {
+    "name": "pandich",
+    "url": "https://github.com/pandich93"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pandich93/creatorloop"
+  },
+  "homepage": "https://github.com/pandich93/creatorloop",
+  "documentation": "https://github.com/pandich93/creatorloop#readme",
+  "support": "https://github.com/pandich93/creatorloop/issues",
+  "server": {
+    "type": "uv",
+    "entry_point": "src/creatorloop/__main__.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": ["run", "--directory", "${__dirname}", "--frozen", "--no-dev", "creatorloop"],
+      "env": {
+        "IG_ACCESS_TOKEN": "${user_config.ig_access_token}",
+        "IG_USER_ID": "${user_config.ig_user_id}"
+      }
+    }
+  },
+  "user_config": {
+    "ig_access_token": {
+      "type": "string",
+      "title": "Instagram access token (optional)",
+      "description": "Leave empty and ask Claude to \"connect my Instagram\": the setup page saves the token for you. Fill in only if you already have a long-lived or System User token. A value here wins over the setup page, so clear it if you reconnect there.",
+      "sensitive": true,
+      "required": false,
+      "default": ""
+    },
+    "ig_user_id": {
+      "type": "string",
+      "title": "Instagram account ID (optional)",
+      "description": "The professional account ID (1784...), not the username. Leave empty when you use the setup page; fill in together with the token.",
+      "required": false,
+      "default": ""
+    }
+  },
+  "keywords": ["instagram", "reels", "content-creator", "social-media", "analytics", "publishing"],
+  "license": "MIT",
+  "privacy_policies": [
+    "https://www.facebook.com/privacy/policy/",
+    "https://www.cloudflare.com/privacypolicy/"
+  ],
+  "compatibility": {
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": {
+      "python": ">=3.14"
+    }
+  }
+}

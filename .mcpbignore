@@ -1,0 +1,11 @@
+# The Claude Desktop bundle (mcpb pack) holds only what `uv run` needs: everything else is excluded.
+*
+!manifest.json
+!pyproject.toml
+!uv.lock
+!README.md
+!LICENSE
+!src
+!src/**
+__pycache__
+*.pyc

@@ -37,6 +37,10 @@ Use `CREATORLOOP_HOME=/some/test/folder` to keep a test account's settings and d
 
 ## Releases (maintainer)
 
-Bump `__version__` in `src/creatorloop/__init__.py` and both versions in `server.json`, move *Unreleased* to the new
-version in `CHANGELOG.md`, then push a tag `vX.Y.Z`. The release workflow publishes to PyPI, GitHub Releases and the
+Bump `__version__` in `src/creatorloop/__init__.py`, both versions in `server.json` and the version in `manifest.json`
+(`tests/test_release.py` fails until they match), move *Unreleased* to the new version in `CHANGELOG.md`, then push a
+tag `vX.Y.Z`. The release workflow publishes to PyPI, GitHub Releases (with the Claude Desktop `.mcpb` bundle) and the
 MCP Registry.
+
+To try the bundle locally: `npx -y @anthropic-ai/mcpb@2.1.2 pack . /tmp/creatorloop.mcpb`, then open the file in
+Claude Desktop. `.mcpbignore` lists what goes into it.

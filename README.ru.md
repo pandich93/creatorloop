@@ -29,6 +29,16 @@ uvx --from creatorloop creatorloop-setup
 последние 10 постов и что мне публиковать дальше?»* Уже в Claude? Попросите *«подключи мой Instagram»* — откроется
 та же страница. Секрет и токен вводятся только на ней, не в чат.
 
+### Установка в один клик (Claude Desktop)
+
+Не хотите открывать терминал? Скачайте файл `.mcpb` из
+[последнего релиза](https://github.com/pandich93/creatorloop/releases/latest) и откройте его двойным щелчком (или
+перетащите в Claude Desktop → Settings → Extensions). Python и зависимости Claude Desktop поставит сам, поэтому первый
+запуск займёт около минуты. Два необязательных поля оставьте пустыми и попросите Claude *«подключи мой Instagram»* —
+откроется та же страница настройки. Заполняйте их, только если у вас уже есть токен и ID аккаунта: значения из этих
+полей важнее страницы настройки. Если Claude Desktop не находит `uv`, установите [uv](https://docs.astral.sh/uv/getting-started/installation/)
+и перезапустите Claude Desktop.
+
 Полная документация — в [README на английском](README.md).
 
 Независимый open source проект, не связан с Meta и Instagram. Лицензия [MIT](LICENSE).

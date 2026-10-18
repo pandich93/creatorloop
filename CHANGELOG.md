@@ -8,6 +8,12 @@ All notable changes to this project are documented here. The format follows
 ### Added
 - Reel template: English search tags for all 167 objects in the object catalog; `python tools/assets.py find`
   now searches Uzbek, Russian and English tags (`find coffee`, `find kofe` and `find кофе` give the same objects).
+- One-click install for Claude Desktop: every GitHub Release carries a `creatorloop-X.Y.Z.mcpb` bundle
+  (`manifest.json`, `uv` server type). The access token and account ID are optional, masked fields: leave them empty
+  and connect through `open_setup`. CI packs the bundle and checks that it starts and lists the tools.
+
+### Fixed
+- An empty `IG_ACCESS_TOKEN` / `IG_USER_ID` environment variable no longer hides the values saved in `.env`.
 
 ### Changed
 - Python 3.12 and 3.13 are supported (was 3.14 only); CI tests 3.12, 3.13 and 3.14 on Ubuntu, macOS and Windows.

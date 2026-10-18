@@ -64,6 +64,15 @@ creatorloop runs on Python 3.12 or newer; uv downloads one by itself if you don'
 keeps your other servers, makes a backup and creates your settings file. Claude Desktop rewrites its config while it
 runs, so on macOS the command quits and reopens it for you; on Windows and Linux it asks you to quit it first.
 
+### One-click install (Claude Desktop)
+
+Prefer not to open a terminal? Download the `.mcpb` file from the
+[latest release](https://github.com/pandich93/creatorloop/releases/latest) and double-click it (or drag it into
+Claude Desktop → Settings → Extensions). Claude Desktop sets up Python and the dependencies itself, so the first start
+takes a minute. Leave the two optional fields empty and ask Claude *"connect my Instagram"*: the same setup page opens.
+Fill them in only if you already have a token and account ID — values entered there win over the setup page. If
+Claude Desktop says it can't find `uv`, install it (see *Installing uv* above) and restart Claude Desktop.
+
 <details>
 <summary>Running in Docker instead of uv</summary>
 

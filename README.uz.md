@@ -29,6 +29,16 @@ qiymatlarini kiriting, **“Facebook orqali davom etish”** tugmasini bosing �
 *«Oxirgi 10 ta postim qanday ketdi va keyin nima joylashim kerak?»* Claude'dasizmi? *«Instagram'imni ulab ber»* deb
 soʻrang — oʻsha sahifa ochiladi. Secret va token faqat shu sahifada kiritiladi, chatga emas.
 
+### Bir bosishda oʻrnatish (Claude Desktop)
+
+Terminal ochishni xohlamaysizmi? [Soʻnggi reliz](https://github.com/pandich93/creatorloop/releases/latest)dan
+`.mcpb` faylini yuklab oling va ustiga ikki marta bosing (yoki Claude Desktop → Settings → Extensions oynasiga sudrab
+olib keling). Python va kutubxonalarni Claude Desktop oʻzi oʻrnatadi, shuning uchun birinchi ishga tushirish bir
+daqiqacha vaqt oladi. Ikkita ixtiyoriy maydonni boʻsh qoldiring va Claude'dan *«Instagram'imni ulab ber»* deb
+soʻrang — oʻsha sozlash sahifasi ochiladi. Ularni faqat tokeningiz va akkaunt ID'ingiz allaqachon boʻlsa toʻldiring:
+bu maydonlardagi qiymatlar sozlash sahifasidan ustun turadi. Claude Desktop `uv`ni topa olmasa,
+[uv](https://docs.astral.sh/uv/getting-started/installation/)ni oʻrnating va Claude Desktop'ni qayta ishga tushiring.
+
 Toʻliq hujjatlar — [ingliz tilidagi README](README.md)da.
 
 Mustaqil ochiq kodli loyiha, Meta va Instagram bilan bogʻliq emas. Litsenziya: [MIT](LICENSE).
