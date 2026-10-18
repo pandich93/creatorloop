@@ -5,6 +5,9 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+- The code is formatted with `ruff format`; CI fails on unformatted code (`ruff format --check`).
+
 ## [0.2.0] - 2026-10-14
 
 ### Added
