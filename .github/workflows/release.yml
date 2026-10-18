@@ -20,10 +20,16 @@ jobs:
       - run: uv run ruff check src tests
       - run: uv run pytest -q
       - run: uv build
+      - name: Claude Desktop bundle (.mcpb)
+        run: npx -y @anthropic-ai/mcpb@2.1.2 pack . "mcpb/creatorloop-${GITHUB_REF_NAME#v}.mcpb"
       - uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
+      - uses: actions/upload-artifact@v4 # kept out of dist/: that folder goes to PyPI
+        with:
+          name: mcpb
+          path: mcpb/
 
   pypi:
     needs: build
@@ -51,6 +57,10 @@ jobs:
         with:
           name: dist
           path: dist/
+      - uses: actions/download-artifact@v4
+        with:
+          name: mcpb
+          path: mcpb/
       - name: Release notes from CHANGELOG.md
         run: |
           version="${GITHUB_REF_NAME#v}"
@@ -58,7 +68,7 @@ jobs:
           test -s notes.md || echo "See CHANGELOG.md" > notes.md
       - env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/* --title "creatorloop $GITHUB_REF_NAME" --notes-file notes.md
+        run: gh release create "$GITHUB_REF_NAME" dist/* mcpb/* --title "creatorloop $GITHUB_REF_NAME" --notes-file notes.md
 
   mcp-registry:
     needs: pypi

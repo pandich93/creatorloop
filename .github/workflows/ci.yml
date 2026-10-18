@@ -20,6 +20,21 @@ jobs:
       - run: uv run ruff check src tests
       - run: uv run pytest -q
 
+  mcpb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - run: npx -y @anthropic-ai/mcpb@2.1.2 pack . "$RUNNER_TEMP/creatorloop.mcpb"
+      - name: The unpacked bundle starts the way Claude Desktop runs it (settings left empty)
+        run: |
+          unzip -q "$RUNNER_TEMP/creatorloop.mcpb" -d "$RUNNER_TEMP/bundle"
+          mapfile -t args < <(jq -r '.server.mcp_config.args[]' manifest.json | sed "s|\${__dirname}|$RUNNER_TEMP/bundle|")
+          IG_ACCESS_TOKEN= IG_USER_ID= CREATORLOOP_HOME="$RUNNER_TEMP/home" \
+            python3 .github/scripts/mcp_smoke.py 34 "$(jq -r .server.mcp_config.command manifest.json)" "${args[@]}"
+
   docker:
     runs-on: ubuntu-latest
     steps:

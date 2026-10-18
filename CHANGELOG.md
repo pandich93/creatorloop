@@ -5,6 +5,14 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- One-click install for Claude Desktop: every GitHub Release carries a `creatorloop-X.Y.Z.mcpb` bundle
+  (`manifest.json`, `uv` server type). The access token and account ID are optional, masked fields: leave them empty
+  and connect through `open_setup`. CI packs the bundle and checks that it starts and lists the tools.
+
+### Fixed
+- An empty `IG_ACCESS_TOKEN` / `IG_USER_ID` environment variable no longer hides the values saved in `.env`.
+
 ## [0.2.0] - 2026-10-14
 
 ### Added

@@ -27,3 +27,15 @@ def test_readme_carries_registry_ownership_marker():
 
 def test_changelog_has_current_version():
     assert f"## [{creatorloop.__version__}]" in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+
+
+def test_mcpb_manifest_matches_package():
+    manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
+    server = json.loads((ROOT / "server.json").read_text(encoding="utf-8"))
+    assert manifest["version"] == creatorloop.__version__
+    assert (ROOT / manifest["server"]["entry_point"]).is_file()
+    [pkg] = server["packages"]
+    assert set(manifest["server"]["mcp_config"]["env"]) <= {v["name"] for v in pkg["environmentVariables"]}
+    for key, option in manifest["user_config"].items():
+        # without a default Claude Desktop passes the literal "${user_config.<key>}" for a field left empty
+        assert option.get("required") or option.get("default") == "", key
