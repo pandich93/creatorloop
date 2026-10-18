@@ -26,13 +26,32 @@ def test_shortcode_parsing():
 
 
 def bd_handler(seen_fields, *, reject_extended=False):
-    page1 = [{"id": str(i), "permalink": f"https://www.instagram.com/p/other{i}/", "media_type": "IMAGE",
-              "timestamp": "2026-09-01T10:00:00+0000", "like_count": 10, "comments_count": 0} for i in range(3)]
-    target = {"id": "t", "permalink": "https://www.instagram.com/p/DeCHjDpjuI8/", "media_type": "CAROUSEL_ALBUM",
-              "timestamp": "2026-09-02T10:00:00+0000", "like_count": 40, "comments_count": 5,
-              "caption": "Собирай не просто проекты\n\nНапиши «КЛИЕНТЫ»",
-              "children": {"data": [{"media_type": "IMAGE", "media_url": "https://cdn.example/1.jpg"},
-                                    {"media_type": "VIDEO", "thumbnail_url": "https://cdn.example/2.jpg"}]}}
+    page1 = [
+        {
+            "id": str(i),
+            "permalink": f"https://www.instagram.com/p/other{i}/",
+            "media_type": "IMAGE",
+            "timestamp": "2026-09-01T10:00:00+0000",
+            "like_count": 10,
+            "comments_count": 0,
+        }
+        for i in range(3)
+    ]
+    target = {
+        "id": "t",
+        "permalink": "https://www.instagram.com/p/DeCHjDpjuI8/",
+        "media_type": "CAROUSEL_ALBUM",
+        "timestamp": "2026-09-02T10:00:00+0000",
+        "like_count": 40,
+        "comments_count": 5,
+        "caption": "Собирай не просто проекты\n\nНапиши «КЛИЕНТЫ»",
+        "children": {
+            "data": [
+                {"media_type": "IMAGE", "media_url": "https://cdn.example/1.jpg"},
+                {"media_type": "VIDEO", "thumbnail_url": "https://cdn.example/2.jpg"},
+            ]
+        },
+    }
 
     def handler(request: httpx.Request) -> httpx.Response:
         if request.url.host == "cdn.example":
@@ -44,8 +63,9 @@ def bd_handler(seen_fields, *, reject_extended=False):
         fields = request.url.params["fields"]
         seen_fields.append(fields)
         if reject_extended and "view_count" in fields:
-            return json_response({"error": {"message": "(#100) Tried accessing nonexisting field (view_count)",
-                                            "code": 100}}, 400)
+            return json_response(
+                {"error": {"message": "(#100) Tried accessing nonexisting field (view_count)", "code": 100}}, 400
+            )
         if ".after(" in fields:
             media = {"data": [target]}
         else:

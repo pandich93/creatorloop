@@ -5,12 +5,25 @@ from creatorloop import analytics
 TZ = ZoneInfo("Asia/Karachi")
 
 MEDIA = [
-    {"id": "1", "media_type": "VIDEO", "media_product_type": "REELS", "timestamp": "2026-09-01T10:00:00+0000",
-     "like_count": 100, "comments_count": 10, "view_count": 5000, "caption": "Новый ролик #финансы #money"},
-    {"id": "2", "media_type": "CAROUSEL_ALBUM", "timestamp": "2026-09-04T10:00:00+0000",
-     "like_count": 50, "comments_count": 5, "caption": "#финансы карусель"},
-    {"id": "3", "media_type": "IMAGE", "timestamp": "2026-09-08T10:00:00+0000",
-     "comments_count": 2, "caption": "likes hidden"},
+    {
+        "id": "1",
+        "media_type": "VIDEO",
+        "media_product_type": "REELS",
+        "timestamp": "2026-09-01T10:00:00+0000",
+        "like_count": 100,
+        "comments_count": 10,
+        "view_count": 5000,
+        "caption": "Новый ролик #финансы #money",
+    },
+    {
+        "id": "2",
+        "media_type": "CAROUSEL_ALBUM",
+        "timestamp": "2026-09-04T10:00:00+0000",
+        "like_count": 50,
+        "comments_count": 5,
+        "caption": "#финансы карусель",
+    },
+    {"id": "3", "media_type": "IMAGE", "timestamp": "2026-09-08T10:00:00+0000", "comments_count": 2, "caption": "likes hidden"},
 ]
 
 
@@ -60,8 +73,7 @@ def test_best_times_local_timezone():
 
 def _own(mid, reach, likes, ts="2026-08-01T10:00:00+0000", fmt="CAROUSEL_ALBUM", saved=0, shares=0):
     ins = {"reach": reach, "likes": likes, "comments": 0, "saved": saved, "shares": shares, "views": reach * 2}
-    return {"id": mid, "media_type": fmt, "timestamp": ts, "insights": ins,
-            "engagement_rate": analytics.own_engagement_rate(ins)}
+    return {"id": mid, "media_type": fmt, "timestamp": ts, "insights": ins, "engagement_rate": analytics.own_engagement_rate(ins)}
 
 
 def test_weighted_engagement_rate_ignores_tiny_reach_outliers():
@@ -87,11 +99,24 @@ def test_short_views_fall_back_to_insights():
 
 def test_viral_posts_by_views_and_interactions():
     media = [
-        {"id": f"r{i}", "media_product_type": "REELS", "media_type": "VIDEO", "timestamp": "2026-08-01T10:00:00+0000",
-         "view_count": v, "like_count": 1} for i, v in enumerate([100, 120, 90, 110, 900])
+        {
+            "id": f"r{i}",
+            "media_product_type": "REELS",
+            "media_type": "VIDEO",
+            "timestamp": "2026-08-01T10:00:00+0000",
+            "view_count": v,
+            "like_count": 1,
+        }
+        for i, v in enumerate([100, 120, 90, 110, 900])
     ] + [
-        {"id": f"c{i}", "media_type": "CAROUSEL_ALBUM", "timestamp": "2026-08-01T10:00:00+0000",
-         "like_count": n, "comments_count": 0} for i, n in enumerate([10, 12, 11])
+        {
+            "id": f"c{i}",
+            "media_type": "CAROUSEL_ALBUM",
+            "timestamp": "2026-08-01T10:00:00+0000",
+            "like_count": n,
+            "comments_count": 0,
+        }
+        for i, n in enumerate([10, 12, 11])
     ]
     res = analytics.viral_posts(media, multiplier=3)
     assert [h["id"] for h in res["viral"]] == ["r4"]
@@ -125,12 +150,18 @@ def test_caption_language_and_features():
 def test_conversion_and_reels_watch():
     feed = _own("f", 1000, 10)
     feed["insights"].update(follows=5, profile_visits=20)
-    reel = {"id": "r", "media_product_type": "REELS", "media_type": "VIDEO", "timestamp": "2026-08-01T10:00:00+0000",
-            "caption": "Hook line\nrest", "insights": {"reach": 500, "ig_reels_avg_watch_time": 6500,
-                                                      "ig_reels_video_view_total_time": 3_600_000}}
+    reel = {
+        "id": "r",
+        "media_product_type": "REELS",
+        "media_type": "VIDEO",
+        "timestamp": "2026-08-01T10:00:00+0000",
+        "caption": "Hook line\nrest",
+        "insights": {"reach": 500, "ig_reels_avg_watch_time": 6500, "ig_reels_video_view_total_time": 3_600_000},
+    }
     conv = analytics.conversion_by_format([feed, reel])
-    assert conv == [{"format": "CAROUSEL", "posts": 1, "follows_per_1k_reach": 5.0,
-                     "profile_visits_per_1k_reach": 20.0, "total_follows": 5}]
+    assert conv == [
+        {"format": "CAROUSEL", "posts": 1, "follows_per_1k_reach": 5.0, "profile_visits_per_1k_reach": 20.0, "total_follows": 5}
+    ]
     watch = analytics.reels_watch([reel])
     assert watch["avg_watch_time_s"] == 6.5 and watch["total_watch_hours"] == 1.0
     assert watch["longest_watched"][0]["hook"] == "Hook line"

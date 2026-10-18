@@ -14,9 +14,7 @@ log = logging.getLogger(__name__)
 
 PROFILE_FIELDS = "id,username,name,biography,website,followers_count,follows_count,media_count,profile_picture_url"
 
-OWN_MEDIA_FIELDS = (
-    "id,caption,media_type,media_product_type,permalink,timestamp,like_count,comments_count,thumbnail_url"
-)
+OWN_MEDIA_FIELDS = "id,caption,media_type,media_product_type,permalink,timestamp,like_count,comments_count,thumbnail_url"
 
 # Business Discovery: base fields are documented for years; extended ones were added later.
 # If the API rejects an extended field we retry with the base set.
@@ -283,9 +281,7 @@ class InstagramService:
                 r["share_pct"] = round(100 * r["count"] / total, 1)
             return {"metric": metric, "breakdown": breakdown, "timeframe": timeframe, "rows": rows}
 
-        return await self._cached(
-            f"me:demo:{self.uid}:{metric}:{breakdown}:{timeframe}", self.settings.ttl_profile_s * 6, fetch
-        )
+        return await self._cached(f"me:demo:{self.uid}:{metric}:{breakdown}:{timeframe}", self.settings.ttl_profile_s * 6, fetch)
 
     # ---- competitors (Business Discovery) ----------------------------------
 
@@ -314,9 +310,7 @@ class InstagramService:
             return data
 
         data = await self._cached(f"bd:{username}:{media_limit}", self.settings.ttl_profile_s, fetch, refresh=refresh)
-        self.storage.save_snapshot(
-            username, data.get("followers_count"), data.get("follows_count"), data.get("media_count")
-        )
+        self.storage.save_snapshot(username, data.get("followers_count"), data.get("follows_count"), data.get("media_count"))
         return data
 
     async def _business_discovery(self, username: str, media_limit: int, media_fields: str) -> dict[str, Any]:
@@ -381,9 +375,7 @@ class InstagramService:
             if self.settings.app_id and self.settings.app_secret
             else self.settings.access_token
         )
-        body = await self.client.get(
-            "/debug_token", {"input_token": self.settings.access_token, "access_token": inspector}
-        )
+        body = await self.client.get("/debug_token", {"input_token": self.settings.access_token, "access_token": inspector})
         data = body.get("data", {})
         now = datetime.now(UTC)
 
@@ -406,9 +398,7 @@ class InstagramService:
         }
         lefts = [d for d in (days_left, data_days_left) if d is not None]
         if not data.get("is_valid"):
-            status["warning"] = (
-                "Token is invalid. Reconnect: call open_setup with again=true (or run `creatorloop-auth login`)."
-            )
+            status["warning"] = "Token is invalid. Reconnect: call open_setup with again=true (or run `creatorloop-auth login`)."
         elif lefts and min(lefts) <= TOKEN_WARN_DAYS:
             status["warning"] = (
                 f"Token or its data access expires in {min(lefts)} days. "

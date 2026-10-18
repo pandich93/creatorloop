@@ -361,9 +361,7 @@ def open_browser(url: str, *, platform: str = sys.platform) -> bool:
     return True
 
 
-def run(
-    env_path: Path, *, open_browser: bool = True, out: Callable[[str], None] = print, **start_kwargs: Any
-) -> Result | None:
+def run(env_path: Path, *, open_browser: bool = True, out: Callable[[str], None] = print, **start_kwargs: Any) -> Result | None:
     """Blocking: show the page, wait until it closes, return the result (None on timeout or Ctrl+C)."""
     srv = start(env_path, **start_kwargs)
     out(f"Setup page: {srv.url}")
