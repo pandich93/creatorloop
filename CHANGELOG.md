@@ -5,6 +5,10 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- Reel template: English search tags for all 167 objects in the object catalog; `python tools/assets.py find`
+  now searches Uzbek, Russian and English tags (`find coffee`, `find kofe` and `find кофе` give the same objects).
+
 ## [0.2.0] - 2026-10-14
 
 ### Added
