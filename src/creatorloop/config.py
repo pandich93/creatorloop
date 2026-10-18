@@ -25,7 +25,7 @@ def _load_env() -> None:
 def _zone(name: str) -> ZoneInfo | None:
     try:
         return ZoneInfo(name.strip()) if name.strip() else None
-    except ZoneInfoNotFoundError, ValueError:
+    except (ZoneInfoNotFoundError, ValueError):
         return None
 
 
